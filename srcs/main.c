@@ -1,47 +1,32 @@
 #include "minishell.h"
 
-static void	ft_prompt(char **envp);
+static char	*ft_prompt(char **envp);
 
-int	main(void)
+int main(int argc, char **argv, char **envp)
 {
-	printf("%d\n", ft_)
+	(void)	argc;
+	(void)	argv;
+	unsigned char	exit_status;
+	char			*line;
+	char			*prompt;
+	t_list			*tokens;
+
+	exit_status = 0;
+	prompt = ft_prompt(envp);
+	line = readline(prompt);
+	tokens = ft_parse(line);
+	return (free(line), free(tokens), exit_status);
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	(void)			argc;
-// 	(void)			argv;
-// 	char			*s;
-// 	unsigned char	exit_status;
-
-// 	exit_status = 0;
-// 	while (1)
-// 	{
-// 		ft_prompt(envp);
-// 		s = ft_remove_endl(get_next_line(0));
-// 		if (!ft_strncmp(s, "pwd\0", 4))
-// 			exit_status = ft_pwd();
-// 		else if (!ft_strncmp(s, "env\0", 4))
-// 			exit_status = ft_env(envp);
-// 		else if (!ft_strncmp(s, "echo ", 5) || !ft_strncmp(s, "echo\0", 5))
-// 			exit_status = ft_echo(s, envp);
-// 		else if (!ft_strncmp(s, "cd ", 3) || !ft_strncmp(s, "cd\0", 3))
-// 			exit_status = ft_cd(s + 2, envp);
-// 		else if (!ft_strncmp(s, "exit ", 5) || !ft_strncmp(s, "exit\0", 5))
-// 		{
-// 			exit_status = ft_exit(s + 4, exit_status);
-// 			free(s);
-// 			break ;
-// 		}
-// 		else if ((*s))
-// 			printf("zsh: command not found: %s\n", s);
-// 		free(s);
-// 	}
-// 	return (exit_status);
-// }
-
-static void	ft_prompt(char **envp)
+static char	*ft_prompt(char **envp)
 {
+	return ("$>");
+}
+
+/*
+static char	*ft_prompt(char **envp)
+{
+	char	*prompt;
 	char	*current_dir;
 	int 	i;
 
@@ -61,6 +46,7 @@ static void	ft_prompt(char **envp)
 	}
 	ft_putstr_fd(" % ", 1);
 }
+*/
 
 /*
 format du prompt :

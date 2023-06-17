@@ -9,6 +9,7 @@ LDFLAGS +=
 # Libraries
 LIBFT		:= libft.a
 LIBS		+= -L$(LIBFTDIR) -lft	# libft
+LIBS		+= -lreadline
 
 # Directories
 SRCSDIR 		:= srcs

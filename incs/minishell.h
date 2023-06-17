@@ -1,16 +1,15 @@
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 #include "../libft/libft.h"
- #include <fcntl.h> // open()
-#include <unistd.h> // getcwd(), read(), chdir()
-#include <sys/types.h> // read()
-#include <sys/uio.h> // read()
-#include <stdio.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+#include <fcntl.h> 				// open()
+#include <unistd.h> 			// getcwd(), read(), chdir()
+#include <sys/types.h> 			// read()
+#include <sys/uio.h> 			// read()
+#include <stdio.h> 				// readline()
+#include <readline/readline.h>	// readline()
+#include <readline/history.h>	// readline()
 
 typedef enum e_bool
 {
@@ -32,5 +31,8 @@ char	*ft_get_var(char *parameter, char **envp, int size);
 
 /* utils.c */
 char	*ft_remove_endl(char *str);
+
+/* parse.c */
+// t_list	ft_parse(char *line);
 
 #endif
