@@ -42,8 +42,8 @@ SRC			:= ft_isalpha.c \
 			ft_lstdelone.c \
 			ft_lstclear.c \
 			ft_lstiter.c \
-			ft_lstmap.c \
-
+			ft_lstmap.c
+			
 OBJS_DIR	:= ./objs
 OBJ			:= ${addprefix $(OBJS_DIR)/, ${SRC:%.c=%.o}}
 DEPS		:= $(OBJS:.o=.d)

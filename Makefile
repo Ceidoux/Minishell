@@ -29,6 +29,7 @@ SRCS	:= main.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
 		   parsing/parse.c \
+		   utils/ft_lstprint.c \
 		   utils/get_var.c \
 		   utils/remove_endl.c
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))

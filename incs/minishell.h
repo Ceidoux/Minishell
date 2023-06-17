@@ -31,8 +31,9 @@ char	*ft_get_var(char *parameter, char **envp, int size);
 
 /* utils.c */
 char	*ft_remove_endl(char *str);
+void	ft_lstprint(t_list *lst);
 
 /* parse.c */
-// t_list	ft_parse(char *line);
+t_list	*ft_parse(char *line);
 
 #endif
