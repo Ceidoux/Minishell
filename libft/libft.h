@@ -16,9 +16,16 @@
 # include <unistd.h>
 # include <stdint.h>
 
+typedef enum e_type
+{ 
+	OPERATOR,
+	WORD
+}	t_type;
+
 typedef struct s_list
 {
-	void			*content;
+	char			*content;
+	t_type			*type;
 	struct s_list	*next;
 }	t_list;
 
