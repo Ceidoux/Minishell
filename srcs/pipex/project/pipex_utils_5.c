@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   pipex_utils_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 12:02:37 by jleguay           #+#    #+#             */
-/*   Updated: 2023/06/17 17:04:05 by smestre          ###   ########.fr       */
+/*   Created: 2023/06/15 09:18:00 by smestre           #+#    #+#             */
+/*   Updated: 2023/06/15 09:52:56 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-t_list	*ft_lstnew(char *content, t_type type)
+char	*return_full_line(char *full_line, char *res, int fd)
 {
-	t_list	*new;
+	close(fd);
+	return (free(res), full_line);
+}
 
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->type = type;
-	new->next = NULL;
-	return (new);
+void	get_next_path(char *full_line, int fd)
+{
+	free(full_line);
+	full_line = get_next_line(fd);
 }

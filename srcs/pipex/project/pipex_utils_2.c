@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   pipex_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 12:02:37 by jleguay           #+#    #+#             */
-/*   Updated: 2023/06/17 17:04:05 by smestre          ###   ########.fr       */
+/*   Created: 2023/06/12 14:53:40 by smestre           #+#    #+#             */
+/*   Updated: 2023/06/16 17:41:23 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-t_list	*ft_lstnew(char *content, t_type type)
+int	syntax_help(void)
 {
-	t_list	*new;
+	ft_printf("Error : Wrong Number of arguments.\n");
+	ft_printf("Syntax should be as follows : ");
+	ft_printf("FILE1 CMD1 PARAMS1 CMD2 PARAMS2 FILE2\n");
+	return (1);
+}
 
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->type = type;
-	new->next = NULL;
-	return (new);
+int	non_printable(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] >= 0 && str[i] <= 32) || str[i] == 127)
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }
