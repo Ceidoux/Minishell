@@ -18,7 +18,7 @@ t_list *ft_parse(char *s)
 			s++;
 		if (ft_ismetachar(*s))
 			s += ft_addoperator(s, &tokens);
-		else
+		else if (*s)
 			s += ft_addword(s, &tokens);
 	}
 	return (tokens);
