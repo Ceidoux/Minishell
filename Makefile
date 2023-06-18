@@ -63,7 +63,7 @@ all: $(NAME)
 .PHONY: bonus
 bonus: all
 
-$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | get_libft
+$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft
 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
@@ -75,8 +75,8 @@ $(OBJSDIR)/%.o: $(if $(filter bonus, $(MAKECMDGOALS)), $(SRCSDIR_BONUS)/%.c, $(S
 $(OBJSSUBDIR):
 	-mkdir -p $@
 
-.PHONY= get_libft
-get_libft:
+.PHONY= _libft
+_libft:
 #	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	@$(MAKE) -C $(LIBFTDIR)
 #	@echo $(GREEN)[OK] $@$(NOCOLOR)
