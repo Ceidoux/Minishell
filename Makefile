@@ -30,6 +30,7 @@ SRCS	:= main.c \
 		   builtins/unset.c \
 		   parsing/parse.c \
 		   parsing/expand.c \
+		   parsing/unquote.c \
 		   utils/ft_lstprint.c \
 		   utils/get_var.c \
 		   utils/remove_endl.c

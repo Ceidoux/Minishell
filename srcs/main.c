@@ -4,8 +4,7 @@ static char	*ft_prompt(char **envp);
 
 int main(int argc, char **argv, char **envp)
 {
-	(void)	argc;
-	(void)	argv;
+	(void)	argc, (void) argv;
 	unsigned char	exit_status;
 	char			*line_read;
 	char			*prompt;
@@ -14,8 +13,7 @@ int main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	prompt = ft_prompt(envp);
 	line_read = readline(prompt);
-	lst_of_tokens = ft_parse(line_read);
-	ft_expand(lst_of_tokens, envp);
+	lst_of_tokens = ft_parse(line_read, envp);
 	ft_lstprint(lst_of_tokens);
 	ft_lstclear(&lst_of_tokens, &free);
 	return (free(line_read), exit_status); // free(prompt) si alloc
