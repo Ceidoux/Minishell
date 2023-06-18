@@ -61,10 +61,21 @@ static char	*ft_expand_var(char *s, int idx, char **envp)
 	return (new_s);
 }
 /*
-A gérer :
+A gerer:
 [**] $VAR_DEFINIE
 [**] $VAR_NON_DEFINIE	-> echo $VAR_UNDEFINIED Output: (nothing)
+[**] $ blabla 			--> e.g. echo $ qs ($ immediatement suivi d'un espace) Output: $ qs ($ conserve)
+[**] blabla$			->
 [**] "$USER"			--> jle
 [**] '$USER'			--> $USER
-[**] echo $ qs			--> qs ($ immediatement suivi d'un espace est conserve comme $)
+[**] $?					--> dernier output !!
+
+N'a pas a etre gere:
+[-] $0 $1 $2...		--> verifier l'output sur bash
+[-] $1USER			--> Output:USER ($1 est traite comme un variable)
+[-] $#				--> affiche le nombre d'arguments (?)
+[-] $*
+[-] $!
+[-] $$
+[-] $-
 */
