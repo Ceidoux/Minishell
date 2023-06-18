@@ -15,8 +15,9 @@ int main(int argc, char **argv, char **envp)
 	prompt = ft_prompt(envp);
 	line_read = readline(prompt);
 	lst_of_tokens = ft_parse(line_read);
+	ft_expand(lst_of_tokens, envp);
 	ft_lstprint(lst_of_tokens);
-	ft_lstclear(lst_of_tokens, &free);
+	ft_lstclear(&lst_of_tokens, &free);
 	return (free(line_read), exit_status); // free(prompt) si alloc
 }
 

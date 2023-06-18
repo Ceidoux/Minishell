@@ -27,7 +27,7 @@ int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
 
 /* environment.c */
-char	*ft_get_var(char *parameter, char **envp, int size);
+char	*ft_get_var(char *parameter, char **envp);
 
 /* utils.c */
 char	*ft_remove_endl(char *str);
@@ -35,5 +35,6 @@ void	ft_lstprint(t_list *lst);
 
 /* parse.c */
 t_list	*ft_parse(char *line);
+void	ft_expand(t_list *tokens, char **envp);
 
 #endif
