@@ -50,12 +50,14 @@ static char	*ft_expand_var(char *s, int idx, char **envp)
 		return (s);
 	var_name = ft_substr(s, idx, len);
 	var = ft_get_var(var_name, envp);
+	printf("%s\n", var);
 	free(var_name);
 	new_s = malloc((ft_strlen(s) - len + ft_strlen(var)) * sizeof(*new_s));
 	if (!new_s)
 		return (NULL);
 	ft_strlcpy(new_s, s, idx);
-	ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
+	if (var)
+		ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
 	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), s + idx + len, ft_strlen(s) - (idx + len) + 1);
 	free(s);
 	return (new_s);
