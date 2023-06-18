@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/17 17:22:14 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/17 20:05:21 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,68 @@
 
 ATTENTION : Version en travaux !!!
 
+Cette version inclut une liste initialisee dans le main en guise d'exemple.
+
+LISTE EXEMPLE ACTUELLE : < text1.txt grep "S" | grep "e" > text2.txt
+
+REMARQUE : Une partie du code actuel est encore ecrit en PSEUDO-CODE.
+
 */
 #include "pipex_bonus.h"
+
+
+void	manage_word(t_list **my_list)
+{
+
+}
+
+void	manage_operator()
+{
+	if ((*my_list)->content == "<")
+	{
+		*my_list = (*my_list)->next;
+		pipe[0][1] = write
+	}
+}
 
 int	main(int argc, char *argv[], char **envp)
 {
 	t_list	**my_list;
 	t_list	*next_element;
 
+	my_list = malloc(sizeof(t_list *));
 	*my_list = ft_lstnew("<", OPERATOR);
 	next_element = ft_lstnew("text1.txt", WORD);
 	ft_lstadd_back(my_list, next_element);
-	next_element = ft_lstnew("grep S", WORD);
+	next_element = ft_lstnew("grep", WORD);
+	ft_lstadd_back(my_list, next_element);
+	next_element = ft_lstnew("S", WORD);
 	ft_lstadd_back(my_list, next_element);
 	next_element = ft_lstnew("|", OPERATOR);
 	ft_lstadd_back(my_list, next_element);
-	next_element = ft_lstnew("grep e", WORD);
+	next_element = ft_lstnew("grep", WORD);
+	ft_lstadd_back(my_list, next_element);
+	next_element = ft_lstnew("e", WORD);
 	ft_lstadd_back(my_list, next_element);
 	next_element = ft_lstnew(">", OPERATOR);
 	ft_lstadd_back(my_list, next_element);
-	while ((*my_list)->next != NULL)
+	next_element = ft_lstnew("text2.txt", WORD);
+	ft_lstadd_back(my_list, next_element);
+	while ((*my_list) != NULL)
 	{
-		printf("%s\n", (*my_list)->next->content);
+		printf("%s : %d\n", (*my_list)->content, (*my_list)->type);
 		(*my_list) = (*my_list)->next;
+	}
+	while(*my_list)
+	{
+		if ((*my_list)->type == WORD)
+		{
+			manage_word();
+		}
+		else
+		{
+			manage_operator();
+		}
 	}
 	return (0);
 }
