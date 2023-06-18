@@ -63,7 +63,7 @@ all: $(NAME)
 .PHONY: bonus
 bonus: all
 
-$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | $(LIBFTDIR)/$(LIBFT)
+$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | get_libft
 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
@@ -75,10 +75,11 @@ $(OBJSDIR)/%.o: $(if $(filter bonus, $(MAKECMDGOALS)), $(SRCSDIR_BONUS)/%.c, $(S
 $(OBJSSUBDIR):
 	-mkdir -p $@
 
-$(LIBFTDIR)/$(LIBFT):
-	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
-	$(MAKE) -C $(LIBFTDIR)
-	@echo $(GREEN)[OK] $@$(NOCOLOR)
+.PHONY= get_libft
+get_libft:
+#	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
+	@$(MAKE) -C $(LIBFTDIR)
+#	@echo $(GREEN)[OK] $@$(NOCOLOR)
 
 #========== MISCELLANEOUS ========================================================
 .PHONY: nof
