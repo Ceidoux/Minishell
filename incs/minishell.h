@@ -17,7 +17,7 @@ typedef enum e_bool
 	TRUE
 }	t_bool;
 
-/* in builtin directory */
+/* builtin directory */
 int		ft_cd(char *s, char ** envp);
 int		ft_echo(char *s, char **envp);
 int		ft_env(char **envp);
@@ -26,14 +26,15 @@ int		ft_export(char *s, char **envp);
 int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
 
-/* environment.c */
-char	*ft_get_var(char *parameter, char **envp, int size);
+/* parsing directory */
+t_list	*ft_parse(char *s, char **envp);
+void	ft_expand(char **s, char **envp);
+void	ft_unquote(char **s);
 
-/* utils.c */
-char	*ft_remove_endl(char *str);
+/* utils directory */
 void	ft_lstprint(t_list *lst);
-
-/* parse.c */
-t_list	*ft_parse(char *line);
+void	ft_lstremovelast(t_list *lst, void (*del)(void*));
+char	*ft_get_var(char *parameter, char **envp);
+char	*ft_remove_endl(char *str);
 
 #endif

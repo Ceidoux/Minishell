@@ -12,7 +12,7 @@ int		ft_cd(char *s, char **envp)
 	else if (*s != ' ')
 		return (-1);
 	else if (*(s + 1) == '-' && !*(s + 2))
-		ret = chdir(ft_get_var("OLDPWD", envp, 6));
+		ret = chdir(ft_get_var("OLDPWD", envp));
 	else if (*(s + 1) == '/')
 		ret = chdir(s + 1);
 	else
@@ -48,7 +48,7 @@ static int	ft_cd_from_home(char *path, char **envp)
 	char	*home_dir;
 	char	*target_dir;
 
-	home_dir = ft_get_var("HOME", envp, 4);
+	home_dir = ft_get_var("HOME", envp);
 	if (!home_dir || !home_dir[0])
 		return (0);
 	if (!path || !path[0] || (path[1] == '~' && !path[2])

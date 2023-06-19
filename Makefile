@@ -29,7 +29,10 @@ SRCS	:= main.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
 		   parsing/parse.c \
+		   parsing/expand.c \
+		   parsing/unquote.c \
 		   utils/ft_lstprint.c \
+		   utils/ft_lstremovelast.c \
 		   utils/get_var.c \
 		   utils/remove_endl.c
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
@@ -62,7 +65,7 @@ all: $(NAME)
 .PHONY: bonus
 bonus: all
 
-$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | $(LIBFTDIR)/$(LIBFT)
+$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft
 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
@@ -74,10 +77,11 @@ $(OBJSDIR)/%.o: $(if $(filter bonus, $(MAKECMDGOALS)), $(SRCSDIR_BONUS)/%.c, $(S
 $(OBJSSUBDIR):
 	-mkdir -p $@
 
-$(LIBFTDIR)/$(LIBFT):
-	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
-	$(MAKE) -C $(LIBFTDIR)
-	@echo $(GREEN)[OK] $@$(NOCOLOR)
+.PHONY= _libft
+_libft:
+#	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
+	@$(MAKE) -C $(LIBFTDIR)
+#	@echo $(GREEN)[OK] $@$(NOCOLOR)
 
 #========== MISCELLANEOUS ========================================================
 .PHONY: nof
