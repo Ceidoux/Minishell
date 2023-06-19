@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:30:48 by kali              #+#    #+#             */
-/*   Updated: 2023/06/17 17:52:45 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:16:26 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 typedef struct s_tools
 {
 	int			i;
+	int			j;
 	int			**pipe_fd;
 	int			file_fd;
 	int			*pid;
@@ -36,6 +37,8 @@ typedef struct s_tools
 	int			saved_std_out;
 	char		*str;
 	char		**paths;
+	int			nombre_fds;
+	char		buf[200];
 }	t_tools;
 
 void	first_command(t_tools tools, int argc, char *argv[], char **envp);
@@ -97,5 +100,6 @@ void	ft_putlongnbr_base(long unsigned int nbr, char *base, int *len);
 void	ft_putpoint_base(long unsigned int nbr, char *base, int *len);
 void	print_format(char *str, int *i, va_list args, int *len);
 int		ft_printf(const char *str, ...);
+char	*ft_strjoin_space(char *s1, char *s2);
 
 #endif

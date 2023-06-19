@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_2_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:39:35 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/18 14:58:18 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/19 14:01:07 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_tools(t_tools *tools, int compteur)
 	if (tools->pid == NULL)
 		return ;
 	tools->i = 0;
+	tools->j = 0;
 }
 
 int	is_slash(char *str)

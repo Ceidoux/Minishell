@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:42:51 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/16 17:41:10 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:08:16 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	env_path(t_tools tools, char **envp)
 	if (tools.str == NULL)
 		no_path(tools);
 	tools.paths = ft_split_slash(tools.str, ':');
-	while (tools.paths[tools.i])
+	while (tools.paths[tools.j])
 	{
-		tools.paths[tools.i] = ft_strjoin(tools.paths[(tools.i)],
+		tools.paths[tools.j] = ft_strjoin(tools.paths[(tools.j)],
 				tools.args[0]);
-		if (tools.paths[tools.i] == NULL)
+		if (tools.paths[tools.j] == NULL)
 			return ;
-		execve(tools.paths[tools.i], tools.args, NULL);
-		(tools.i)++;
+		execve(tools.paths[tools.j], tools.args, NULL);
+		(tools.j)++;
 	}
 	no_execution(tools);
 }
