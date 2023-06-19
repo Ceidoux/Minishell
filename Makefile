@@ -18,6 +18,7 @@ OBJSDIR			:= objs
 OBJSSUBDIR 		:= $(subst $(SRCSDIR), $(OBJSDIR), $(shell find $(SRCSDIR) -type d))
 INCSDIR			:= incs
 LIBFTDIR		:= libft
+PIPEXDIR		:= $(SRCSDIR)/pipex
 
 # Mandatory: Sources, Objects
 SRCS	:= main.c \
@@ -28,9 +29,10 @@ SRCS	:= main.c \
 		   builtins/export.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
-		   parsing/parse.c \
-		   parsing/expand.c \
-		   parsing/unquote.c \
+		   parsing/checking.c \
+		   parsing/expanding.c \
+		   parsing/parsing.c \
+		   parsing/unquoting.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/get_var.c \
@@ -65,7 +67,7 @@ all: $(NAME)
 .PHONY: bonus
 bonus: all
 
-$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft
+$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft _pipex
 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
@@ -77,11 +79,17 @@ $(OBJSDIR)/%.o: $(if $(filter bonus, $(MAKECMDGOALS)), $(SRCSDIR_BONUS)/%.c, $(S
 $(OBJSSUBDIR):
 	-mkdir -p $@
 
-.PHONY= _libft
+.PHONY: _libft
 _libft:
-#	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
+	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	@$(MAKE) -C $(LIBFTDIR)
-#	@echo $(GREEN)[OK] $@$(NOCOLOR)
+	@echo $(GREEN)[OK] $@$(NOCOLOR)
+
+.PHONY: _pipex
+_pipex:
+	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
+	@$(MAKE) -C $(PIPEXDIR)
+	@echo $(GREEN)[OK] $@$(NOCOLOR)
 
 #========== MISCELLANEOUS ========================================================
 .PHONY: nof

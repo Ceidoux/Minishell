@@ -2,8 +2,6 @@
 
 static int	ft_remove_quotes(char **s, int idx, char c);
 
-/* WARNING: cas d'erreur pour le prompt suivant 12'34'56'78'9 les quotes successifs sont mals geres*/
-
 void	ft_unquote(char **s)
 {
 	int		idx;
