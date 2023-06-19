@@ -32,6 +32,7 @@ SRCS	:= main.c \
 		   parsing/expand.c \
 		   parsing/unquote.c \
 		   utils/ft_lstprint.c \
+		   utils/ft_lstremovelast.c \
 		   utils/get_var.c \
 		   utils/remove_endl.c
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))

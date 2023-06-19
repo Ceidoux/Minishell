@@ -10,6 +10,7 @@ un 'token' qui peut etre soit un 'operator' soit un 'word'*/
 t_list *ft_parse(char *s, char **envp)
 {
 	t_list	*tokens;
+	t_list	*last_token;
 
 	tokens = NULL;
 	while (*s)
@@ -21,9 +22,12 @@ t_list *ft_parse(char *s, char **envp)
 		else if (*s)
 		{
 			s += ft_addword(s, &tokens);
-			ft_expand(&(ft_lstlast(tokens)->content), envp);
-			ft_unquote(&(ft_lstlast(tokens)->content));
+			last_token = ft_lstlast(tokens);
+			ft_expand(&(last_token->content), envp);
+			ft_unquote(&(last_token->content));
 		}
+		if (last_token->content[0] == '\0')
+			ft_lstremovelast(tokens, &free);
 	}
 	return (tokens);
 }
