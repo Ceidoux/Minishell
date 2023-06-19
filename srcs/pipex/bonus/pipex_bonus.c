@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/17 20:05:21 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/18 18:55:03 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,91 @@ REMARQUE : Une partie du code actuel est encore ecrit en PSEUDO-CODE.
 */
 #include "pipex_bonus.h"
 
+int	ft_strcmp(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str1[i] || str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	manage_word(t_list **my_list)
 {
-
+	
 }
 
-void	manage_operator()
+void	manage_operator(t_list **my_list, t_tools tools)
 {
-	if ((*my_list)->content == "<")
+	if (ft_strcmp((*my_list)->type, "<"))
 	{
 		*my_list = (*my_list)->next;
-		pipe[0][1] = write
+		tools.pipe_fd[0][1] = open((*my_list)->content, O_RDONLY, 0644);
+		*my_list = (*my_list)->next;
+	}
+	else if (ft_strcmp((*my_list)->type, ">"))
+	{
+
+	}
+	else if (ft_strcmp((*my_list)->type, "|"))
+	{
+		
 	}
 }
+
+
+int	fd_count(t_list *my_list)
+{
+	int	compteur;
+
+	compteur = 0;
+	while (my_list)
+	{
+		if (my_list->type == OPERATOR)
+		{
+			if (ft_strcmp(my_list->content, "<") || ft_strcmp(my_list->content, ">"))
+			{
+				my_list = my_list->next;
+				my_list = my_list->next;
+			}
+			else
+			{
+				my_list = my_list->next;
+				while (my_list && my_list->type == WORD)
+					my_list = my_list->next;
+			}
+			compteur++;
+		}
+		else
+		{
+			compteur++;
+			while (my_list && my_list->type == WORD)
+				my_list = my_list->next;
+		}
+	}
+	return (compteur);
+}
+
+void	print_list(t_list **my_list)
+{
+	while ((*my_list) != NULL)
+	{
+		printf("%s : %d\n", (*my_list)->content, (*my_list)->type);
+		(*my_list) = (*my_list)->next;
+	}
+}
+
 
 int	main(int argc, char *argv[], char **envp)
 {
 	t_list	**my_list;
 	t_list	*next_element;
+	int		nombre_fds;
 
 	my_list = malloc(sizeof(t_list *));
 	*my_list = ft_lstnew("<", OPERATOR);
@@ -61,22 +127,20 @@ int	main(int argc, char *argv[], char **envp)
 	ft_lstadd_back(my_list, next_element);
 	next_element = ft_lstnew("text2.txt", WORD);
 	ft_lstadd_back(my_list, next_element);
-	while ((*my_list) != NULL)
-	{
-		printf("%s : %d\n", (*my_list)->content, (*my_list)->type);
-		(*my_list) = (*my_list)->next;
-	}
-	while(*my_list)
-	{
-		if ((*my_list)->type == WORD)
-		{
-			manage_word();
-		}
-		else
-		{
-			manage_operator();
-		}
-	}
+	// print_list(my_list);
+	nombre_fds = fd_count(*my_list);
+	printf("NUMBER OF PIPES: %d", nombre_fds);
+	// while(*my_list)
+	// {
+	// 	if ((*my_list)->type == WORD)
+	// 	{
+	// 		manage_word();
+	// 	}
+	// 	else
+	// 	{
+	// 		manage_operator();
+	// 	}
+	// }
 	return (0);
 }
 
@@ -109,22 +173,22 @@ int	main(int argc, char *argv[], char **envp)
 // 	return (0);
 // }
 
-// void	clean_finish(t_tools tools, int argc)
-// {
-// 	tools.i = 0;
-// 	while (tools.i < argc - 2)
-// 	{
-// 		close(tools.pipe_fd[tools.i][0]);
-// 		close(tools.pipe_fd[tools.i][1]);
-// 		(tools.i)++;
-// 	}
-// 	while (argc > 2)
-// 	{
-// 		wait(NULL);
-// 		argc--;
-// 	}
-// 	free_main(&tools);
-// }
+void	clean_finish(t_tools tools, int argc)
+{
+	tools.i = 0;
+	while (tools.i < argc - 2)
+	{
+		close(tools.pipe_fd[tools.i][0]);
+		close(tools.pipe_fd[tools.i][1]);
+		(tools.i)++;
+	}
+	while (argc > 2)
+	{
+		wait(NULL);
+		argc--;
+	}
+	free_main(&tools);
+}
 
 // void	first_command(t_tools tools, int argc, char *argv[], char **envp)
 // {
