@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_2_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:39:35 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/16 18:43:20 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/18 14:58:18 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int	non_printable(char *str)
 	return (1);
 }
 
-void	init_tools(t_tools *tools, int argc)
+void	init_tools(t_tools *tools, int compteur)
 {
 	tools->i = 0;
-	tools->pipe_fd = malloc(sizeof(int *) * (argc - 1));
+	tools->pipe_fd = malloc(sizeof(int *) * (compteur + 1));
 	if (tools->pipe_fd == NULL)
 		return ;
-	tools->pipe_fd[argc - 2] = NULL;
-	while (tools->i < argc - 2)
+	tools->pipe_fd[compteur] = NULL;
+	while (tools->i < compteur)
 	{
 		tools->pipe_fd[tools->i] = malloc(sizeof(int) * 2);
 		if (tools->pipe_fd[tools->i] == NULL)
@@ -53,7 +53,7 @@ void	init_tools(t_tools *tools, int argc)
 		pipe(tools->pipe_fd[tools->i]);
 		(tools->i)++;
 	}
-	tools->pid = malloc(sizeof(int) * (argc - 2));
+	tools->pid = malloc(sizeof(int) * (compteur));
 	if (tools->pid == NULL)
 		return ;
 	tools->i = 0;
