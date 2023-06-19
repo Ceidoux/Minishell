@@ -25,9 +25,9 @@ t_list *ft_parse(char *s, char **envp)
 			last_token = ft_lstlast(tokens);
 			ft_expand(&(last_token->content), envp);
 			ft_unquote(&(last_token->content));
+			if (last_token->content[0] == '\0')
+				ft_lstremovelast(&tokens, &free);
 		}
-		if (last_token->content[0] == '\0')
-			ft_lstremovelast(tokens, &free);
 	}
 	return (tokens);
 }
