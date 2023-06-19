@@ -22,7 +22,7 @@ static char	*ft_prompt(char **envp)
 {
 	char	*prompt;
 
-	prompt = ft_strjoin(ft_get_var("USER", envp), (" %>"));
+	prompt = ft_strjoin(ft_get_var("USER", envp), (" %> "));
 	return (prompt);
 }
 
