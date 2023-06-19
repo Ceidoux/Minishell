@@ -18,7 +18,7 @@ OBJSDIR			:= objs
 OBJSSUBDIR 		:= $(subst $(SRCSDIR), $(OBJSDIR), $(shell find $(SRCSDIR) -type d))
 INCSDIR			:= incs
 LIBFTDIR		:= libft
-PIPEXDIR		:= $(SRCSDIR)/pipex
+# PIPEXDIR		:= $(SRCSDIR)/pipex
 
 # Mandatory: Sources, Objects
 SRCS	:= main.c \
@@ -67,7 +67,7 @@ all: $(NAME)
 .PHONY: bonus
 bonus: all
 
-$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft _pipex
+$(NAME): $(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS_BONUS), $(OBJS)) | _libft #_pipex
 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
@@ -85,11 +85,11 @@ _libft:
 	@$(MAKE) -C $(LIBFTDIR)
 	@echo $(GREEN)[OK] $@$(NOCOLOR)
 
-.PHONY: _pipex
-_pipex:
-	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
-	@$(MAKE) -C $(PIPEXDIR)
-	@echo $(GREEN)[OK] $@$(NOCOLOR)
+# .PHONY: _pipex
+# _pipex:
+# 	@echo $(BLUE)[BUILDING] $@$(NOCOLOR)
+# 	@$(MAKE) -C $(PIPEXDIR)
+# 	@echo $(GREEN)[OK] $@$(NOCOLOR)
 
 #========== MISCELLANEOUS ========================================================
 .PHONY: nof
