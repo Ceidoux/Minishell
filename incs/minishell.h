@@ -27,13 +27,14 @@ int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
 
 /* parsing directory */
+int		ft_check(t_list	*tokens);
 t_list	*ft_parse(char *s, char **envp);
 void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
 /* utils directory */
 void	ft_lstprint(t_list *lst);
-void	ft_lstremovelast(t_list *lst, void (*del)(void*));
+void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 char	*ft_get_var(char *parameter, char **envp);
 char	*ft_remove_endl(char *str);
 
