@@ -11,6 +11,8 @@
 #include <readline/readline.h>	// readline()
 #include <readline/history.h>	// readline()
 
+extern unsigned char	g_exit_status;
+
 typedef enum e_bool
 {
 	FALSE,
@@ -21,7 +23,7 @@ typedef enum e_bool
 int		ft_cd(char *s, char ** envp);
 int		ft_echo(char *s, char **envp);
 int		ft_env(char **envp);
-int		ft_exit(char *s, int exit_status);
+int		ft_exit(char *s);
 int		ft_export(char *s, char **envp);
 int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);

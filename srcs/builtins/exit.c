@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_exit(char *s, int exit_status)
+int	ft_exit(char *s)
 {
 	unsigned char	n;
 	int 			sign;
@@ -10,7 +10,7 @@ int	ft_exit(char *s, int exit_status)
 	while (*s == ' ')
 		s++;
 	if (!*s)
-		return (exit_status);
+		return (g_exit_status);
 	if (*s == '+' || *s == '-')
 		sign = 44 - *(s++);
 	if (!ft_isdigit(*s))

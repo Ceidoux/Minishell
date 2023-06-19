@@ -29,6 +29,7 @@ t_list *ft_parse(char *s, char **envp)
 				ft_lstremovelast(&tokens, &free);
 		}
 	}
+	g_exit_status = ft_check(tokens);
 	return (tokens);
 }
 
