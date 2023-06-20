@@ -35,6 +35,7 @@ void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
 /* parser directory */
+char	***ft_parser(char *s, char **envp);
 
 /* utils directory */
 void	ft_lstprint(t_list *lst);

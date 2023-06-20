@@ -33,6 +33,7 @@ SRCS	:= main.c \
 		   lexer/expanding.c \
 		   lexer/lexer.c \
 		   lexer/unquoting.c \
+		   parser/parse.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/get_var.c \

@@ -5,16 +5,14 @@ unsigned char	g_exit_status = 0;
 
 int main(int argc, char **argv, char **envp)
 {
-	(void)	argc, (void) argv;
-	char			*line_read;
-	char			*prompt;
-	t_list			*lst_of_tokens;
+	(void) argc, (void) argv;
+	char	*line_read;
+	char	*prompt;
+	char	***toc;
 
 	prompt = ft_prompt(envp);
 	line_read = readline(prompt);
-	lst_of_tokens = ft_lexer(line_read, envp);
-	ft_lstprint(lst_of_tokens);
-	ft_lstclear(&lst_of_tokens, &free);
+	toc = ft_parser(line_read, envp);
 	return (free(line_read), free(prompt), g_exit_status);
 }
 

@@ -1,4 +1,0 @@
-/!\ Apparemment, bash ne supprime pas le token s'il est vide
-	e.g.	$>		Output: rien
-			$>""	Output: command not found
-

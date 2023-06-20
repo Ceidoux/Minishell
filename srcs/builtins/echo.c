@@ -2,7 +2,7 @@
 
 int	ft_echo(char *s, char **envp)
 {
-	(void)	envp;
+	(void) envp;
 	int		n_flag;
 	t_bool	metacaracters;
 
