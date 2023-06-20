@@ -38,7 +38,6 @@ static char	*ft_expand_var(char *s, int idx, char **envp)
 		return (s);
 	var_name = ft_substr(s, idx, len);
 	var = ft_get_var(var_name, envp);
-	printf("%s\n", var);
 	free(var_name);
 	new_s = malloc((ft_strlen(s) - len + ft_strlen(var)) * sizeof(*new_s));
 	if (!new_s)

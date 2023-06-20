@@ -7,7 +7,7 @@ static int	ft_addword(char *s, t_list **tokens);
 
 /* creation d'une liste chainee dont chaque element est 
 un 'token' qui peut etre soit un 'operator' soit un 'word'*/
-t_list *ft_parse(char *s, char **envp)
+t_list *ft_lexer(char *s, char **envp)
 {
 	t_list	*tokens;
 	t_list	*last_token;

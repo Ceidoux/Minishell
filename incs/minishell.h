@@ -28,11 +28,13 @@ int		ft_export(char *s, char **envp);
 int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
 
-/* parsing directory */
+/* lexer (lexical analyser) directory */
 int		ft_check(t_list	*tokens);
-t_list	*ft_parse(char *s, char **envp);
+t_list	*ft_lexer(char *s, char **envp);
 void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
+
+/* parser directory */
 
 /* utils directory */
 void	ft_lstprint(t_list *lst);

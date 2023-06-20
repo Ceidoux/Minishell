@@ -29,10 +29,10 @@ SRCS	:= main.c \
 		   builtins/export.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
-		   parsing/checking.c \
-		   parsing/expanding.c \
-		   parsing/parsing.c \
-		   parsing/unquoting.c \
+		   lexer/checking.c \
+		   lexer/expanding.c \
+		   lexer/lexer.c \
+		   lexer/unquoting.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/get_var.c \

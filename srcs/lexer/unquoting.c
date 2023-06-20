@@ -28,5 +28,5 @@ static int	ft_remove_quotes(char **s, int idx, char c)
 	ft_strlcpy(new_s + idx + len, *s + idx + len + 2, ft_strlen(*s) - idx - len - 1);
 	free(*s);
 	*s = new_s;
-	return (len);
+	return (len - 1);
 }
