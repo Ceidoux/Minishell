@@ -21,8 +21,13 @@ int main(int argc, char **argv, char **envp)
 static char	*ft_prompt(char **envp)
 {
 	char	*prompt;
+	char	*user;
 
-	prompt = ft_strjoin(ft_get_var("USER", envp), (" %> "));
+	user = ft_get_var("USER", envp);
+	if (!user)
+		prompt = ft_strdup("%> ");
+	else
+		prompt = ft_strjoin(user, (" %> "));
 	return (prompt);
 }
 
