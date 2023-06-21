@@ -22,7 +22,9 @@ typedef enum e_bool
 typedef struct s_table_of_commands
 {
 	int		size;
-	char	***table;
+	char	**commands;
+	int		*inputs;
+	int		*outputs;
 }	t_table_of_commands;
 
 /* builtin directory */
@@ -44,6 +46,7 @@ void	ft_unquote(char **s);
 t_table_of_commands	ft_parser(char *s, char **envp);
 
 /* utils directory */
+void	ft_ioclose(t_table_of_commands toc);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 void	ft_tocprint(t_table_of_commands	toc);

@@ -34,6 +34,7 @@ SRCS	:= main.c \
 		   lexer/lexer.c \
 		   lexer/unquoting.c \
 		   parser/parser.c \
+		   utils/ft_ioclose.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/ft_tocfree.c \

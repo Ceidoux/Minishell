@@ -2,10 +2,9 @@
 
 static t_table_of_commands	ft_create_table_of_commands(t_list *tokens);
 static void					ft_add_new_line(t_table_of_commands *toc);
-static void					ft_toc_tablecpy(char ***dst_table, char ***src_table, int size);
 static void 				ft_add_command(t_table_of_commands *toc, char *command);
-static void					ft_add_input(t_table_of_commands *toc, t_list **tokens);
-static void					ft_add_output(t_table_of_commands *toc, t_list **tokens);
+static int					ft_add_input(t_table_of_commands *toc, t_list **tokens);
+static int					ft_add_output(t_table_of_commands *toc, t_list **tokens);
 
 t_table_of_commands	ft_parser(char *s, char **envp)
 {
@@ -30,10 +29,16 @@ static t_table_of_commands ft_create_table_of_commands(t_list *tokens)
 	{
 		if (tokens->type == WORD)
 			ft_add_command(&toc, tokens->content);
-		else if (tokens->type == OPERATOR && !ft_strncmp(tokens->content, "<", 2))
-			ft_add_input(&toc, &tokens);
-		else if (tokens->type == OPERATOR && !ft_strncmp(tokens->content, ">", 2))
-			ft_add_output(&toc, &tokens);
+		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, "<", 2) || !ft_strncmp(tokens->content, "<<", 3)))
+		{
+			if (ft_add_input(&toc, &tokens))
+				return (toc);
+		}
+		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, ">", 2) || !ft_strncmp(tokens->content, ">>", 3)))
+		{
+			if(ft_add_output(&toc, &tokens))
+				return (toc);
+		}
 		else
 			ft_add_new_line(&toc);
 		tokens = tokens->next;
@@ -41,67 +46,82 @@ static t_table_of_commands ft_create_table_of_commands(t_list *tokens)
 	return (toc);
 }
 
-static void	ft_add_input(t_table_of_commands *toc, t_list **tokens)
+static int	ft_add_input(t_table_of_commands *toc, t_list **tokens)
 {
+	if (toc->inputs[toc->size - 1])
+		close(toc->inputs[toc->size - 1]);	
+	if (!ft_strncmp((*tokens)->content, "<", 2))
+	{
+		toc->inputs[toc->size - 1] = open((*tokens)->next->content, O_RDONLY);
+		if (toc->inputs[toc->size - 1] == -1)
+		{
+			perror((*tokens)->next->content);
+			ft_tocfree(toc);
+			return (-1);
+		}
+	}
+	else 
+	{
+		/* HEREDOC (<<) */
+	}
 	*tokens = (*tokens)->next;
-	if (toc->table[toc->size - 1][1])
-		free(toc->table[toc->size - 1][1]);
-	toc->table[toc->size - 1][1] = ft_strdup((*tokens)->content);
+	return (0);
 }
 
-static void	ft_add_output(t_table_of_commands *toc, t_list **tokens)
+static int	ft_add_output(t_table_of_commands *toc, t_list **tokens)
 {
+	if (toc->outputs[toc->size - 1])
+		close(toc->outputs[toc->size - 1]);
+	if (!ft_strncmp((*tokens)->content, ">", 2))
+		toc->outputs[toc->size - 1] = open((*tokens)->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		toc->outputs[toc->size - 1] = open((*tokens)->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (toc->outputs[toc->size - 1] == -1)
+	{
+		perror((*tokens)->next->content);
+		ft_tocfree(toc);
+		return (-1);
+	}
 	*tokens = (*tokens)->next;
-	if (toc->table[toc->size - 1][2])
-		free(toc->table[toc->size - 1][2]);
-	toc->table[toc->size - 1][2] = ft_strdup((*tokens)->content);
+	return (0);
 }
 
 static void	ft_add_new_line(t_table_of_commands *toc)
 {
-	char ***new_table;
+	t_table_of_commands	new_toc;
+	int					line;
 
-	new_table = malloc((toc->size + 1) * sizeof(*new_table));
-	if (!new_table)
+	new_toc.size = toc->size + 1;
+	new_toc.commands = calloc(new_toc.size, sizeof(*(new_toc.commands)));
+	if (!(new_toc.commands))
 		exit(EXIT_FAILURE);
-	ft_toc_tablecpy(new_table, toc->table, toc->size);
-	ft_tocfree(toc);
-	new_table[toc->size] = ft_calloc(3, sizeof(**new_table));
-	if (!(new_table[toc->size]))
-		exit(EXIT_FAILURE);
-	toc->table = new_table;
-	toc->size++;
-}
-
-static void	ft_toc_tablecpy(char ***dst_table, char ***src_table, int size)
-{
-	while (--size >= 0)
+	new_toc.inputs = calloc(new_toc.size, sizeof(*(new_toc.inputs)));
+	new_toc.outputs = calloc(new_toc.size, sizeof(*(new_toc.outputs)));
+	line = -1;
+	while (++line < new_toc.size - 1)
 	{
-		dst_table[size] = ft_calloc(3, sizeof(**dst_table));
-		if (!(dst_table[size]))
-			exit(EXIT_FAILURE);
-		if (src_table[size][0])
-			dst_table[size][0] = ft_strdup(src_table[size][0]);
-		if (src_table[size][1])
-			dst_table[size][1] = ft_strdup(src_table[size][1]);
-		if (src_table[size][2])
-			dst_table[size][2] = ft_strdup(src_table[size][2]);
+		if (toc->commands[line])
+			new_toc.commands[line] = ft_strdup(toc->commands[line]);
+		new_toc.inputs[line] = toc->inputs[line];
+		new_toc.outputs[line] = toc->outputs[line];
 	}
+	ft_tocfree(toc);
+	*toc = new_toc;
 }
 
 static void ft_add_command(t_table_of_commands *toc, char *command)
 {
 	char	*temp;
 
-	if (!toc->table[toc->size - 1][0])
-		toc->table[toc->size - 1][0] = ft_strdup(command);
+	if (!toc->commands[toc->size - 1])
+		toc->commands[toc->size - 1] = ft_strdup(command);
 	else
 	{
-		temp = toc->table[toc->size - 1][0];
-		toc->table[toc->size - 1][0] = ft_strjoin(toc->table[toc->size - 1][0], " ");
+		temp = toc->commands[toc->size - 1];
+		toc->commands[toc->size - 1] = ft_strjoin(toc->commands[toc->size - 1], " ");
 		free(temp);
-		temp = toc->table[toc->size - 1][0];
-		toc->table[toc->size - 1][0] = ft_strjoin(toc->table[toc->size - 1][0], command);
+		temp = toc->commands[toc->size - 1];
+		toc->commands[toc->size - 1] = ft_strjoin(toc->commands[toc->size - 1], command);
 		free(temp);
 	}
 }

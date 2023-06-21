@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **envp)
 	prompt = ft_prompt(envp);
 	line_read = readline(prompt);
 	toc = ft_parser(line_read, envp);
-	return (free(line_read), free(prompt), ft_tocfree(&toc), g_exit_status);
+	return (free(line_read), free(prompt), ft_ioclose(toc), ft_tocfree(&toc), g_exit_status);
 }
 
 static char	*ft_prompt(char **envp)

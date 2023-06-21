@@ -2,17 +2,20 @@
 
 void	ft_tocprint(t_table_of_commands	toc)
 {
-	int	command_line;
-	int	column;
+	int	line;
 
-	command_line = 0;
-	printf("%d\n", toc.size);
-	while (command_line < toc.size)
+	line = 0;
+	printf("Size = %d\n", toc.size);
+	if (toc.size)
 	{
-		column = -1;
-		while (++column < 3)
-			printf("[%s]", toc.table[command_line][column]);
-		printf("\n");
-		command_line++;
+		printf("[command][input fd][output fd]\n");
+		while (line < toc.size)
+		{
+			printf("[%s]", toc.commands[line]);
+			printf("[%d]", toc.inputs[line]);
+			printf("[%d]", toc.outputs[line]);
+			printf("\n");
+			line++;
+		}
 	}
 }

@@ -2,9 +2,8 @@
 	e.g.	$>		Output: rien
 			$>""	Output: command not found
 
-Attention: le chevron ne redirige QUE stdout
-
-e.g. ls fichier_qui_n_existe_pas > outfile
+Attention: le chevron ne redirige QUE stdout (et laisse stderr sur le terminal)
+ex: ls fichier_qui_n_existe_pas > outfile
 => la sortie erreur (ici, "No such file or directory") est redirigée par défaut vers le terminal.
 
 /!\ le checker doit vérifier que :
