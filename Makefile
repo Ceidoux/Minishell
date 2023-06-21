@@ -33,9 +33,11 @@ SRCS	:= main.c \
 		   lexer/expanding.c \
 		   lexer/lexer.c \
 		   lexer/unquoting.c \
-		   parser/parse.c \
+		   parser/parser.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
+		   utils/ft_tocfree.c \
+		   utils/ft_tocprint.c \
 		   utils/get_var.c \
 		   utils/remove_endl.c
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))

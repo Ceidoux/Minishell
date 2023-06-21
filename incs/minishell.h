@@ -19,6 +19,12 @@ typedef enum e_bool
 	TRUE
 }	t_bool;
 
+typedef struct s_table_of_commands
+{
+	int		size;
+	char	***table;
+}	t_table_of_commands;
+
 /* builtin directory */
 int		ft_cd(char *s, char ** envp);
 int		ft_echo(char *s, char **envp);
@@ -35,11 +41,14 @@ void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
 /* parser directory */
-char	***ft_parser(char *s, char **envp);
+t_table_of_commands	ft_parser(char *s, char **envp);
 
 /* utils directory */
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
+void	ft_tocprint(t_table_of_commands	toc);
+void	ft_tocfree(t_table_of_commands *toc);
+void	ft_tocfreetable(t_table_of_commands *toc);
 char	*ft_get_var(char *parameter, char **envp);
 char	*ft_remove_endl(char *str);
 
