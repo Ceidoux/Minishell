@@ -10,4 +10,5 @@ e.g. ls fichier_qui_n_existe_pas > outfile
 /!\ le checker doit vérifier que :
 - après une redirection (< ou >), le token qui suit existe, et qu'il est bien de type WORD
   à défaut : bash: syntax error near unexpected token 'newline' / '|' / '>' ...
-- deux pipes ne se suivent pas (ou est-ce possible ?)
+- deux pipes ne se suivent pas
+- pas de pipe en début ou en fin de ligne de commandes

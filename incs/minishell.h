@@ -48,7 +48,6 @@ void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 void	ft_tocprint(t_table_of_commands	toc);
 void	ft_tocfree(t_table_of_commands *toc);
-void	ft_tocfreetable(t_table_of_commands *toc);
 char	*ft_get_var(char *parameter, char **envp);
 char	*ft_remove_endl(char *str);
 

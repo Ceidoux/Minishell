@@ -6,6 +6,7 @@ void	ft_tocprint(t_table_of_commands	toc)
 	int	column;
 
 	command_line = 0;
+	printf("%d\n", toc.size);
 	while (command_line < toc.size)
 	{
 		column = -1;
