@@ -1,12 +1,29 @@
 #include "minishell.h"
 
+static int	ft_create_heredoc(char *delimiter);
+
 int	ft_heredoc(char *delimiter)
+{
+	int	fd;
+
+	if (ft_create_heredoc(delimiter) == -1)
+		return (-1);
+	fd = open(".heredoc", O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	unlink(".heredoc");
+	return (fd);
+}
+
+static int	ft_create_heredoc(char *delimiter)
 {
 	int		fd;
 	char	*line;
 	int		idx;
 
-	fd = open("bash_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == -1)
+		return (-1);
 	idx = 0;
 	while (++idx)
 	{
@@ -20,7 +37,5 @@ int	ft_heredoc(char *delimiter)
 	}
 	free(line);
 	close(fd);
-	fd = open("bash_heredoc", O_RDONLY);
-	unlink("bash_heredoc");
-	return (fd);
+	return (0);
 }

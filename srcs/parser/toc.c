@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+static void					ft_add_new_line(t_table_of_commands *toc);
+static void 				ft_add_command(t_table_of_commands *toc, char *command);
+static int					ft_add_input(t_table_of_commands *toc, t_list **tokens);
+static int					ft_add_output(t_table_of_commands *toc, t_list **tokens);
+
 t_table_of_commands ft_create_table_of_commands(t_list *tokens)
 {
 	t_table_of_commands	toc;
@@ -32,17 +37,15 @@ static int	ft_add_input(t_table_of_commands *toc, t_list **tokens)
 	if (toc->inputs[toc->size - 1])
 		close(toc->inputs[toc->size - 1]);	
 	if (!ft_strncmp((*tokens)->content, "<", 2))
-	{
 		toc->inputs[toc->size - 1] = open((*tokens)->next->content, O_RDONLY);
-		if (toc->inputs[toc->size - 1] == -1)
-		{
-			perror((*tokens)->next->content);
-			ft_tocfree(toc);
-			return (-1);
-		}
-	}
 	else 
-		ft_create_heredoc((*tokens)->next->content);
+		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content);
+	if (toc->inputs[toc->size - 1] == -1)
+	{
+		perror((*tokens)->next->content);
+		ft_tocfree(toc);
+		return (-1);
+	}
 	*tokens = (*tokens)->next;
 	return (0);
 }
