@@ -7,7 +7,9 @@ void	ft_ioclose(t_table_of_commands toc)
 	line = -1;
 	while (++line < toc.size)
 	{
-		close(toc.inputs[line]);
-		close(toc.outputs[line]);
+		if (toc.inputs[line])
+			close(toc.inputs[line]);
+		if (toc.outputs[line])
+			close(toc.outputs[line]);
 	}
 }

@@ -14,5 +14,5 @@ ex: ls fichier_qui_n_existe_pas > outfile
 - pas de pipe en début ou en fin de ligne de commandes
 
 /!\ en principe cat -e <>file 	-> le fichier est ouvert pour lecture ET écriture
-(mais cette commande ne semble pas entrainer une écriture en sortie sur le fichier file ?)
+(mais cette commande ne semble pas entrainer une écriture en sortie sur le fichier 'file' ?)
 

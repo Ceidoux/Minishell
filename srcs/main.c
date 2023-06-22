@@ -11,9 +11,15 @@ int main(int argc, char **argv, char **envp)
 	t_table_of_commands	toc;
 
 	prompt = ft_prompt(envp);
-	line_read = readline(prompt);
-	toc = ft_parser(line_read, envp);
-	return (free(line_read), free(prompt), ft_ioclose(toc), ft_tocfree(&toc), g_exit_status);
+	while (1)
+	{
+		line_read = readline(prompt);
+		toc = ft_parser(line_read, envp);
+		free(line_read);
+		ft_tocfree(&toc);
+		ft_ioclose(toc);
+	}
+	return (free(prompt), g_exit_status);
 }
 
 static char	*ft_prompt(char **envp)
