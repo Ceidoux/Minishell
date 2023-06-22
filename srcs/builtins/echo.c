@@ -1,8 +1,7 @@
 #include "minishell.h"
 
-int	ft_echo(char *s, char **envp)
+int	ft_echo(char *s)
 {
-	(void) envp;
 	int		n_flag;
 	t_bool	metacaracters;
 

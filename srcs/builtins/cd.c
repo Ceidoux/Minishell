@@ -1,18 +1,18 @@
 #include "minishell.h"
 
 static int	ft_cd_relative_path(char *path);
-static int	ft_cd_from_home(char *path, char **envp);
+static int	ft_cd_from_home(char *path);
 
-int		ft_cd(char *s, char **envp)
+int		ft_cd(char *s)
 {
 	int		ret;
 
 	if (!*s || *(s + 1) == '~')
-		ret = ft_cd_from_home(s, envp);
+		ret = ft_cd_from_home(s);
 	else if (*s != ' ')
 		return (-1);
 	else if (*(s + 1) == '-' && !*(s + 2))
-		ret = chdir(ft_get_var("OLDPWD", envp));
+		ret = chdir(getenv("OLDPWD"));
 	else if (*(s + 1) == '/')
 		ret = chdir(s + 1);
 	else
@@ -48,7 +48,7 @@ static int	ft_cd_from_home(char *path, char **envp)
 	char	*home_dir;
 	char	*target_dir;
 
-	home_dir = ft_get_var("HOME", envp);
+	home_dir = getenv("HOME");
 	if (!home_dir || !home_dir[0])
 		return (0);
 	if (!path || !path[0] || (path[1] == '~' && !path[2])

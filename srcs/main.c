@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	*ft_prompt(char **envp);
+static char	*ft_prompt(void);
 unsigned char	g_exit_status = 0;
 
 int main(int argc, char **argv, char **envp)
@@ -10,12 +10,12 @@ int main(int argc, char **argv, char **envp)
 	char				*prompt;
 	t_table_of_commands	toc;
 
-	prompt = ft_prompt(envp);
+	prompt = ft_prompt();
 	while (1)
 	{
 		line_read = readline(prompt);
 		add_history(line_read);
-		toc = ft_parser(line_read, envp);
+		toc = ft_parser(line_read);
 		free(line_read);
 		ft_tocfree(&toc);
 		ft_ioclose(toc);
@@ -23,12 +23,12 @@ int main(int argc, char **argv, char **envp)
 	return (free(prompt), g_exit_status);
 }
 
-static char	*ft_prompt(char **envp)
+static char	*ft_prompt(void)
 {
-	char	*prompt;
-	char	*user;
+	char		*prompt;
+	const char	*user;
 
-	user = ft_get_var("USER", envp);
+	user = getenv("USER");
 	if (!user)
 		prompt = ft_strdup("%> ");
 	else

@@ -7,7 +7,7 @@ static int	ft_addword(char *s, t_list **tokens);
 
 /* creation d'une liste chainee dont chaque element est 
 un 'token' qui peut etre soit un 'operator' soit un 'word'*/
-t_list *ft_lexer(char *s, char **envp)
+t_list *ft_lexer(char *s)
 {
 	t_list	*tokens;
 	t_list	*last_token;
@@ -23,7 +23,7 @@ t_list *ft_lexer(char *s, char **envp)
 		{
 			s += ft_addword(s, &tokens);
 			last_token = ft_lstlast(tokens);
-			ft_expand(&(last_token->content), envp);
+			ft_expand(&(last_token->content));
 			ft_unquote(&(last_token->content));
 			if (last_token->content[0] == '\0')
 				ft_lstremovelast(&tokens, &free);

@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+/* /!\ La fonction getenv (autorisée) fait exactement la même chose ! */
+
 /* Extrait la variable de l'environnement */
 char	*ft_get_var(char *parameter, char **envp)
 {
