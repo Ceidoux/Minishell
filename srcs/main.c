@@ -5,7 +5,7 @@ unsigned char	g_exit_status = 0;
 
 int main(int argc, char **argv, char **envp)
 {
-	(void) argc, (void) argv;
+	(void) argc, (void) argv, (void) envp;
 	char				*line_read;
 	char				*prompt;
 	t_table_of_commands	toc;

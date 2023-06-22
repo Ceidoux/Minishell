@@ -42,7 +42,7 @@ static int	ft_cd_relative_path(char *path)
 	return (ret);
 }
 
-static int	ft_cd_from_home(char *path, char **envp)
+static int	ft_cd_from_home(char *path)
 {
 	int		ret;
 	char	*home_dir;
