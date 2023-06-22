@@ -1,26 +1,63 @@
 #include "minishell.h"
 
-static char	*ft_prompt(void);
 unsigned char	g_exit_status = 0;
+
+static char	*ft_prompt(void);
+static void	ft_loop(char **envp, char *prompt);
+static void	ft_handler(int sig);
 
 int main(int argc, char **argv, char **envp)
 {
-	(void) argc, (void) argv, (void) envp;
-	char				*line_read;
+	(void) argc;
+	(void) argv;
+	
+	struct sigaction	sa;
 	char				*prompt;
+
+	sa.sa_handler = ft_handler;
+	sa.sa_flags = 0;
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
+	prompt = ft_prompt();
+	ft_loop(envp, prompt);
+	return (free(prompt), g_exit_status);
+}
+
+static void	ft_loop(char **envp, char *prompt)
+{
+	char				*line_read;
 	t_table_of_commands	toc;
 
-	prompt = ft_prompt();
+	(void) envp;
 	while (1)
 	{
 		line_read = readline(prompt);
-		add_history(line_read);
-		toc = ft_parser(line_read);
+		if (!line_read)
+		{
+			rl_replace_line(),
+			printf("exit\n");
+			return ;
+		}
+		else if (*line_read)
+		{
+			add_history(line_read);
+			toc = ft_parser(line_read);
+			/* execv ici */
+			ft_ioclose(toc);
+			ft_tocfree(&toc);
+		}
 		free(line_read);
-		ft_tocfree(&toc);
-		ft_ioclose(toc);
 	}
-	return (free(prompt), g_exit_status);
+	// rl_clear_history();
+}
+
+static void	ft_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line();
+	}
 }
 
 static char	*ft_prompt(void)

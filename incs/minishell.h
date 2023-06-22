@@ -11,6 +11,8 @@
 #include <stdio.h> 				// readline()
 #include <readline/readline.h>	// readline()
 #include <readline/history.h>	// readline()
+#include <signal.h>				// sigaction()
+
 /* nb: use -lreadline when compiling */
 
 extern unsigned char	g_exit_status;
