@@ -14,6 +14,7 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line_read = readline(prompt);
+		add_history(line_read);
 		toc = ft_parser(line_read, envp);
 		free(line_read);
 		ft_tocfree(&toc);
