@@ -4,12 +4,13 @@
 #include "../libft/libft.h"
 
 #include <fcntl.h> 				// open()
-#include <unistd.h> 			// getcwd(), read(), chdir()
+#include <unistd.h> 			// getcwd(), read(), write(), chdir(), unlink()
 #include <sys/types.h> 			// read()
 #include <sys/uio.h> 			// read()
 #include <stdio.h> 				// readline()
 #include <readline/readline.h>	// readline()
 #include <readline/history.h>	// readline()
+/* nb: use -lreadline when compiling */
 
 extern unsigned char	g_exit_status;
 
@@ -44,6 +45,8 @@ void	ft_unquote(char **s);
 
 /* parser directory */
 t_table_of_commands	ft_parser(char *s, char **envp);
+t_table_of_commands ft_create_table_of_commands(t_list *tokens);
+int		ft_heredoc(char *delimiter);
 
 /* utils directory */
 void	ft_ioclose(t_table_of_commands toc);
