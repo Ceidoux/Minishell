@@ -2,6 +2,32 @@
 
 static int	ft_remove_quotes(char **s, int idx, char c);
 
+int	ft_check_quotes(char *word)
+{
+	int		idx;
+	t_bool	simple_quote;
+	t_bool	double_quote;
+
+	idx = -1;
+	simple_quote = FALSE;
+	double_quote = FALSE;
+	while (word[++idx])
+	{
+		if (word[idx] == '\"' && simple_quote == FALSE)
+			double_quote = (double_quote == FALSE);
+		else if (word[idx] == '\'' && double_quote == FALSE)
+			simple_quote = (simple_quote == FALSE);
+	}
+	if (double_quote == FALSE && simple_quote == FALSE)
+		return (1);
+	g_exit_status = 258;
+	if (double_quote == TRUE)
+		ft_putendl_fd("syntax error: expected \" not found", 1);
+	else if (simple_quote == TRUE)
+		ft_putendl_fd("syntax error: expected \' not found", 1);
+	return (0);
+}
+
 void	ft_unquote(char **s)
 {
 	int		idx;

@@ -24,7 +24,6 @@ t_list *ft_lexer(char *s)
 			s += ft_addword(s, &tokens);
 			last_token = ft_lstlast(tokens);
 			ft_expand(&(last_token->content));
-			ft_unquote(&(last_token->content));
 			if (last_token->content[0] == '\0')
 				ft_lstremovelast(&tokens, &free);
 		}
@@ -37,7 +36,8 @@ t_list *ft_lexer(char *s)
 static int	ft_ismetachar(char c)
 {
 	return (c == '|' || c == '&' || c == '('
-		|| c == ')' || c == '<' || c == '>');
+		|| c == ')' || c == '<' || c == '>'
+		|| c == ';');
 }
 
 static int	ft_isblank(char c)

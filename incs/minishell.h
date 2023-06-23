@@ -17,7 +17,7 @@
 
 /* nb: use -lreadline when compiling */
 
-extern unsigned char	g_exit_status;
+extern int	g_exit_status;
 
 typedef enum e_bool
 {
@@ -57,6 +57,7 @@ int		ft_unset(char *s, char **envp);
 
 /* lexer (lexical analyser) directory */
 int		ft_check(t_list	*tokens);
+int		ft_check_quotes(char *word);
 t_list	*ft_lexer(char *s);
 void	ft_expand(char **s);
 void	ft_unquote(char **s);

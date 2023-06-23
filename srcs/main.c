@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-unsigned char	g_exit_status = 0;
+int	g_exit_status = 0;
 
 static char	*ft_prompt(void);
 static void	ft_loop(char **envp, char *prompt);
@@ -42,7 +42,6 @@ static void	ft_loop(char **envp, char *prompt)
 		{
 			add_history(line_read);
 			toc = ft_parser(line_read);
-			/* execv ici */
 			pipex(toc);
 			ft_ioclose(toc);
 			ft_tocfree(&toc);

@@ -9,6 +9,6 @@ t_table_of_commands	ft_parser(char *s)
 	// ft_lstprint(tokens);
 	toc = ft_create_table_of_commands(tokens);
 	ft_lstclear(&tokens, &free);
-	ft_tocprint(toc);
+	// ft_tocprint(toc);
 	return (toc);
 }

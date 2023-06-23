@@ -32,7 +32,7 @@ SRCS	:= main.c \
 		   lexer/checking.c \
 		   lexer/expanding.c \
 		   lexer/lexer.c \
-		   lexer/unquoting.c \
+		   lexer/quotes.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
 		   parser/toc.c \
