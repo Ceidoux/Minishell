@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:30:48 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 21:16:40 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 06:04:04 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,8 @@ void	ft_putlongnbr_base(long unsigned int nbr, char *base, int *len);
 void	ft_putpoint_base(long unsigned int nbr, char *base, int *len);
 void	print_format(char *str, int *i, va_list args, int *len);
 int		ft_printf(const char *str, ...);
-int		end_of_line(char *str);
-char	*real_line(char *line, char *buf, int error);
-void	clear_buf(char *buf);
-char	*ft_calloc(void);
-char	*get_next_line(int fd);
 int		ft_strlen(char const *str);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlcpy(char *dst, const char *src, int size);
-void	ft_bzero(void *s, int n);
-void	ft_copy(char *line, char *buf);
 void	ft_putchar(char c, int *len);
 void	ft_putstr(char *str, int *len);
 void	ft_putnbr(int nbr, int *len);

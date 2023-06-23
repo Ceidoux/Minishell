@@ -17,12 +17,10 @@ TABLE DES FICHIERS SOURCES
 5. ft_split :p 
 6. Un split qui rajoute "/" a la fin... C'est tout pour moi !
 7. ft_printf
-8. gnl (peut-etre qu'on peut s'en passer)
-9. gnl partie 2
-10. Des fonctions classiques de C, dont certaines presentes dans la libft.
+8. Des fonctions classiques de C, dont certaines presentes dans la libft.
+9. idem
+10. Les fonctions qui permettent de free.
 11. idem
-12. Les fonctions qui permettent de free.
-13. idem
 
 
 23/06/2023 3:30

@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 21:24:33 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/22 21:39:44 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	pipex(t_table_of_commands toc)
 
 
 
-/*
---> Ce main est a utilise tout seul et a configurer manuellement pour simuler une arrivee de T.O.C dans Pipex
+/**se tout seul et a configurer manuellement pour simuler une arrivee de T.O.C dans Pipex
 	sans passer par minishell !
 	
 int main(void)
@@ -65,7 +64,7 @@ int main(void)
 	return (0);
 }
 
-
-
-
 */
+
+
+

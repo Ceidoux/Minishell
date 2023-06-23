@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 21:22:55 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 05:52:22 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	absolute_relative_path(t_tools tools)
 	}
 	tools.args[0] = remove_path(tools.args[0]);
 	execve(tools.str, tools.args, NULL);
+	perror(tools.str);
+	no_execution(tools);
 }
 
 void	env_path(t_tools tools)
@@ -98,6 +100,7 @@ void	env_path(t_tools tools)
 			return ;
 		execve(tools.paths[tools.i], tools.args, NULL);
 		(tools.i)++;
-	}		
+	}
+	perror(tools.args[0]);
 	no_execution(tools);
 }
