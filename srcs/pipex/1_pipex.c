@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:25 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 16:35:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-int	pipex(t_table_of_commands toc)
+int	pipex(t_table_of_commands toc, char **envp)
 {
 	t_tools	tools;
 
@@ -28,7 +28,7 @@ int	pipex(t_table_of_commands toc)
 	{
 		tools.pid[tools.i] = fork();
 		if (tools.pid[tools.i] == 0)
-			command_exec(tools, toc);
+			command_exec(tools, toc, envp);
 		(tools.i)++;
 	}
 	clean_finish(tools, toc);

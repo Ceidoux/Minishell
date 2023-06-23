@@ -6,11 +6,12 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:36 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 16:51:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+#include <string.h>
 
 /*  Voici la partie qui execute les commandes de pipex.
     
@@ -24,7 +25,7 @@
 
 */
 
-void	command_exec(t_tools tools, t_table_of_commands toc)
+void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 {
 	int	j;
 
@@ -51,9 +52,14 @@ void	command_exec(t_tools tools, t_table_of_commands toc)
 	tools.args = ft_split(toc.commands[tools.i], ' ');
 	if (is_slash(toc.commands[tools.i]))
 		absolute_relative_path(tools);
+	else if (is_builtin(toc.commands[tools.i]))
+		/* fonciton bultins */
+		builtin_exec(tools, toc, envp);
 	else
 		env_path(tools);
 }
+
+
 
 void	absolute_relative_path(t_tools tools)
 {
@@ -103,4 +109,43 @@ void	env_path(t_tools tools)
 	}
 	perror(tools.args[0]);
 	no_execution(tools);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+} 
+
+int	is_builtin(char *str)
+{
+	if (ft_strcmp(str, "cd") || ft_strcmp(str, "echo")
+		|| ft_strcmp(str, "env") || ft_strcmp(str, "exit")
+		|| ft_strcmp(str, "export") || ft_strcmp(str, "pwd") || ft_strcmp(str, "unset"))
+		return (1);
+	return (0);
+}
+
+void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
+{
+	int i;
+
+	if (ft_strcmp(toc.commands[tools.i], "export"))
+	{
+		i = 0;
+		while (envp[i])
+		{
+			pipex_printf("%s\n", envp[i]);
+			i++;
+		}
+	}
+	exit(0);
 }

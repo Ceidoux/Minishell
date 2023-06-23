@@ -1,10 +1,20 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 int	ft_export(char *s, char **envp)
 {
 	(void) s;
 	(void) envp;
+	int i;
 
+	i = 0;
+	if (s == NULL)
+	{
+		while (envp[i])
+		{
+			pipex_printf("%s", envp[i]);
+			i++;
+		}
+	}
 	return (0);
 }
 
