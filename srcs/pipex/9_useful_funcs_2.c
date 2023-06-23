@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:01:49 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:43 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:51 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 int	pipex_strncmp(char *s1, char *s2, int n)
 {

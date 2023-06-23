@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:27 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:42 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 int	not_blank(char c, char charset)
 {

@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:52 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:55 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	clean_finish(t_tools tools, t_table_of_commands toc)
 {

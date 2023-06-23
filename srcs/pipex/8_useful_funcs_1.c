@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 13:35:18 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:39 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:49 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	pipex_putchar(char c, int *len)
 {

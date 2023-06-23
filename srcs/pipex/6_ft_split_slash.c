@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:27:20 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:31 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:44 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 char	**pipex_split_slash(char *str, char charset)
 {

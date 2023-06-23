@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:39:32 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:48 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:53 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	free_str_args(t_tools tools)
 {

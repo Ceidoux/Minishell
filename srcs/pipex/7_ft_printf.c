@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:37:45 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:36 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 14:57:46 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len)
 {
