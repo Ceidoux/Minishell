@@ -1,19 +1,13 @@
 NAME        =    pipex
 
-SRCS        =   project/pipex.c project/pipex_utils.c project/pipex_utils_2.c project/pipex_utils_3.c project/pipex_utils_4.c project/pipex_utils_5.c project/split.c project/split_utils.c project/get_next_line.c project/get_next_line_utils.c project/ft_printf.c project/useful_funcs.c
-
-BONUS		=	bonus/pipex_bonus.c bonus/split_bonus.c bonus/get_next_line_bonus.c bonus/get_next_line_utils_bonus.c bonus/pipex_utils_bonus.c bonus/pipex_utils_2_bonus.c bonus/pipex_utils_3_bonus.c bonus/pipex_utils_4_bonus.c bonus/pipex_utils_5_bonus.c bonus/pipex_utils_6_bonus.c bonus/ft_printf_bonus.c bonus/useful_funcs_bonus.c
+SRCS        =   project/1_pipex.c project/2_init.c project/3_execution.c project/4_paths.c project/5_ft_split.c project/6_ft_split_slash.c project/7_ft_printf.c project/8_get_next_line.c project/9_get_next_line_utils.c project/10_useful_funcs_1.c project/11_useful_funcs_2.c project/12_close_free_1.c project/13_close_free_2.c
 
 OBJS        =    ${SRCS:.c=.o}
-
-OBJS_BONUS	=	${BONUS:.c=.o}
 
 CC            =    cc
 CFLAGS        =   -Wall -Werror -Wextra
 
 DEPENDANCES	= project/pipex.h  Makefile
-
-DEPANDANCES_BONUS = bonus/pipex_bonus.h Makefile
 
 RM            =    rm -f
 
@@ -25,21 +19,11 @@ all:            ${NAME}
 ${NAME}:        ${OBJS} ${DEPENDANCES}
 				${CC} ${CFLAGS} -o ${NAME} ${OBJS}
 
-bonus:			${OBJS_BONUS} ${DEPENDANCES_BONUS}
-				${CC} ${CFLAGS} -o ${NAME} ${OBJS_BONUS}
 clean:
 				rm -f $(OBJS)
 fclean:            clean
 				${RM} ${NAME}
 
-cleanbonus:
-				rm -f ${OBJS_BONUS}
-
-fcleanbonus:	cleanbonus
-				${RM} ${NAME}
-
 re:                fclean all
-
-rebonus:		fcleanbonus bonus
 
 .PHONY:            all clean fclean re

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   useful_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 13:35:18 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/16 17:35:48 by smestre          ###   ########.fr       */
+/*   Updated: 2023/06/22 19:50:02 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	ft_putchar(char c, int *len)
 {
