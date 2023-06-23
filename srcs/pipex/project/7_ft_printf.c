@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   7_ft_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:37:45 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 19:49:43 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
-void	ft_putlongnbr_base(long unsigned int nbr, char *base, int *len)
+void	pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len)
 {
 	if (nbr / 16 != 0)
-		ft_putlongnbr_base(nbr / 16, base, len);
+		pipex_putlongnbr_base(nbr / 16, base, len);
 	write(1, &base[nbr % 16], 1);
 	(*len)++;
 }
 
-void	ft_putpoint_base(long unsigned int nbr, char *base, int *len)
+void	pipex_putpoint_base(long unsigned int nbr, char *base, int *len)
 {
 	if (nbr == 0)
 	{
@@ -30,7 +30,7 @@ void	ft_putpoint_base(long unsigned int nbr, char *base, int *len)
 	}
 	write(1, "0x", 2);
 	(*len) += 2;
-	ft_putlongnbr_base(nbr, base, len);
+	pipex_putlongnbr_base(nbr, base, len);
 }
 
 void	print_format(char *str, int *i, va_list args, int *len)
@@ -39,28 +39,28 @@ void	print_format(char *str, int *i, va_list args, int *len)
 	if (str[*i])
 	{
 		if (str[*i] == 'c')
-			ft_putchar((char) va_arg(args, int), len);
+			pipex_putchar((char) va_arg(args, int), len);
 		else if (str[*i] == 's')
-			ft_putstr(va_arg(args, char *), len);
+			pipex_putstr(va_arg(args, char *), len);
 		else if (str[*i] == 'p')
-			ft_putpoint_base(va_arg(args, long unsigned int),
+			pipex_putpoint_base(va_arg(args, long unsigned int),
 				"0123456789abcdef", len);
 		else if (str[*i] == 'd' || str[*i] == 'i')
-			ft_putnbr(va_arg(args, int), len);
+			pipex_putnbr(va_arg(args, int), len);
 		else if (str[*i] == 'u')
-			ft_putunsnbr(va_arg(args, unsigned int), len);
+			pipex_putunsnbr(va_arg(args, unsigned int), len);
 		else if (str[*i] == 'x')
-			ft_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef", len);
+			pipex_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef", len);
 		else if (str[*i] == 'X')
-			ft_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF", len);
+			pipex_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF", len);
 		else if (str[*i] == '%')
-			ft_putchar('%', len);
+			pipex_putchar('%', len);
 	}
 	if (str[*i])
 		(*i)++;
 }
 
-int	ft_printf(const char *str, ...)
+int	pipex_printf(const char *str, ...)
 {
 	int		i;
 	int		len;
@@ -75,7 +75,7 @@ int	ft_printf(const char *str, ...)
 			print_format((char *)str, &i, args, &len);
 		else
 		{
-			ft_putchar(str[i], &len);
+			pipex_putchar(str[i], &len);
 			i++;
 		}
 	}

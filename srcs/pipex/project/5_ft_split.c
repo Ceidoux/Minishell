@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 21:19:53 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:27 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
 int	not_blank(char c, char charset)
 {
@@ -61,7 +61,7 @@ char	*put_word(char *str, int start, int end)
 	return (res);
 }
 
-char	**ft_split(char *str, char charset)
+char	**pipex_split(char *str, char charset)
 {
 	char	**res;
 	int		i;

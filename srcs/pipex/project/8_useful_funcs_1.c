@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   useful_funcs.c                                     :+:      :+:    :+:   */
+/*   8_useful_funcs_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 13:35:18 by smestre           #+#    #+#             */
-/*   Updated: 2023/06/22 19:50:02 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:39 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
-void	ft_putchar(char c, int *len)
+void	pipex_putchar(char c, int *len)
 {
 	write(1, &c, 1);
 	(*len)++;
 }
 
-void	ft_putstr(char *str, int *len)
+void	pipex_putstr(char *str, int *len)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ void	ft_putstr(char *str, int *len)
 	}
 }
 
-void	ft_putnbr(int nbr, int *len)
+void	pipex_putnbr(int nbr, int *len)
 {
 	if (nbr == -2147483648)
 	{
@@ -53,7 +53,7 @@ void	ft_putnbr(int nbr, int *len)
 	}
 	if (nbr >= 10)
 	{
-		ft_putnbr(nbr / 10, len);
+		pipex_putnbr(nbr / 10, len);
 		nbr = (nbr % 10) + '0';
 		write(1, &nbr, 1);
 		(*len)++;
@@ -66,11 +66,11 @@ void	ft_putnbr(int nbr, int *len)
 	}
 }
 
-void	ft_putunsnbr(unsigned int nbr, int *len)
+void	pipex_putunsnbr(unsigned int nbr, int *len)
 {
 	if (nbr >= 10)
 	{
-		ft_putnbr(nbr / 10, len);
+		pipex_putnbr(nbr / 10, len);
 		nbr = (nbr % 10) + '0';
 		write(1, &nbr, 1);
 		(*len)++;
@@ -83,10 +83,10 @@ void	ft_putunsnbr(unsigned int nbr, int *len)
 	}
 }
 
-void	ft_putnbr_base(unsigned int nbr, char *base, int *len)
+void	pipex_putnbr_base(unsigned int nbr, char *base, int *len)
 {
 	if (nbr / 16 != 0)
-		ft_putnbr_base(nbr / 16, base, len);
+		pipex_putnbr_base(nbr / 16, base, len);
 	write(1, &base[nbr % 16], 1);
 	(*len)++;
 }

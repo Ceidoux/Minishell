@@ -43,6 +43,7 @@ static void	ft_loop(char **envp, char *prompt)
 			add_history(line_read);
 			toc = ft_parser(line_read);
 			/* execv ici */
+			pipex(toc);
 			ft_ioclose(toc);
 			ft_tocfree(&toc);
 		}

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_slash.c                                      :+:      :+:    :+:   */
+/*   6_ft_split_slash.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:27:20 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 20:29:12 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:31 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
-char	**ft_split_slash(char *str, char charset)
+char	**pipex_split_slash(char *str, char charset)
 {
 	char	**res;
 	int		i;

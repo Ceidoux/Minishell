@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:31:07 by kali              #+#    #+#             */
-/*   Updated: 2023/06/22 21:19:50 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:23 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
 
 
@@ -37,7 +37,7 @@ char	*remove_path(char *str)
 			j = i;
 		i++;
 	}
-	res = malloc(sizeof(char) * (ft_strlen(str) - j));
+	res = malloc(sizeof(char) * (pipex_strlen(str) - j));
 	if (res == NULL)
 		return (NULL);
 	j++;
@@ -80,7 +80,7 @@ void	no_path(t_tools tools)
 {
 	dup2(tools.saved_std_out, 1);
 	dup2(STDERR_FILENO, STDOUT_FILENO);
-	ft_printf("Command not found : %s \n", tools.args[0]);
+	pipex_printf("Command not found : %s \n", tools.args[0]);
 	free_no_path(tools);
 	free_main(&tools);
 	exit(0);

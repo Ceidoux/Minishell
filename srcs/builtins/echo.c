@@ -3,9 +3,9 @@
 int	ft_echo(char *s)
 {
 	int		n_flag;
-	t_bool	metacaracters;
+	// t_bool	metacaracters;
 
-	metacaracters = TRUE;
+	// metacaracters = TRUE;
 
 	n_flag = 0;
 	s += 5;

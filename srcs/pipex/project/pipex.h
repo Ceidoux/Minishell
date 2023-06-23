@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:30:48 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 06:04:04 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:09:24 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ void	no_path(t_tools tools);
 int		not_blank(char c, char charset);
 int		count_words(char *str, char charset);
 char	*put_word(char *str, int start, int end);
-char	**ft_split(char *str, char charset);
-char	**ft_split_slash(char *str, char charset);
+char	**pipex_split(char *str, char charset);
+char	**pipex_split_slash(char *str, char charset);
 char	*put_word_slash(char *str, int start, int end);
-void	ft_putlongnbr_base(long unsigned int nbr, char *base, int *len);
-void	ft_putpoint_base(long unsigned int nbr, char *base, int *len);
+void	pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len);
+void	pipex_putpoint_base(long unsigned int nbr, char *base, int *len);
 void	print_format(char *str, int *i, va_list args, int *len);
-int		ft_printf(const char *str, ...);
-int		ft_strlen(char const *str);
-char	*ft_strjoin(char *s1, char *s2);
-void	ft_putchar(char c, int *len);
-void	ft_putstr(char *str, int *len);
-void	ft_putnbr(int nbr, int *len);
-void	ft_putunsnbr(unsigned int nbr, int *len);
-void	ft_putnbr_base(unsigned int nbr, char *base, int *len);
-int		ft_strncmp(char *s1, char *s2, int n);
-char	*ft_strdup(char *str);
-char 	*ft_putstr2(char *str);
+int		pipex_printf(const char *str, ...);
+int		pipex_strlen(char const *str);
+char	*pipex_strjoin(char *s1, char *s2);
+void	pipex_putchar(char c, int *len);
+void	pipex_putstr(char *str, int *len);
+void	pipex_putnbr(int nbr, int *len);
+void	pipex_putunsnbr(unsigned int nbr, int *len);
+void	pipex_putnbr_base(unsigned int nbr, char *base, int *len);
+int		pipex_strncmp(char *s1, char *s2, int n);
+char	*pipex_strdup(char *str);
+char 	*pipex_putstr2(char *str);
 void	free_str_args(t_tools tools);
 void	free_main(t_tools *tools);
 void	free_path(t_tools tools);

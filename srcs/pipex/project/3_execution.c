@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 05:52:22 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/23 10:31:50 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../../incs/minishell.h"
 
 /*  Voici la partie qui execute les commandes de pipex.
     
@@ -72,7 +72,7 @@ void	absolute_relative_path(t_tools tools)
 	else if (end_slash(tools.str))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
-		ft_printf("%s: Is a directory\n", tools.str);
+		pipex_printf("%s: Is a directory\n", tools.str);
 		free_str_args(tools);
 		free_main(&tools);
 		exit(0);
@@ -88,7 +88,7 @@ void	env_path(t_tools tools)
 	tools.str = getenv("PATH");
 	if (tools.str == NULL)
 		no_path(tools);
-	tools.paths = ft_split_slash(tools.str, ':');
+	tools.paths = pipex_split_slash(tools.str, ':');
 	// for (int i = 0; tools.args[i]; i++)
 	// 	fprintf(stderr,"ARG %d: %s\n", i, tools.args[i]);
 	tools.i = 0;

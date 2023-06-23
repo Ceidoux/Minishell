@@ -42,7 +42,19 @@ SRCS	:= main.c \
 		   utils/ft_tocfree.c \
 		   utils/ft_tocprint.c \
 		   utils/get_var.c \
-		   utils/remove_endl.c
+		   utils/remove_endl.c \
+		   pipex/project/1_pipex.c \
+		   pipex/project/2_init.c \
+		   pipex/project/3_execution.c \
+		   pipex/project/4_paths.c \
+		   pipex/project/5_ft_split.c \
+		   pipex/project/6_ft_split_slash.c \
+		   pipex/project/7_ft_printf.c \
+		   pipex/project/8_useful_funcs_1.c \
+		   pipex/project/9_useful_funcs_2.c \
+		   pipex/project/10_close_free_1.c \
+		   pipex/project/11_close_free_2.c
+
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 
 # Bonus: Sources, Objects
