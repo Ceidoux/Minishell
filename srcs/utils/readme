@@ -1,0 +1,45 @@
+/*
+
+Tadaaaaaa mon cher Jeremie, voici une premiere version, a priori foncitonelle de Pipex avec Minishell !!!
+
+
+INFORMARTIONS : Certaines fonctions ont pour l'instant le nom en commun avec une fonciton dela libft ici, mais ne sont pas 
+                identiques, donc attention !
+                Pour cette raison, un import direct du makefile n'est pour l'instant pas vraiment possible.
+                De plus, beaucoupde cas d'erreurs  spcefiques ne sont pour l'instant pas, ou mal geres.
+
+TABLE DES FICHIERS SOURCES
+
+1. La fonction principale de pipex, creant un child process par commande, grace a la fonciton fork().
+2. La fonction d'initialisation des outils utiles pour Pipex (pipes, pids, i, etc).
+3. Les fonctions principales liees a l'execution des commandes passees par le parser.
+4. Les fonctions permettant de chercher un chemin absolu ou relatif.
+5. ft_split :p 
+6. Un split qui rajoute "/" a la fin... C'est tout pour moi !
+7. ft_printf
+8. Des fonctions classiques de C, dont certaines presentes dans la libft.
+9. idem
+10. Les fonctions qui permettent de free.
+11. idem
+
+
+23/06/2023 3:30
+
+Commit et push du premier pipex reellement fonctionnel.
+
+
+23/06/2023 2:54
+
+Re organisation des fichiers, afin d'avoir une structure et nomenclature logique et facile a suivre.
+
+
+23/06/2023 1:11 
+
+Changement du fonctionnement de pipex : l'argument est maintenant
+de type t_table_of_commands, afin de pouvoir recevoir la strcture
+donnee par le parser. Un main avec une toc test a ete fait.
+
+envp a ete remplace par la fonciton getenv().
+
+
+*/

@@ -34,9 +34,9 @@ static void	ft_loop(char **envp, char *prompt)
 		line_read = readline(prompt);
 		if (!line_read)
 		{
-			rl_replace_line(),
+			// rl_replace_line(),
 			printf("exit\n");
-			return ;
+			exit(g_exit_status);
 		}
 		else if (*line_read)
 		{
@@ -55,8 +55,8 @@ static void	ft_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line();
+		// rl_on_new_line();
+		// rl_replace_line();
 	}
 }
 

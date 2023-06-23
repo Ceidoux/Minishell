@@ -87,6 +87,8 @@ static void	ft_add_new_line(t_table_of_commands *toc)
 		new_toc.inputs[line] = toc->inputs[line];
 		new_toc.outputs[line] = toc->outputs[line];
 	}
+	new_toc.inputs[line] = -1;
+	new_toc.outputs[line] = -1;
 	ft_tocfree(toc);
 	*toc = new_toc;
 }
