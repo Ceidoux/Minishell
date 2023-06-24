@@ -67,7 +67,6 @@ char	**ft_export(t_tools tools, char **envp)
 		{
 			while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
 			{
-				pipex_printf("DIFFERENCE : %d\n", ft_strsort(envp[j - 1], envp[j]));
 				ft_swap(&envp[j - 1], &envp[j]);
 				j--;					
 			}
