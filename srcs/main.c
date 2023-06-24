@@ -25,11 +25,6 @@ int main(int argc, char **argv, char **envp)
 	return (free(prompt), ft_envp_free(env_copy), g_exit_status);
 }
 
-static char **ft_envp_copy(char **envp)
-{
-
-}
-
 static void	ft_loop(char **envp, char *prompt)
 {
 	char				*line_read;

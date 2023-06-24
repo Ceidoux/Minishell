@@ -1,23 +1,27 @@
 #include "minishell.h"
 
-int	ft_echo(char *s)
+void	ft_echo(char *s)
 {
 	t_bool	n_flag;
 
 	n_flag = 0;
-
-	s += 5;
-	printf("%s %c\n", s, s[2]);
-	if (!ft_strncmp(s, "-n", 2) && s[2] == ' ')
-	{
-		n_flag = 1;
-		s += 3;
-	}
-	if (n_flag)
-		ft_putstr_fd(s, 1);
+	
+	if (!s[4])
+		ft_putchar_fd('\n', 1);
 	else
-		ft_putendl_fd(s, 1);
-	return (0);
+	{
+		s += 5;
+		if (!ft_strncmp(s, "-n", 2) && (s[2] == ' ' || s[2] == '\0'))
+		{
+			n_flag = 1;
+			s += 3;
+		}
+		if (n_flag)
+			ft_putstr_fd(s, 1);
+		else
+			ft_putendl_fd(s, 1);
+	}
+	g_exit_status = 0;
 }
 
 /*
@@ -37,4 +41,8 @@ A gérer :
 [**] echo $$
 [**] echo $!				-> PID of last job running in background
 [**] echo -n text
+
+[] echo      test
+[] echo "     " test
+
 */
