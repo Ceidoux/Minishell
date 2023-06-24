@@ -2,7 +2,8 @@
 
 static char	*ft_expand_var(char *s, int idx);
 
-/* expansion des variables unquoted*/
+/* expansion des variables unquoted
+nb: char** car on passe l'adresse d'un str */
 void	ft_expand(char **s)
 {
 	int		idx;
@@ -15,7 +16,10 @@ void	ft_expand(char **s)
 	while ((*s)[idx])
 	{
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
+		{
 			*s = ft_expand_var(*s, idx + 1);
+			continue;
+		}
 		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);
 		else if ((*s)[idx] == '\'' && double_quote == FALSE)
