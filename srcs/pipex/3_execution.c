@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 06:08:21 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 08:37:45 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,20 @@ int	ft_strcmp(char *s1, char *s2)
 	return (1);
 } 
 
+int	ft_strsort(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s2[i] - s1[i]);
+		i++;
+	}
+	return (0);
+} 
+
 int	is_builtin(char *str)
 {
 	if (ft_strcmp(str, "cd") || ft_strcmp(str, "echo")
@@ -140,8 +154,8 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 		ft_cd(toc.commands[tools.i]);
 	else if (ft_strcmp(toc.commands[tools.i], "echo"))
 		ft_echo(toc.commands[tools.i]);
-	else if (ft_strcmp(toc.commands[tools.i], "env"))
-		envp = ft_env(envp);
+	// else if (ft_strcmp(toc.commands[tools.i], "env"))
+	// 	envp = ft_env(envp);
 	else if (ft_strcmp(toc.commands[tools.i], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(toc.commands[tools.i], "export"))

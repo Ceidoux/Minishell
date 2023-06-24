@@ -121,5 +121,6 @@ void	close_pipes(t_tools tools, t_table_of_commands toc);
 int		is_builtin(char *str);
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_strsort(char *s1, char *s2);
 
 #endif
