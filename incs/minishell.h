@@ -51,7 +51,7 @@ int		ft_cd(char *s);
 int		ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
-int		ft_export(char *s, char **envp);
+int		ft_export(t_tools tools, char **envp);
 int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
 
@@ -85,11 +85,11 @@ char	*remove_path(char *str);
 int		is_slash(char *str);
 int		end_slash(char *str);
 void	no_path(t_tools tools);
-int		not_blank(char c, char charset);
-int		count_words(char *str, char charset);
+int		not_blank(char c, char *charset);
+int		count_words(char *str, char *charset);
 char	*put_word(char *str, int start, int end);
-char	**pipex_split(char *str, char charset);
-char	**pipex_split_slash(char *str, char charset);
+char	**pipex_split(char *str, char *charset);
+char	**pipex_split_slash(char *str, char *charset);
 char	*put_word_slash(char *str, int start, int end);
 void	pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len);
 void	pipex_putpoint_base(long unsigned int nbr, char *base, int *len);
@@ -117,5 +117,6 @@ void	failed_open(t_tools tools, char **argv);
 void	close_pipes(t_tools tools, t_table_of_commands toc);
 int		is_builtin(char *str);
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif
