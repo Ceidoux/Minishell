@@ -24,8 +24,9 @@ char **ft_realloc_envp(char **old_envp, size_t new_size)
 		exit(EXIT_FAILURE);
 	while (--old_size >= 0)
 	{
-		new_envp = ft_strdup(old_envp[old_size]);
+		new_envp[old_size] = ft_strdup(old_envp[old_size]);
 		free(old_envp[old_size]);
 	}
+	free(old_envp);
 	return (new_envp);
 }
