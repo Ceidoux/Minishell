@@ -51,7 +51,7 @@ int		ft_cd(char *s);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
-int		ft_export(t_tools tools, char **envp);
+char	**ft_export(t_tools tools, char **envp);
 int		ft_pwd(void);
 char	**ft_unset(char *s, char **envp);
 

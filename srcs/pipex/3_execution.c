@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 10:55:59 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 11:39:13 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	else if (ft_strcmp(tools.args[0], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "export"))
-		ft_export(tools, &envp);
+		envp = ft_export(tools, envp);
 	else if (ft_strcmp(tools.args[0], "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(tools.args[0], "unset"))

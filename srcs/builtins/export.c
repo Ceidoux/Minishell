@@ -28,7 +28,27 @@ int	env_size(char **envp)
 	return (i);
 }
 
-int	ft_export(t_tools tools, char **envp)
+
+char	**ft_addstr(char **envp, char *str)
+{
+	int		i;
+	char	**res;
+
+	i = 0;
+	res = malloc(sizeof(char *) * (env_size(envp) + 2));
+	res[env_size(envp) + 1] = NULL;
+	while(envp[i])
+	{
+		res[i] = ft_strdup(envp[i]);
+		free(envp[i]);
+		i++;
+	}
+	res[i] = ft_strdup(str);
+	free(envp);
+	return (res);
+}
+
+char	**ft_export(t_tools tools, char **envp)
 {
 	int i;
 	int j;
@@ -40,35 +60,31 @@ int	ft_export(t_tools tools, char **envp)
 	j = 0;
 	size = arg_size(tools);
 	envp_size = env_size(envp);
-	printf("ENVP SIZE : %d SIZE : %d\n\n\n", envp_size, size);
 	if (size == 1)
 	{
 		while (i < envp_size)
 		{
 			while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
 			{
+				pipex_printf("DIFFERENCE : %d\n", ft_strsort(envp[j - 1], envp[j]));
 				ft_swap(&envp[j - 1], &envp[j]);
 				j--;					
 			}
 			i++;
 			j = i;
 		}
+		i = 0;
+		while (envp[i])
+		{
+			pipex_printf("export %s\n", envp[i]);
+			i++;
+		}
 	}
-	i = 0;
-	while (envp[i])
+	else
 	{
-		pipex_printf("%s\n", envp[i]);
-		i++;
+			envp = ft_addstr(envp, tools.args[1]);
 	}
-	// else
-	// {
-	// 	export_var = pipex_split(tools.args[1], " ");
-	// 	while (export_var[i])
-	// 	{
-	// 		put_variable()
-	// 	}
-	// }
-	return (0);
+	return (envp);
 }
 
 /*
