@@ -13,7 +13,7 @@ int	ft_envp_size(char **envp)
 	return (size);
 }
 
-char **ft_realloc_envp(char **old_envp, size_t new_size)
+char **ft_envp_realloc(char **old_envp, size_t new_size)
 {
 	char	**new_envp;
 	int		old_size;
@@ -30,4 +30,28 @@ char **ft_realloc_envp(char **old_envp, size_t new_size)
 	}
 	free(old_envp);
 	return (new_envp);
+}
+
+void	ft_envp_free(char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+		free(envp[i]);
+	free(envp);
+}
+
+char **ft_envp_dup(char **envp)
+{
+	int	size;
+
+	size = ft_envp_size(envp);
+	envp_dup = malloc(size * sizeof(*envp_dup));
+	if (!envp_dup)
+		exit(EXIT_FAILURE);
+	envp_dup[--size] = NULL;
+	while (--size >= 0)
+		envp_dup[size] = ft_strdup(envp[size]);
+	return (envp_dup);	
 }

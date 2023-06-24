@@ -13,14 +13,21 @@ int main(int argc, char **argv, char **envp)
 	
 	struct sigaction	sa;
 	char				*prompt;
+	char				**env_copy;
 
 	sa.sa_handler = ft_handler;
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGINT, &sa, NULL);
 	prompt = ft_prompt();
-	ft_loop(envp, prompt);
-	return (free(prompt), g_exit_status);
+	env_copy = ft_envp_dup(envp);
+	ft_loop(env_copy, prompt);
+	return (free(prompt), ft_envp_free(env_copy), g_exit_status);
+}
+
+static char **ft_envp_copy(char **envp)
+{
+
 }
 
 static void	ft_loop(char **envp, char *prompt)

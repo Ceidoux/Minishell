@@ -29,7 +29,6 @@ SRCS	:= main.c \
 		   builtins/export.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
-		   builtins/builtins_utils.c \
 		   lexer/checking.c \
 		   lexer/expanding.c \
 		   lexer/lexer.c \
@@ -37,12 +36,12 @@ SRCS	:= main.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
 		   parser/toc.c \
+		   utils/ft_envp_free.c \
 		   utils/ft_ioclose.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/ft_tocfree.c \
 		   utils/ft_tocprint.c \
-		   utils/get_var.c \
 		   utils/remove_endl.c \
 		   pipex/1_pipex.c \
 		   pipex/2_init.c \

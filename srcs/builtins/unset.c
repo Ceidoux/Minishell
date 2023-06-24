@@ -38,9 +38,8 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 				offset = 0;
 			else
 				new_envp[old_size - offset] = ft_strdup(old_envp[old_size]);
-			// free(old_envp[old_size]);
 		}
-		// free(old_envp);
+		ft_envp_free(old_envp);
 		return (new_envp);
 	}
 	else

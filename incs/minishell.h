@@ -54,8 +54,6 @@ int		ft_exit(char *s);
 int		ft_export(t_tools tools, char **envp);
 int		ft_pwd(void);
 char	**ft_unset(char *s, char **envp);
-int		ft_envp_size(char **envp);
-char 	**ft_realloc_envp(char **old_envp, size_t new_size);
 
 
 /* lexer (lexical analyser) directory */
@@ -71,12 +69,18 @@ t_table_of_commands ft_create_table_of_commands(t_list *tokens);
 int		ft_heredoc(char *delimiter);
 
 /* utils directory */
+int		ft_envp_size(char **envp);
+void	ft_envp_free(char **envp);
+char	 **ft_envp_dup(char **envp);
+char	 **ft_envp_realloc(char **old_envp, size_t new_size);
+
+
+char 	**ft_envp_realloc(char **old_envp, size_t new_size);
 void	ft_ioclose(t_table_of_commands toc);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 void	ft_tocprint(t_table_of_commands	toc);
 void	ft_tocfree(t_table_of_commands *toc);
-char	*ft_remove_endl(char *str);
 
 /* pipex directory */
 int		pipex(t_table_of_commands toc, char **envp);
