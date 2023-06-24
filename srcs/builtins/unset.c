@@ -2,8 +2,13 @@
 
 int	ft_unset(char *s, char **envp)
 {
-	(void) s;
-	(void) envp;
+	char	**new_envp;
+
+	if (getenv(s))
+	{
+
+		
+	}
 	return (0);
 }
 
