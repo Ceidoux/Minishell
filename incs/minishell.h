@@ -82,7 +82,7 @@ void	ft_tocfree(t_table_of_commands *toc);
 /* pipex directory */
 int		pipex(t_table_of_commands toc, char **envp);
 void	init_tools(t_tools *tools, t_table_of_commands toc);
-void	command_exec(t_tools tools, t_table_of_commands toc, char **envp);
+void	command_exec(t_tools tools, t_table_of_commands toc);
 void	absolute_relative_path(t_tools tools);
 void	env_path(t_tools tools);
 char	*remove_path(char *str);
