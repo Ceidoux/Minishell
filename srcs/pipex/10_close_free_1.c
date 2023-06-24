@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:39:32 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:53 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 12:41:08 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	free_all(t_tools tools)
 	int	i;
 
 	i = 0;
-	free(tools.str);
+	// free(tools.str);
 	while (tools.paths[i])
 		free(tools.paths[i++]);
 	free(tools.paths);

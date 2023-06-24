@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 11:59:41 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 12:36:28 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	env_path(t_tools tools)
 		execve(tools.paths[tools.i], tools.args, NULL);
 		(tools.i)++;
 	}
-	perror(tools.args[0]);
+	// perror(tools.args[0]);
 	no_execution(tools);
 }
 
@@ -160,5 +160,4 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 		ft_pwd();
 	else if (ft_strcmp(tools.args[0], "unset"))
 		envp = ft_unset(toc.commands[tools.i], envp);
-	exit(0);
 }

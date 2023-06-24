@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:55 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 12:39:29 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	clean_finish(t_tools tools, t_table_of_commands toc)
 
 void	no_execution(t_tools tools)
 {
-	// dup2(tools.saved_std_out, 1);
-	// dup2(STDERR_FILENO, STDOUT_FILENO);
-	// ft_printf("Command not found : %s \n", tools.args[0]);
+	pipex_printf("%s: command not found\n", tools.args[0]);
 	free_all(tools);
 	free_main(&tools);
 	exit(0);

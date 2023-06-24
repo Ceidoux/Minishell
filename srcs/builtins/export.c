@@ -29,19 +29,20 @@ int	env_size(char **envp)
 }
 
 
-char	**ft_addstr(char **envp, char *str)
+char	**ft_addstr(char **envp, char *str, int envp_size)
 {
 	int		i;
 	char	**res;
 
 	i = 0;
-	res = malloc(sizeof(char *) * (env_size(envp) + 2));
-	res[env_size(envp) + 1] = NULL;
-	while(envp[i])
+	res = malloc(sizeof(char *) * (envp_size + 2));
+	res[envp_size + 1] = NULL;
+	while(envp_size > 0)
 	{
-		res[i] = ft_strdup(envp[i]);
-		free(envp[i]);
+		res[envp_size - 1] = ft_strdup(envp[envp_size - 1]);
+		free(envp[envp_size - 1]);
 		i++;
+		envp_size--;
 	}
 	res[i] = ft_strdup(str);
 	free(envp);
@@ -82,7 +83,7 @@ char	**ft_export(t_tools tools, char **envp)
 	}
 	else
 	{
-			envp = ft_addstr(envp, tools.args[1]);
+		envp = ft_addstr(envp, tools.args[1], envp_size);
 	}
 	return (envp);
 }
