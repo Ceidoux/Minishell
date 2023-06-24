@@ -44,7 +44,8 @@ void	ft_envp_free(char **envp)
 
 char **ft_envp_dup(char **envp)
 {
-	int	size;
+	int		size;
+	char	**envp_dup;
 
 	size = ft_envp_size(envp);
 	envp_dup = malloc(size * sizeof(*envp_dup));

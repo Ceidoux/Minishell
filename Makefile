@@ -36,13 +36,12 @@ SRCS	:= main.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
 		   parser/toc.c \
-		   utils/ft_envp_free.c \
+		   utils/ft_envp_utils.c \
 		   utils/ft_ioclose.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/ft_tocfree.c \
 		   utils/ft_tocprint.c \
-		   utils/remove_endl.c \
 		   pipex/1_pipex.c \
 		   pipex/2_init.c \
 		   pipex/3_execution.c \

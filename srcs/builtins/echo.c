@@ -2,26 +2,21 @@
 
 int	ft_echo(char *s)
 {
-	int		n_flag;
-	// t_bool	metacaracters;
-
-	// metacaracters = TRUE;
+	t_bool	n_flag;
 
 	n_flag = 0;
+
 	s += 5;
-	if (*s == '-' && *(s + 1) == 'n' && *(s + 2) == ' ')
+	printf("%s %c\n", s, s[2]);
+	if (!ft_strncmp(s, "-n", 2) && s[2] == ' ')
 	{
 		n_flag = 1;
 		s += 3;
 	}
-	while (*s && *s != '\n')
-	{
-		if(*s != '\'' && *s != '\"')
-			write(1, s, 1);
-		s++;
-	}
-	if (!n_flag)
-		write(1, "\n", 1);
+	if (n_flag)
+		ft_putstr_fd(s, 1);
+	else
+		ft_putendl_fd(s, 1);
 	return (0);
 }
 
