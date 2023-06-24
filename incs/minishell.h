@@ -54,6 +54,9 @@ int		ft_exit(char *s);
 int		ft_export(t_tools tools, char **envp);
 int		ft_pwd(void);
 int		ft_unset(char *s, char **envp);
+int		ft_envp_size(char **envp);
+char 	**ft_realloc_envp(char **old_envp, size_t new_size);
+
 
 /* lexer (lexical analyser) directory */
 int		ft_check(t_list	*tokens);

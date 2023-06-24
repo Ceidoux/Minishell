@@ -29,6 +29,7 @@ SRCS	:= main.c \
 		   builtins/export.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
+		   builtins/builtins_utils.c \
 		   lexer/checking.c \
 		   lexer/expanding.c \
 		   lexer/lexer.c \

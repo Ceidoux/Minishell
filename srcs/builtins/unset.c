@@ -3,10 +3,11 @@
 int	ft_unset(char *s, char **envp)
 {
 	char	**new_envp;
+	int		new_size;
 
 	if (getenv(s))
 	{
-
+		new_size = ft_
 		
 	}
 	return (0);
