@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 static int	ft_expand_var(char **s, int idx);
+static int	ft_expand_exit_status(char **s, int idx);
 
 /* expansion des variables unquoted
 nb: char** car on passe l'adresse d'un str */
@@ -17,7 +18,10 @@ void	ft_expand(char **s)
 	{
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
 		{
-			idx += ft_expand_var(s, idx + 1);
+			if ((*s)[idx + 1] == '?')
+				idx += ft_expand_exit_status(s, idx + 1);
+			else
+				idx += ft_expand_var(s, idx + 1);
 			continue;
 		}
 		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
@@ -26,6 +30,29 @@ void	ft_expand(char **s)
 			simple_quote = (simple_quote == FALSE);
 		idx++;
 	}
+}
+
+static int	ft_expand_exit_status(char **s, int idx)
+{
+	char	*exit_status;
+	int		exit_status_length;
+	char	*new_s;
+	char	*old_s;
+
+	exit_status = ft_itoa(g_exit_status);
+	exit_status_length = ft_strlen(exit_status);
+	new_s = malloc((ft_strlen(*s) - 1 + exit_status_length) * sizeof(*new_s));
+	if (!new_s)
+		exit(EXIT_FAILURE);
+	ft_strlcpy(new_s, *s, idx);
+	if (exit_status && *exit_status)
+		ft_strlcpy(new_s + idx - 1, exit_status, exit_status_length + 1);
+	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1, ft_strlen(*s) - idx);
+	free(exit_status);
+	old_s = *s;
+	*s = new_s;
+	free(old_s);
+	return (exit_status_length);
 }
 
 static int	ft_expand_var(char **s, int idx)
