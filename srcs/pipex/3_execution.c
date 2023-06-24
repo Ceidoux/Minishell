@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 08:37:45 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 10:55:59 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	tools.args = ft_split(toc.commands[tools.i], ' ');
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
-	else if (is_builtin(toc.commands[tools.i]))
+	else if (is_builtin(tools.args[0]))
 		/* fonciton bultins */
 		builtin_exec(tools, toc, envp);
 	else
@@ -150,19 +150,19 @@ int	is_builtin(char *str)
 
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 {
-	if (ft_strcmp(toc.commands[tools.i], "cd"))
+	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(toc.commands[tools.i]);
-	else if (ft_strcmp(toc.commands[tools.i], "echo"))
+	else if (ft_strcmp(tools.args[0], "echo"))
 		ft_echo(toc.commands[tools.i]);
-	else if (ft_strcmp(toc.commands[tools.i], "env"))
+	else if (ft_strcmp(tools.args[0], "env"))
 		ft_env(envp);
-	else if (ft_strcmp(toc.commands[tools.i], "exit"))
+	else if (ft_strcmp(tools.args[0], "exit"))
 		ft_exit(toc.commands[tools.i]);
-	else if (ft_strcmp(toc.commands[tools.i], "export"))
-		ft_export(tools, envp);
-	else if (ft_strcmp(toc.commands[tools.i], "pwd"))
+	else if (ft_strcmp(tools.args[0], "export"))
+		ft_export(tools, &envp);
+	else if (ft_strcmp(tools.args[0], "pwd"))
 		ft_pwd();
-	else if (ft_strcmp(toc.commands[tools.i], "unset"))
+	else if (ft_strcmp(tools.args[0], "unset"))
 		envp = ft_unset(toc.commands[tools.i], envp);
 	exit(0);
 }
