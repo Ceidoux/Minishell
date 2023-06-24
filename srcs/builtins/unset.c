@@ -26,24 +26,27 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 	if (getenv(varname))
 	{
 		old_size = ft_envp_size(old_envp);
+		printf("old_size:%d\n", old_size);
 		new_envp = malloc((old_size - 1) * sizeof(*new_envp));
 		if (!new_envp)
 			exit(EXIT_FAILURE);
-		offset = 0;
+		new_envp[old_size - 1] = NULL;
+		offset = 1;
 		while (--old_size >= 0)
 		{
-			if (ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)))
-				new_envp[old_size + offset] = ft_strdup(old_envp[old_size]);
+			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)) && old_envp[old_size][ft_strlen(varname)] == '=')
+				offset = 0;
 			else
-				offset = 1;
-			free(old_envp[old_size]);
+				new_envp[old_size - offset] = ft_strdup(old_envp[old_size]);
+			// free(old_envp[old_size]);
 		}
-		free(old_envp);
+		// free(old_envp);
 		return (new_envp);
 	}
 	else
 		return (old_envp);
 }
+
 
 /*
 A gérer :

@@ -141,7 +141,7 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	else if (ft_strcmp(toc.commands[tools.i], "echo"))
 		ft_echo(toc.commands[tools.i]);
 	else if (ft_strcmp(toc.commands[tools.i], "env"))
-		envp = ft_env(envp);
+		ft_env(envp);
 	else if (ft_strcmp(toc.commands[tools.i], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(toc.commands[tools.i], "export"))
@@ -149,6 +149,6 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	else if (ft_strcmp(toc.commands[tools.i], "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(toc.commands[tools.i], "unset"))
-		ft_unset(toc.commands[tools.i], envp);
+		envp = ft_unset(toc.commands[tools.i], envp);
 	exit(0);
 }

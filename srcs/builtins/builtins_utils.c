@@ -22,6 +22,7 @@ char **ft_realloc_envp(char **old_envp, size_t new_size)
 	new_envp = malloc(new_size * sizeof(*new_envp));
 	if (!new_envp)
 		exit(EXIT_FAILURE);
+	new_envp[old_size] = NULL;
 	while (--old_size >= 0)
 	{
 		new_envp[old_size] = ft_strdup(old_envp[old_size]);
