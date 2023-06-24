@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 12:39:29 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 16:48:11 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	no_execution(t_tools tools)
 	pipex_printf("%s: command not found\n", tools.args[0]);
 	free_all(tools);
 	free_main(&tools);
-	exit(0);
+	exit(127);
 }
 
 void	free_no_path(t_tools tools)
