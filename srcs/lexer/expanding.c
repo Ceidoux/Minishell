@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	*ft_expand_var(char *s, int idx);
+static int	ft_expand_var(char **s, int idx);
 
 /* expansion des variables unquoted
 nb: char** car on passe l'adresse d'un str */
@@ -15,9 +15,10 @@ void	ft_expand(char **s)
 	double_quote = FALSE;
 	while ((*s)[idx])
 	{
+		printf("%s et %c\n", *s, (*s)[idx]);
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
 		{
-			*s = ft_expand_var(*s, idx + 1);
+			idx += ft_expand_var(s, idx + 1);
 			continue;
 		}
 		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
@@ -26,9 +27,10 @@ void	ft_expand(char **s)
 			simple_quote = (simple_quote == FALSE);
 		idx++;
 	}
+	printf(">>%s\n", *s);
 }
 
-static char	*ft_expand_var(char *s, int idx)
+static int	ft_expand_var(char **s, int idx)
 {
 	char	*var_name;
 	char	*var;
@@ -36,24 +38,31 @@ static char	*ft_expand_var(char *s, int idx)
 	int		len;
 
 	len = 0;
-	while (ft_isalnum(s[len + idx]) || s[len + idx] == '_')
+	// if (!ft_strncmp(s, "? ", 2))
+	// 	return (ft_expand_exit_status(*xs, idx));
+	while (ft_isalnum((*s)[len + idx]) || (*s)[len + idx] == '_')
 		len++;
 	if (!len)
-		return (s);
-	var_name = ft_substr(s, idx, len);
+		return (1);
+	var_name = ft_substr(*s, idx, len);
 	var = getenv(var_name);
 	free(var_name);
-	new_s = malloc((ft_strlen(s) - len + ft_strlen(var)) * sizeof(*new_s));
+	new_s = malloc((ft_strlen(*s) - len + ft_strlen(var)) * sizeof(*new_s));
 	if (!new_s)
-		return (NULL);
-	ft_strlcpy(new_s, s, idx);
+		exit(EXIT_FAILURE);
+	ft_strlcpy(new_s, *s, idx);
 	if (var)
 		ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
-	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), s + idx + len, ft_strlen(s) - (idx + len) + 1);
-	free(s);
-	return (new_s);
+	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len, ft_strlen(*s) - (idx + len) + 1);
+	*s = new_s;
+	free(new_s);
+	return (ft_strlen(var));
 }
 
+// static char	*ft_expand_exit_status(char *s, int idx)
+// {
+
+// }
 /*
 A gerer:
 [**] $VAR_DEFINIE
