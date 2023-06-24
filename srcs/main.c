@@ -44,7 +44,8 @@ static void	ft_loop(char **envp, char *prompt)
 		{
 			add_history(line_read);
 			toc = ft_parser(line_read);
-			pipex(toc, envp);
+			if (toc.commands[0])
+				pipex(toc, envp);
 			ft_ioclose(toc);
 			ft_tocfree(&toc);
 		}
