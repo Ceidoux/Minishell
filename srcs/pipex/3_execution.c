@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 11:39:13 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 11:59:41 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 */
 
-void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
+void	command_exec(t_tools tools, t_table_of_commands toc)
 {
 	int	j;
 
@@ -49,12 +49,8 @@ void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 		j++;
 	}
 	close(tools.saved_std_out);
-	tools.args = ft_split(toc.commands[tools.i], ' ');
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
-	else if (is_builtin(tools.args[0]))
-		/* fonciton bultins */
-		builtin_exec(tools, toc, envp);
 	else
 		env_path(tools);
 }
