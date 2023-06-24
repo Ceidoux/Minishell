@@ -11,7 +11,7 @@ int	ft_export(char *s, char **envp)
 	{
 		while (envp[i])
 		{
-			pipex_printf("%s", envp[i]);
+			pipex_printf("%s\n", envp[i]);
 			i++;
 		}
 	}

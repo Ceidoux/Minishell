@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 16:51:09 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 04:23:14 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	}
 	close(tools.saved_std_out);
 	tools.args = ft_split(toc.commands[tools.i], ' ');
-	if (is_slash(toc.commands[tools.i]))
+	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
 	else if (is_builtin(toc.commands[tools.i]))
 		/* fonciton bultins */
@@ -136,16 +136,19 @@ int	is_builtin(char *str)
 
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 {
-	int i;
-
+	if (ft_strcmp(toc.commands[tools.i], "cd"))
+		ft_cd(toc.commands[tools.i]);
+	if (ft_strcmp(toc.commands[tools.i], "echo"))
+			ft_echo(toc.commands[tools.i]);
+	if (ft_strcmp(toc.commands[tools.i], "env"))
+			ft_env(envp);
+	if (ft_strcmp(toc.commands[tools.i], "exit"))
+			ft_exit(toc.commands[tools.i]);
 	if (ft_strcmp(toc.commands[tools.i], "export"))
-	{
-		i = 0;
-		while (envp[i])
-		{
-			pipex_printf("%s\n", envp[i]);
-			i++;
-		}
-	}
+			ft_export(NULL, envp);
+	if (ft_strcmp(toc.commands[tools.i], "pwd"))
+			ft_pwd();
+	if (ft_strcmp(toc.commands[tools.i], "unset"))
+			ft_unset(toc.commands[tools.i], envp);
 	exit(0);
 }
