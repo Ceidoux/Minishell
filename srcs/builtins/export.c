@@ -1,18 +1,38 @@
 #include "../../incs/minishell.h"
 
-int	ft_export(char *s, char **envp)
+int	arg_size(t_tools tools)
 {
-	(void) s;
-	(void) envp;
 	int i;
 
 	i = 0;
-	if (s == NULL)
+	while(tools.args[i])
+		i++;
+	return (i);
+}
+
+int	ft_export(t_tools tools, char **envp)
+{
+	(void) envp;
+	int i;
+	int size;
+	char	**export_var;
+
+	i = 0;
+	size = arg_size(tools);
+	if (size == 1)
 	{
 		while (envp[i])
 		{
 			pipex_printf("%s\n", envp[i]);
 			i++;
+		}
+	}
+	else
+	{
+		export_var = pipex_split(tools.args[1], " ");
+		while (export_var[i])
+		{
+			put_variable()
 		}
 	}
 	return (0);

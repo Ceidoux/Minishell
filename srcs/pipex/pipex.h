@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:30:48 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 10:09:24 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 06:08:31 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ char	*remove_path(char *str);
 int		is_slash(char *str);
 int		end_slash(char *str);
 void	no_path(t_tools tools);
-int		not_blank(char c, char charset);
-int		count_words(char *str, char charset);
+int		not_blank(char c, char *charset);
+int		count_words(char *str, char *charset);
 char	*put_word(char *str, int start, int end);
-char	**pipex_split(char *str, char charset);
-char	**pipex_split_slash(char *str, char charset);
+char	**pipex_split(char *str, char *charset);
+char	**pipex_split_slash(char *str, char *charset);
 char	*put_word_slash(char *str, int start, int end);
 void	pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len);
 void	pipex_putpoint_base(long unsigned int nbr, char *base, int *len);

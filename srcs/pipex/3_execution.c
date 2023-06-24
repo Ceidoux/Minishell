@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 04:23:14 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 06:08:21 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	env_path(t_tools tools)
 	tools.str = getenv("PATH");
 	if (tools.str == NULL)
 		no_path(tools);
-	tools.paths = pipex_split_slash(tools.str, ':');
+	tools.paths = pipex_split_slash(tools.str, ":");
 	// for (int i = 0; tools.args[i]; i++)
 	// 	fprintf(stderr,"ARG %d: %s\n", i, tools.args[i]);
 	tools.i = 0;
@@ -145,7 +145,7 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
 	if (ft_strcmp(toc.commands[tools.i], "exit"))
 			ft_exit(toc.commands[tools.i]);
 	if (ft_strcmp(toc.commands[tools.i], "export"))
-			ft_export(NULL, envp);
+			ft_export(tools, envp);
 	if (ft_strcmp(toc.commands[tools.i], "pwd"))
 			ft_pwd();
 	if (ft_strcmp(toc.commands[tools.i], "unset"))

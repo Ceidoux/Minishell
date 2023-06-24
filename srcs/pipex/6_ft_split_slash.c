@@ -6,13 +6,13 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:27:20 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:44 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 06:07:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	**pipex_split_slash(char *str, char charset)
+char	**pipex_split_slash(char *str, char *charset)
 {
 	char	**res;
 	int		i;

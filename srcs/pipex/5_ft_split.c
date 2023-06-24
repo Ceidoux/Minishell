@@ -6,20 +6,27 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:42 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/24 06:06:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	not_blank(char c, char charset)
+int	not_blank(char c, char *charset)
 {
-	if (c == charset)
-		return (0);
+	int	i;
+
+	i = 0;
+	while (charset[i])
+	{
+		if (charset[i] == c)
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
-int	count_words(char *str, char charset)
+int	count_words(char *str, char *charset)
 {
 	int	compteur;
 	int	flag;
@@ -61,7 +68,7 @@ char	*put_word(char *str, int start, int end)
 	return (res);
 }
 
-char	**pipex_split(char *str, char charset)
+char	**pipex_split(char *str, char *charset)
 {
 	char	**res;
 	int		i;
