@@ -48,7 +48,7 @@ typedef struct s_tools
 
 /* builtin directory */
 int		ft_cd(char *s);
-int		ft_echo(char *s);
+void	ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
 int		ft_export(t_tools tools, char **envp);
@@ -73,9 +73,6 @@ int		ft_envp_size(char **envp);
 void	ft_envp_free(char **envp);
 char	 **ft_envp_dup(char **envp);
 char	 **ft_envp_realloc(char **old_envp, size_t new_size);
-
-
-char 	**ft_envp_realloc(char **old_envp, size_t new_size);
 void	ft_ioclose(t_table_of_commands toc);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
