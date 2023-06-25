@@ -115,7 +115,7 @@ int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant 
 }
 
 
-int	has_invalid_character(char *str)
+int	has_invalid_character(char *str) /* verifie que la variable exportee respecte bien les regles de syntaxe */
 {
 	int i;
 
@@ -204,30 +204,16 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 	}
 	else
 	{
-		// while (tools.args[i + 1])
-		// {
-		// 	if (pipex_strncmp(tools.args[i + 1], "=", 1))
-		// 	{
-		// 		printf("export: %s: not a valid identifier\n", tools.args[i + 1]);
-		// 		return (envp);
-		// 	}
-		// 	i++;
-		// }
-		// i = 0;
 		while (i < size - 1)
 		{
-			if /*(pipex_strncmp(tools.args[i + 1], "=", 1) ||*/ (has_invalid_character(tools.args[i + 1])  /* || (has_car(tools.args[i + 1], '=') == -1
-				&& tools.args[i + 2] && pipex_strncmp(tools.args[i + 2], "=", 1))*/)
-			{
+			if (has_invalid_character(tools.args[i + 1]))
 				printf("export: %s: not a valid identifier\n", tools.args[i + 1]);
-				i++;
-			}
 			else
 			{
 				envp = ft_addstr(envp, tools.args[i + 1], envp_size);
 				envp_size = env_size(envp);
-				i++;
 			}
+			i++;
 		}
 	}
 	return (envp);
@@ -236,10 +222,12 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 /*
 A gérer :
 [ok] export								-> affiche env par ordre alphabetique
-[ok] export MA_VAR=x					-> exporte MA_VAR=x dans env
+[ok] export MA_VAR						-> exporte juste MA_VAR
+[ok] export MA_VAR=x					-> exporte MA_VAR="x" dans export
 [ok] export MA_VAR='x'					-> idem
 [ok] export MA_VAR="x"					-> idem
-[ok] export MA_VAR=""					-> idem avec MA_VAR=
+[ok] export M"A"VA'R'="x"				-> idem
+[ok] export MA_VAR=""					-> MA_VAR=""
 [ok] export MA_VAR						-> export et affiche juste MA_VAR
 [ok] export MA_VAR_QUI_EXISTE_DEJA=y	-> modifie la variable qui existe deja
 [**] export MA_VAR1=$MA_VAR2			-> MA_VAR1 prend la valeur de MA_VAR2
@@ -247,6 +235,9 @@ A gérer :
 [**] export MA_VAR1='$MA_VAR2'			-> MA_VAR1 prend pour valeur : "MA_VAR2"
 [ok] export MA_VAR1=1 MA_VAR2=2			-> export les deux variables
 [ok] export MA_VAR1=MA_VAR2=2			-> MA_VAR1 prend la valeur "MA_VAR2=2"
+[ok] export MA@_VAR						-> Erreur syntaxe
+[ok] export 3MA_VAR						-> idem
+[ok] export =MA_VAR						-> idem
 [**] export VAR+=TEXT
 [**] export VAR?=TEXT
 
