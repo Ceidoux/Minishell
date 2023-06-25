@@ -18,7 +18,7 @@ void	ft_swap(char **s1, char **s2)     /* Un simple echange de valeurs de str*/
 	*s2 = ft_strdup(temp);
 }
 
-int	env_size(char **envp)         /* Nombre de lignes dans env*/
+int	env_size(char **envp)         /* Nombre de lignes dans env*/ 
 {
 	int i;
 
@@ -49,7 +49,8 @@ int	is_char(char str, char c)      /*  permet de savoir si un caractere est le m
 	return (0);
 }
 
-char	**split_two(char *str, int i)
+char	**split_two(char *str, int i)		/*la suite de separation_two. Ces deux fonctions servent a faire un split mais
+												que pour la premiere instance du charset, divisant le tableau en 2*/
 {
 	int j;
 	char **res;
@@ -77,7 +78,7 @@ char	**split_two(char *str, int i)
 	return (res);
 }
 
-char	**separate_two(char	*str)
+char	**separate_two(char	*str)						/* voir split_two*/
 {
 	char **res;
 	int i;
@@ -105,8 +106,7 @@ char	**separate_two(char	*str)
 	return (res);
 }
 
-char	*modify_var(char *str)  /*  Fonction assez complexe permettant de mettre "" autour de la valeur de la variable apres le 1er signe '=' , 
-									ainsi que de retirer tout ' ou " present dans la variable ! C'est un peu un "affinage" de la variable quoi */
+char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presents dans la variable"*/
 {
 	char	**res;
 	int		i;
@@ -186,6 +186,24 @@ int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant 
 		return (ft_strlen(str));
 }
 
+int	plus_equal(char *str)				/* permet de savoir si l'enchainement "+="  est present dans la string*/
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+		{
+			i++;
+			if (str[i] == '=')
+				return (1);
+			return (0);
+		}
+		i++;
+	}
+	return (-1);
+}
 
 int	has_invalid_character(char *str) /* verifie que la variable exportee respecte bien les regles de syntaxe */
 {
@@ -199,11 +217,38 @@ int	has_invalid_character(char *str) /* verifie que la variable exportee respect
 		if  ((str[i] < 'A'
 				|| str[i] > 'Z') && (str[i] < 'a'
 				|| str[i] > 'z') && (str[i] < '0' || str[i] > '9') 
-				&& str[i] != '_' && str[i] != '=')
+				&& str[i] != '_' && str[i] != '='
+				&& plus_equal(str) != 1)
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+
+
+char	*remove_plus(char *str)					/* retire le '+' dune string */
+{
+	int		i;
+	char	**cut;
+
+	i = 1;
+	if (has_car(str, '+') != -1)
+	{
+		cut = ft_split(str, '+');
+		while (cut[i])
+		{
+			cut[0] = ft_strjoin(cut[0], cut[i]);
+			i++;
+		}
+		i = 1;
+		while (cut[i])
+			free(cut[i++]);
+		str = ft_strdup(cut[0]);
+		free(cut[0]);
+		free(cut);
+	}
+	return (str);
 }
 
 char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse la chaine avec modify_var(), permet de ajouter
@@ -211,9 +256,12 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 {
 	int		i;
 	char	**res;
+	char 	*str_no_plus;
 
 	i = 0;
 	str = modify_var(str);
+	str_no_plus = ft_strdup(str);
+	str_no_plus = remove_plus(str_no_plus);
 	while (envp[i])
 	{
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str)) && has_car(str, '=') == -1
@@ -225,9 +273,18 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 			envp[i] = ft_strdup(str);
 			return (envp);
 		}
-		// if (pipex_strncmp(str, envp[i], ft_len_dif(str) - 1) && ft_len_dif(str) == ft_len_dif(envp[i]))
+		if (pipex_strncmp(str_no_plus, envp[i], ft_len_dif(str_no_plus)) && plus_equal(str) == 1)
+		{
+			res = separate_two(str);
+			if (has_car(envp[i], '=') == -1)
+				envp[i] = ft_strjoin(envp[i], "=");
+			if (env_size(res) > 1)
+				envp[i] = ft_strjoin(envp[i], res[1]);
+			return (envp);
+		}
 		i++;
 	}
+	str = remove_plus(str);
 	i = 0;
 	res = malloc(sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
@@ -306,6 +363,10 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 }
 
 /*
+
+
+REMARQUE : Un nombre INCALCULABLE de cas specifiques en plus ont ete corrige, je ne peux malheuresement pas tous les repertorie ici... 
+
 A gérer :
 [ok] export								-> affiche env par ordre alphabetique
 [ok] export MA_VAR						-> exporte juste MA_VAR
@@ -318,13 +379,13 @@ A gérer :
 [ok] export MA_VAR_QUI_EXISTE_DEJA=y	-> modifie la variable qui existe deja
 [**] export MA_VAR1=$MA_VAR2			-> MA_VAR1 prend la valeur de MA_VAR2
 [**] export MA_VAR1="$MA_VAR2"			-> idem
-[**] export MA_VAR1='$MA_VAR2'			-> MA_VAR1 prend pour valeur : "MA_VAR2"
+[**] export MA_VAR1='$MA_VAR2'			-> MA_VAR1 pre  nd pour valeur : "MA_VAR2"
 [ok] export MA_VAR1=1 MA_VAR2=2			-> export les deux variables
 [ok] export MA_VAR1=MA_VAR2=2			-> MA_VAR1 prend la valeur "MA_VAR2=2"
 [ok] export MA@_VAR						-> Erreur syntaxe
 [ok] export 3MA_VAR						-> idem
 [ok] export =MA_VAR						-> idem
-[**] export VAR+=TEXT
+[ok] export VAR+=TEXT
 [**] export VAR?=TEXT
 
 nota : utiliser ft_split !!!
