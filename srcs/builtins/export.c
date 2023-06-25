@@ -42,14 +42,77 @@ int	has_car(char *str, char c)      /*  permet de saboir si un caractere est dan
 	return (-1);
 }
 
+int	is_char(char str, char c)      /*  permet de savoir si un caractere est le mem element)*/
+{
+	if (str == c)
+		return (1);
+	return (0);
+}
+
+char	**split_two(char *str, int i)
+{
+	int j;
+	char **res;
+
+	res = malloc(sizeof(char *) * 3);
+	res[2] = NULL;
+	j = 0;
+	res[0] = malloc(sizeof(char) * i + 1);
+	while (j < i)
+	{
+		res[0][j] = str[j];
+		j++;
+	}
+	res[0][j] = 0;
+	j = 0;
+	res[1] = malloc(sizeof(char) * (ft_strlen(str) - i));
+	i++;
+	while (str[i])
+	{
+		res[1][j] = str[i];
+		i++;
+		j++;
+	}
+	res[1][j] = 0;
+	return (res);
+}
+
+char	**separate_two(char	*str)
+{
+	char **res;
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (is_char(str[i], '=') && (size_t)i != (ft_strlen(str) - 1))
+		{
+			res = split_two(str, i);
+			return (res);
+		}
+		i++;
+	}
+	res = malloc(sizeof(char *) * 2);
+	res[1] = NULL;
+	res[0] = malloc(sizeof(char) * ft_strlen(str));
+	i = 0;
+	while ((size_t)i < ft_strlen(str) - 1)
+	{
+		res[0][i] = str[i];
+		i++;
+	}
+	res[0][i] = 0;
+	return (res);
+}
+
 char	*modify_var(char *str)  /*  Fonction assez complexe permettant de mettre "" autour de la valeur de la variable apres le 1er signe '=' , 
 									ainsi que de retirer tout ' ou " present dans la variable ! C'est un peu un "affinage" de la variable quoi */
 {
 	char	**res;
 	int		i;
-	int flag;
+	// int flag;
 
-	flag = 0;
+	// flag = 0;
 	i = 0;
 	if (has_car(str, '\'') != -1 || has_car(str, '\"') != -1)
 	{
@@ -73,15 +136,24 @@ char	*modify_var(char *str)  /*  Fonction assez complexe permettant de mettre ""
 	}
 	if (has_car(str, '=') != -1)
 	{
-		res = pipex_split(str, "=");
+		// res = pipex_split(str, "=");
+		// res[0] = ft_strjoin(res[0], "=\"");
+		// i++;
+		// while(res[i])
+		// {
+		// 	if (flag == 1)
+		// 		res[0] = ft_strjoin(res[0], "=");
+		// 	else
+		// 		flag = 1;
+		// 	res[0] = ft_strjoin(res[0], res[i]);
+		// 	i++;
+		// }
+		// res[0] = ft_strjoin(res[0], "\"");
+		res = separate_two(str);
 		res[0] = ft_strjoin(res[0], "=\"");
-		i++;
-		while(res[i])
+		i = 1;
+		while (res[i])
 		{
-			if (flag == 1)
-				res[0] = ft_strjoin(res[0], "=");
-			else
-				flag = 1;
 			res[0] = ft_strjoin(res[0], res[i]);
 			i++;
 		}
@@ -122,7 +194,7 @@ int	has_invalid_character(char *str) /* verifie que la variable exportee respect
 	i = 0;
 	if ((str[i] >= '0' && str[i] <= '9') || str[i] == '=')
 		return (1);
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if  ((str[i] < 'A'
 				|| str[i] > 'Z') && (str[i] < 'a'
