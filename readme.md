@@ -16,3 +16,4 @@ ex: ls fichier_qui_n_existe_pas > outfile
 /!\ en principe cat -e <>file 	-> le fichier est ouvert pour lecture ET écriture
 (mais cette commande ne semble pas entrainer une écriture en sortie sur le fichier 'file' ?)
 
+Salut
