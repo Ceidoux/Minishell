@@ -80,7 +80,7 @@ void	ft_tocprint(t_table_of_commands	toc);
 void	ft_tocfree(t_table_of_commands *toc);
 
 /* pipex directory */
-int		pipex(t_table_of_commands toc, char **envp);
+int		pipex(t_table_of_commands toc, char ***envp);
 void	init_tools(t_tools *tools, t_table_of_commands toc);
 void	command_exec(t_tools tools, t_table_of_commands toc);
 void	absolute_relative_path(t_tools tools);
@@ -120,7 +120,7 @@ void	free_no_path(t_tools tools);
 void	failed_open(t_tools tools, char **argv);
 void	close_pipes(t_tools tools, t_table_of_commands toc);
 int		is_builtin(char *str);
-void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp);
+void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strsort(char *s1, char *s2);
 

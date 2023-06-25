@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 11:59:46 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/25 02:13:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-int	pipex(t_table_of_commands toc, char **envp)
+int	pipex(t_table_of_commands toc, char ***envp)
 {
 	t_tools	tools;
 

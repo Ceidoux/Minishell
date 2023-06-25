@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 12:36:28 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/25 02:15:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,20 +144,20 @@ int	is_builtin(char *str)
 	return (0);
 }
 
-void	builtin_exec(t_tools tools, t_table_of_commands toc, char **envp)
+void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
 {
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "echo"))
 		ft_echo(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "env"))
-		ft_env(envp);
+		ft_env(*envp);
 	else if (ft_strcmp(tools.args[0], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "export"))
-		envp = ft_export(tools, envp);
+		*envp = ft_export(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(tools.args[0], "unset"))
-		envp = ft_unset(toc.commands[tools.i], envp);
+		*envp = ft_unset(toc.commands[tools.i], *envp);
 }

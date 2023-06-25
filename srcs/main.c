@@ -3,7 +3,7 @@
 int	g_exit_status = 0;
 
 static char	*ft_prompt(void);
-static void	ft_loop(char **envp, char *prompt);
+static void	ft_loop(char ***envp, char *prompt);
 static void	ft_handler(int sig);
 
 int main(int argc, char **argv, char **envp)
@@ -21,11 +21,11 @@ int main(int argc, char **argv, char **envp)
 	sigaction(SIGINT, &sa, NULL);
 	prompt = ft_prompt();
 	env_copy = ft_envp_dup(envp);
-	ft_loop(env_copy, prompt);
+	ft_loop(&env_copy, prompt);
 	return (free(prompt), ft_envp_free(env_copy), g_exit_status);
 }
 
-static void	ft_loop(char **envp, char *prompt)
+static void	ft_loop(char ***envp, char *prompt)
 {
 	char				*line_read;
 	t_table_of_commands	toc;
