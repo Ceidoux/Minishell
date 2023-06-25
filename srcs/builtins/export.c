@@ -134,40 +134,40 @@ char	*modify_var(char *str)  /*  Fonction assez complexe permettant de mettre ""
 		free(res);
 		i = 0;
 	}
-	if (has_car(str, '=') != -1)
-	{
+	// if (has_car(str, '=') != -1)
+	// {
 		// res = pipex_split(str, "=");
-		// res[0] = ft_strjoin(res[0], "=\"");
-		// i++;
-		// while(res[i])
-		// {
-		// 	if (flag == 1)
-		// 		res[0] = ft_strjoin(res[0], "=");
-		// 	else
-		// 		flag = 1;
-		// 	res[0] = ft_strjoin(res[0], res[i]);
-		// 	i++;
-		// }
-		// res[0] = ft_strjoin(res[0], "\"");
-		res = separate_two(str);
-		res[0] = ft_strjoin(res[0], "=\"");
-		i = 1;
-		while (res[i])
-		{
-			res[0] = ft_strjoin(res[0], res[i]);
-			i++;
-		}
-		res[0] = ft_strjoin(res[0], "\"");
-		i = 1;
-		while(res[i])
-		{
-			free(res[i]);
-			i++;
-		}
-		str = ft_strdup(res[0]);
-		free(res[0]);
-		free(res);
-	}
+	// 	// res[0] = ft_strjoin(res[0], "=\"");
+	// 	// i++;
+	// 	// while(res[i])
+	// 	// {
+	// 	// 	if (flag == 1)
+	// 	// 		res[0] = ft_strjoin(res[0], "=");
+	// 	// 	else
+	// 	// 		flag = 1;
+	// 	// 	res[0] = ft_strjoin(res[0], res[i]);
+	// 	// 	i++;
+	// 	// }
+	// 	// res[0] = ft_strjoin(res[0], "\"");
+	// 	res = separate_two(str);
+	// 	res[0] = ft_strjoin(res[0], "=\"");
+	// 	i = 1;
+	// 	while (res[i])
+	// 	{
+	// 		res[0] = ft_strjoin(res[0], res[i]);
+	// 		i++;
+	// 	}
+	// 	res[0] = ft_strjoin(res[0], "\"");
+	// 	i = 1;
+	// 	while(res[i])
+	// 	{
+	// 		free(res[i]);
+	// 		i++;
+	// 	}
+	// 	str = ft_strdup(res[0]);
+	// 	free(res[0]);
+	// 	free(res);
+	// }
 	return (str);
 }
 
@@ -225,6 +225,7 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 			envp[i] = ft_strdup(str);
 			return (envp);
 		}
+		// if (pipex_strncmp(str, envp[i], ft_len_dif(str) - 1) && ft_len_dif(str) == ft_len_dif(envp[i]))
 		i++;
 	}
 	i = 0;
@@ -249,7 +250,7 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 	int j;
 	int size;
 	int	envp_size;
-	// char	**export_var;
+	char **export_var;
 
 	i = 0;
 	j = 0;
@@ -268,9 +269,22 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 			j = i;
 		}
 		i = 0;
+		j = 0;
 		while (envp[i])
 		{
-			pipex_printf("export %s\n", envp[i]);
+			if (has_car(envp[i], '=') != -1)
+			{
+				export_var = separate_two(envp[i]);
+				if (env_size(export_var) == 2)
+					printf("export %s=\"%s\"\n", export_var[0], export_var[1]);
+				else if (env_size(export_var) == 1 && envp[i][ft_strlen(envp[i]) - 1] == '=')
+					printf("export %s=\"\"\n", export_var[0]);
+				while (export_var[j])
+					free(export_var[j++]);
+				free(export_var);
+			}
+			else
+				pipex_printf("export %s\n", envp[i]);
 			i++;
 		}
 	}
