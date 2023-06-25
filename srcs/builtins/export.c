@@ -114,6 +114,26 @@ int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant 
 		return (ft_strlen(str));
 }
 
+
+int	has_invalid_character(char *str)
+{
+	int i;
+
+	i = 0;
+	if ((str[i] >= '0' && str[i] <= '9') || str[i] == '=')
+		return (1);
+	while (str[i])
+	{
+		if  ((str[i] < 'A'
+				|| str[i] > 'Z') && (str[i] < 'a'
+				|| str[i] > 'z') && (str[i] < '0' || str[i] > '9') 
+				&& str[i] != '_' && str[i] != '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse la chaine avec modify_var(), permet de ajouter
 															la variable dans envp ! */
 {
@@ -124,7 +144,8 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	str = modify_var(str);
 	while (envp[i])
 	{
-		if (pipex_strncmp(str, envp[i], ft_len_dif(str) ) && has_car(str, '=') == -1)
+		if (pipex_strncmp(str, envp[i], ft_len_dif(str)) && has_car(str, '=') == -1
+			&& ft_len_dif(str) == ft_len_dif(envp[i]))
 			return (envp);
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str)) && ft_len_dif(str) == ft_len_dif(envp[i]))
 		{
@@ -195,15 +216,18 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 		// i = 0;
 		while (i < size - 1)
 		{
-			if (pipex_strncmp(tools.args[i + 1], "=", 1) || (has_car(tools.args[i + 1], '=') == -1
-				&& tools.args[i + 2] && pipex_strncmp(tools.args[i + 2], "=", 1) != -1))
+			if /*(pipex_strncmp(tools.args[i + 1], "=", 1) ||*/ (has_invalid_character(tools.args[i + 1])  /* || (has_car(tools.args[i + 1], '=') == -1
+				&& tools.args[i + 2] && pipex_strncmp(tools.args[i + 2], "=", 1))*/)
 			{
 				printf("export: %s: not a valid identifier\n", tools.args[i + 1]);
-				return (envp);
+				i++;
 			}
-			envp = ft_addstr(envp, tools.args[i + 1], envp_size);
-			envp_size = env_size(envp);
-			i++;
+			else
+			{
+				envp = ft_addstr(envp, tools.args[i + 1], envp_size);
+				envp_size = env_size(envp);
+				i++;
+			}
 		}
 	}
 	return (envp);
