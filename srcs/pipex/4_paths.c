@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_paths.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:31:07 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:40 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/27 16:25:57 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	end_slash(char *str)
 
 void	no_path(t_tools tools)
 {
-	dup2(tools.saved_std_out, 1);
-	dup2(STDERR_FILENO, STDOUT_FILENO);
+	// dup2(tools.saved_std_out, 1);
+	// dup2(STDERR_FILENO, STDOUT_FILENO);
+	// perror(tools.args[0]);
 	pipex_printf("Command not found : %s \n", tools.args[0]);
 	free_no_path(tools);
 	free_main(&tools);

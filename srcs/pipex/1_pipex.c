@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/06/25 02:13:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/06/27 16:19:59 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	pipex(t_table_of_commands toc, char ***envp)
 		{
 			tools.pid[tools.i] = fork();
 			if (tools.pid[tools.i] == 0)
-				command_exec(tools, toc);
+				command_exec(tools, toc, *envp);
 		}
 		(tools.i)++;
 	}

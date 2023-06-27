@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/27 14:43:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/06/27 16:20:48 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 */
 
-void	command_exec(t_tools tools, t_table_of_commands toc)
+void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 {
 	int	j;
 
@@ -52,7 +52,7 @@ void	command_exec(t_tools tools, t_table_of_commands toc)
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
 	else
-		env_path(tools);
+		env_path(tools, envp);
 }
 
 
@@ -85,9 +85,28 @@ void	absolute_relative_path(t_tools tools)
 	no_execution(tools);
 }
 
-void	env_path(t_tools tools)
+char	*get_path(char **envp, char *str)
 {
-	tools.str = getenv("PATH");
+	int i;
+	char	*res;
+
+	i = 0;
+	while(envp[i])
+	{
+		if ((ft_strlen(envp[i]) == 4 && ft_strncmp(envp[i], str, 4) == 0) || ft_strncmp(envp[i], str, 5) == 0)
+		{
+			res = ft_strdup(envp[i]);
+			return (res);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	env_path(t_tools tools, char **envp)
+{
+	// tools.str = getenv("PATH");
+	tools.str = get_path(envp, "PATH=");
 	if (tools.str == NULL)
 		no_path(tools);
 	tools.paths = pipex_split_slash(tools.str, ":");

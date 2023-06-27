@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   11_close_free_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 16:48:11 by kali             ###   ########.fr       */
+/*   Updated: 2023/06/27 16:26:09 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	clean_finish(t_tools tools, t_table_of_commands toc)
 
 void	no_execution(t_tools tools)
 {
+	// perror(tools.args[0]);
 	pipex_printf("%s: command not found\n", tools.args[0]);
 	free_all(tools);
 	free_main(&tools);
