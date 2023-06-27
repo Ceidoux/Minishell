@@ -47,11 +47,28 @@ typedef struct s_tools
 }	t_tools;
 
 /* builtin directory */
-int		ft_cd(char *s);
+void		ft_cd(t_tools tools);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
+/*  Function in Export */
 char	**ft_export(t_tools tools, char **envp);
+int		arg_size(t_tools tools);
+void	ft_swap(char **s1, char **s2);
+int		env_size(char **envp);
+int		has_car(char *str, char c);
+int		is_char(char str, char c);
+char	**split_two(char *str, int i);
+char	**separate_two(char	*str);
+char	*modify_var(char *str);
+int		ft_len_dif(char *str);
+int		plus_equal(char *str);
+int		has_invalid_character(char *str);
+char	*remove_plus(char *str);
+char	**ft_addstr(char **envp, char *str, int envp_size);
+
+/* End of functions in export*/
+
 int		ft_pwd(void);
 char	**ft_unset(char *s, char **envp);
 

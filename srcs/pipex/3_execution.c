@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/26 22:11:35 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/06/27 14:43:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	is_builtin(char *str)
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
 {
 	if (ft_strcmp(tools.args[0], "cd"))
-		ft_cd(toc.commands[tools.i]);
+		ft_cd(tools);
 	else if (ft_strcmp(tools.args[0], "echo"))
 		ft_echo(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "env"))
