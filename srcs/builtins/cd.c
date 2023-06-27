@@ -29,7 +29,7 @@ static int	ft_cd_relative_path(char *path)
 	char	*target_dir;
 
 	current_dir = NULL;
-	current_dir = getcwd(current_dir, 1);
+	current_dir = getcwd(current_dir, 4096);
 	if (!current_dir)
 		return (1);
 	target_dir = ft_strjoin(current_dir, "/");

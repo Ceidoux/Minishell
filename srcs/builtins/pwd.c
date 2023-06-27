@@ -5,7 +5,7 @@ int	ft_pwd(void)
 	char *current_dir;
 	
 	current_dir = NULL;
-	current_dir = getcwd(current_dir, 1);
+	current_dir = getcwd(current_dir, 4096);
 	if (!current_dir)
 	{
 		perror("pwd");
