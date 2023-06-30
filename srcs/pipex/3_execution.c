@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/27 16:20:48 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/06/30 21:39:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,35 @@ void	absolute_relative_path(t_tools tools)
 	no_execution(tools);
 }
 
+int	ft_len_before_equal(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+int	env_var_exists(char **envp, char *str)
+{
+	int	i;
+
+	i = 0;
+	while(envp[i])
+	{
+		if (((size_t)ft_len_before_equal(envp[i]) == ft_strlen(str) && ft_strncmp(envp[i], str, ft_len_before_equal(envp[i])) == 0))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
 char	*get_path(char **envp, char *str)
 {
 	int i;
@@ -93,7 +122,7 @@ char	*get_path(char **envp, char *str)
 	i = 0;
 	while(envp[i])
 	{
-		if ((ft_strlen(envp[i]) == 4 && ft_strncmp(envp[i], str, 4) == 0) || ft_strncmp(envp[i], str, 5) == 0)
+		if ((ft_strlen(envp[i]) == ft_strlen(str) && ft_strncmp(envp[i], str, ft_strlen(str)) == 0) || ft_strncmp(envp[i], str, 5) == 0)
 		{
 			res = ft_strdup(envp[i]);
 			return (res);

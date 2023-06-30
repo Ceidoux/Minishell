@@ -140,5 +140,8 @@ int		is_builtin(char *str);
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strsort(char *s1, char *s2);
+char	*get_path(char **envp, char *str);
+int		ft_len_before_equal(char *str);
+int		env_var_exists(char **envp, char *str);
 
 #endif
