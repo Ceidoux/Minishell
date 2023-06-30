@@ -26,8 +26,7 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 	if (env_var_exists(old_envp, varname))
 	{
 		old_size = ft_envp_size(old_envp);
-		printf("old_size:%d\n", old_size);
-		new_envp = malloc((old_size - 1) * sizeof(*new_envp));
+		new_envp = malloc((old_size) * sizeof(*new_envp));
 		if (!new_envp)
 			exit(EXIT_FAILURE);
 		new_envp[old_size - 1] = NULL;
@@ -50,7 +49,6 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 /*
 
 
-PROBLEME : Faire unset a repititon sur la meme variable provoque une erreur de segmentation 
 A gérer :
 [**] unset VAR_QUI_EXISTE		-> supprime la variable de l'environnement
 [**] unset VAR_QUI_N'EXISTE_PAS	-> ne fait rien
