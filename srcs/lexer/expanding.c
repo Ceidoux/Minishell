@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	ft_expand_var(char **s, int idx);
+static int	ft_expand_var(char **s, int idx, char **envp);
 static int	ft_expand_exit_status(char **s, int idx);
 
 /* expansion des variables unquoted
@@ -21,7 +21,7 @@ void	ft_expand(char **s, char **envp)
 			if ((*s)[idx + 1] == '?')
 				idx += ft_expand_exit_status(s, idx + 1);
 			else
-				idx += ft_expand_var(s, idx + 1);
+				idx += ft_expand_var(s, idx + 1, envp);
 			continue ;
 		}
 		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
@@ -55,7 +55,7 @@ static int	ft_expand_exit_status(char **s, int idx)
 	return (exit_status_length);
 }
 
-static int	ft_expand_var(char **s, int idx)
+static int	ft_expand_var(char **s, int idx, char **envp)
 {
 	char	*var_name;
 	char	*var;
@@ -69,7 +69,7 @@ static int	ft_expand_var(char **s, int idx)
 	if (!len)
 		return (1);
 	var_name = ft_substr(*s, idx, len);
-	var = getenv(var_name);
+	var = ft_getenv(var_name, envp);
 	free(var_name);
 	new_s = malloc((ft_strlen(*s) - len + ft_strlen(var)) * sizeof(*new_s));
 	if (!new_s)
