@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   11_close_free_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/06/27 16:26:09 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/01 15:40:59 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ void	clean_finish(t_tools tools, t_table_of_commands toc)
 	tools.i = 0;
 	while (tools.i < toc.size)
 	{
-		close(tools.pipe_fd[tools.i][0]);
-		close(tools.pipe_fd[tools.i][1]);
-		close(toc.inputs[tools.i]);
-		close(toc.outputs[tools.i]);
+		if (tools.pipe_fd[tools.i][0] >= 0)
+			close(tools.pipe_fd[tools.i][0]);
+		if (tools.pipe_fd[tools.i][1] >= 0)
+			close(tools.pipe_fd[tools.i][1]);
+		if (toc.inputs[tools.i] >= 0)
+			close(toc.inputs[tools.i]);
+		if (toc.outputs[tools.i] >= 0)
+			close(toc.outputs[tools.i]);
 		(tools.i)++;
 	}
 	while (toc.size > 0)
