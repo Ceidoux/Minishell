@@ -56,3 +56,14 @@ char **ft_envp_dup(char **envp)
 		envp_dup[size] = ft_strdup(envp[size]);
 	return (envp_dup);	
 }
+
+char *ft_getenv(char *var, char **envp)
+{
+	int	idx;
+
+	idx = -1;
+	while (envp[++idx])
+		if (!ft_strncmp(envp[idx], var, ft_strlen(var)) && envp[idx][ft_strlen(var)] == '=')
+			return (envp[idx] + ft_strlen(var) + 1);
+	return (NULL);
+}

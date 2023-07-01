@@ -2,44 +2,44 @@
 
 int g_exit_status = 0;
 
-static char *ft_prompt(void);
-static void ft_loop(char ***envp, char *prompt);
+static char *ft_prompt(char **envp);
+static void ft_loop(char ***envp);
 static void ft_handler(int sig);
 
 int main(int argc, char **argv, char **envp)
 {
+	struct sigaction	sig_quit;
+	struct sigaction	sig_int;
+	char				**env_copy;
+
 	(void)argc;
 	(void)argv;
-
-	struct sigaction sa;
-	struct sigaction sa_ignore;
-	char *prompt;
-	char **env_copy;
-
-	sa_ignore.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa_ignore, NULL);
-	sa.sa_handler = ft_handler;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);	
-	prompt = ft_prompt();
+	ft_bzero(&sig_int, sizeof(sig_int));
+	sig_quit.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sig_quit, NULL);
+	ft_bzero(&sig_quit, sizeof(sig_quit));
+	sig_int.sa_handler = ft_handler;
+	sigaction(SIGINT, &sig_int, NULL);	
 	env_copy = ft_envp_dup(envp);
-	ft_loop(&env_copy, prompt);
-	return (free(prompt), ft_envp_free(env_copy), g_exit_status);
+	ft_loop(&env_copy);
+	return (ft_envp_free(env_copy), g_exit_status);
 }
 
-static void ft_loop(char ***envp, char *prompt)
+static void ft_loop(char ***envp)
 {
-	char *line_read;
+	char				*prompt;
+	char				*line_read;
 	t_table_of_commands toc;
 
 	while (1)
 	{
+		prompt = ft_prompt(*envp);
 		line_read = readline(prompt);
 		if (!line_read)
 		{
 			printf("exit\n");
 			rl_clear_history();
+			free(prompt);
 			return ;
 		}
 		else if (*line_read)
@@ -52,6 +52,7 @@ static void ft_loop(char ***envp, char *prompt)
 		}
 		free(line_read);
 	}
+	free(prompt);
 	rl_clear_history();
 }
 
@@ -65,12 +66,12 @@ static void ft_handler(int sig)
 	g_exit_status = 130;
 }
 
-static char *ft_prompt(void)
+static char *ft_prompt(char **envp)
 {
-	char *prompt;
-	const char *user;
+	char		*prompt;
+	const char	*user;
 
-	user = getenv("USER");
+	user = ft_getenv("USER", envp);
 	if (!user)
 		prompt = ft_strdup("%> ");
 	else
