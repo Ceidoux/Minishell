@@ -5,7 +5,7 @@ static int	ft_expand_exit_status(char **s, int idx);
 
 /* expansion des variables unquoted
 nb: char** car on passe l'adresse d'un str */
-void	ft_expand(char **s)
+void	ft_expand(char **s, char **envp)
 {
 	int		idx;
 	t_bool	simple_quote;
@@ -22,7 +22,7 @@ void	ft_expand(char **s)
 				idx += ft_expand_exit_status(s, idx + 1);
 			else
 				idx += ft_expand_var(s, idx + 1);
-			continue;
+			continue ;
 		}
 		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);

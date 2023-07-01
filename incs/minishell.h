@@ -51,6 +51,8 @@ void	ft_cd(t_tools tools);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
+int		ft_pwd(void);
+char	**ft_unset(char *s, char **envp);
 
 /*  Function in Export */
 char	**ft_export(t_tools tools, char **envp);
@@ -69,18 +71,16 @@ char	*remove_plus(char *str);
 char	**ft_addstr(char **envp, char *str, int envp_size);
 
 /* End of functions in export*/
-int		ft_pwd(void);
-char	**ft_unset(char *s, char **envp);
 
 /* lexer (lexical analyser) directory */
 int		ft_check(t_list	*tokens);
 int		ft_check_quotes(char *word);
-t_list	*ft_lexer(char *s);
-void	ft_expand(char **s);
+t_list	*ft_lexer(char *s, char **envp);
+void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
 /* parser directory */
-t_table_of_commands	ft_parser(char *s);
+t_table_of_commands	ft_parser(char *s, char **envp);
 t_table_of_commands	ft_create_table_of_commands(t_list *tokens);
 int		ft_heredoc(char *delimiter);
 
@@ -129,7 +129,7 @@ void	free_str_args(t_tools tools);
 void	free_main(t_tools *tools);
 void	free_path(t_tools tools);
 void	free_before(t_tools *tools);
-voi		free_all(t_tools tools);
+void	free_all(t_tools tools);
 void	clean_finish(t_tools tools, t_table_of_commands toc);
 void	no_execution(t_tools tools);
 void	free_no_path(t_tools tools);
