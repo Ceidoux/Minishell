@@ -50,7 +50,7 @@ typedef struct s_tools
 void	ft_cd(t_tools tools, char **envp);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
-int		ft_exit(char *s);
+void		ft_exit(char *s);
 int		ft_pwd(t_tools tools);
 char	**ft_unset(char *s, char **envp);
 
