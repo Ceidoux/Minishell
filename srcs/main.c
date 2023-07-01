@@ -49,13 +49,9 @@ static void	ft_loop(char ***envp)
 	{
 		prompt = ft_prompt(*envp);
 		line_read = readline(prompt);
+		free(prompt);
 		if (!line_read)
-		{
-			printf("exit\n");
-			rl_clear_history();
-			free(prompt);
-			return ;
-		}
+			break ;
 		else if (*line_read)
 		{
 			add_history(line_read);
@@ -66,17 +62,17 @@ static void	ft_loop(char ***envp)
 		}
 		free(line_read);
 	}
-	free(prompt);
-	rl_clear_history();
+	printf("exit\n");
+	// rl_clear_history();
 }
 
 static void	ft_handler(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_redisplay();
 	g_exit_status = 130;
 }
 

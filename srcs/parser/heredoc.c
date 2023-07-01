@@ -47,6 +47,7 @@ static int	ft_create_heredoc(char *delimiter)
 		write(fd, line, ft_strlen(line));
 		free(line);
 	}
+	write(fd, "\n", 1);
 	free(line);
 	close(fd);
 	return (0);
