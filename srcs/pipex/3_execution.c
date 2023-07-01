@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/01 17:32:13 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/01 18:07:49 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	absolute_relative_path(t_tools tools)
 		exit(0);
 	}
 	tools.args[0] = remove_path(tools.args[0]);
-	execve(tools.str, tools.args, NULL);
+	g_exit_status = execve(tools.str, tools.args, NULL);
 	perror(tools.str);
 	no_execution(tools);
 }
@@ -151,7 +151,7 @@ void	env_path(t_tools tools, char **envp)
 				tools.args[0]);
 		if (tools.paths[tools.i] == NULL)
 			return ;
-		execve(tools.paths[tools.i], tools.args, NULL);
+		g_exit_status = execve(tools.paths[tools.i], tools.args, NULL);
 		(tools.i)++;
 	}
 	// perror(tools.args[0]);
@@ -198,7 +198,7 @@ int	is_builtin(char *str)
 void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
 {
 	if (ft_strcmp(tools.args[0], "cd"))
-		ft_cd(tools);
+		ft_cd(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "echo"))
 		ft_echo(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "env"))
@@ -208,7 +208,7 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
 	else if (ft_strcmp(tools.args[0], "export"))
 		*envp = ft_export(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "pwd"))
-		ft_pwd();
+		ft_pwd(tools);
 	else if (ft_strcmp(tools.args[0], "unset"))
 		*envp = ft_unset(toc.commands[tools.i], *envp);
 }
