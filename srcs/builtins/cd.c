@@ -86,12 +86,18 @@ void	ft_cd(t_tools tools, char **envp)
 			return ;
 		}
 		if (chdir(str) == -1)
+		{
 			perror(str);
+			g_exit_status = 1;
+		}
 	}
 	else if (arg_size(tools) == 2)
 	{
 		if (chdir(tools.args[1]) == -1)
+		{
 			perror(tools.args[1]);
+			g_exit_status = 1;
+		}
 	}
 }
 
