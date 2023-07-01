@@ -90,7 +90,6 @@ int		ft_envp_size(char **envp);
 void	ft_envp_free(char **envp);
 char	 **ft_envp_dup(char **envp);
 char	 **ft_envp_realloc(char **old_envp, size_t new_size);
-void	ft_ioclose(t_table_of_commands toc);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 void	ft_tocprint(t_table_of_commands	toc);

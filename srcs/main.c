@@ -18,7 +18,6 @@ int main(int argc, char **argv, char **envp)
 
 	sa_ignore.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa_ignore, NULL);
-
 	sa.sa_handler = ft_handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -34,16 +33,14 @@ static void ft_loop(char ***envp, char *prompt)
 	char *line_read;
 	t_table_of_commands toc;
 
-	(void)envp;
 	while (1)
 	{
-		write(1, "test2\n", 6);
 		line_read = readline(prompt);
 		if (!line_read)
 		{
-			// rl_replace_line("TEST", 0); // a quoi correspond le second parametre ???
 			printf("exit\n");
-			exit(g_exit_status);
+			rl_clear_history();
+			return ;
 		}
 		else if (*line_read)
 		{
@@ -51,12 +48,11 @@ static void ft_loop(char ***envp, char *prompt)
 			toc = ft_parser(line_read);
 			if (toc.commands[0])
 				pipex(toc, envp);
-			// ft_ioclose(toc);
 			ft_tocfree(&toc);
 		}
 		free(line_read);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void ft_handler(int sig)
@@ -69,6 +65,7 @@ static void ft_handler(int sig)
 		rl_replace_line(prompt, 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_exit_status = 130;
 	}
 	else if (sig == SIGQUIT)
 		write(1, "", 0);

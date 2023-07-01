@@ -37,7 +37,6 @@ SRCS	:= main.c \
 		   parser/parser.c \
 		   parser/toc.c \
 		   utils/ft_envp_utils.c \
-		   utils/ft_ioclose.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
 		   utils/ft_tocfree.c \
