@@ -58,3 +58,4 @@ dkms.conf
 # VsCode
 settings.json
 srcs/tp_main.c
+.nfs*
