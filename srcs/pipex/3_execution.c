@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/06/30 21:39:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/01 15:26:26 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
 		dup2(tools.pipe_fd[tools.i][1], STDOUT_FILENO);
 	while (j < toc.size)
 	{
-
-		close(tools.pipe_fd[j][0]);
-		close(tools.pipe_fd[j][1]);
-		close(toc.inputs[j]);
-		close(toc.outputs[j]);
+		if (tools.pipe_fd[j][0] >= 0)
+			close(tools.pipe_fd[j][0]);
+		if (tools.pipe_fd[j][1] >= 0)
+			close(tools.pipe_fd[j][1]);
+		if (toc.inputs[j] >= 0)
+			close(toc.inputs[j]);
+		if (toc.outputs[j] >= 0)
+			close(toc.outputs[j]);
 		j++;
 	}
 	close(tools.saved_std_out);
