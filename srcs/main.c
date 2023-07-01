@@ -59,16 +59,12 @@ static void ft_handler(int sig)
 {
 	char *prompt;
 
+	(void) sig;
 	prompt = ft_prompt();
-	if (sig == SIGINT)
-	{
-		rl_replace_line(prompt, 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_status = 130;
-	}
-	else if (sig == SIGQUIT)
-		write(1, "", 0);
+	rl_replace_line(prompt, 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_exit_status = 130;
 	free(prompt);
 }
 
