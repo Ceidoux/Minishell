@@ -29,7 +29,7 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 		new_envp = malloc((old_size) * sizeof(*new_envp));
 		if (!new_envp)
 			exit(EXIT_FAILURE);
-		new_envp[old_size - 1] = NULL;
+		new_envp[--old_size] = NULL;
 		offset = 1;
 		while (--old_size >= 0)
 		{
