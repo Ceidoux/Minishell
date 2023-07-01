@@ -57,15 +57,12 @@ static void ft_loop(char ***envp, char *prompt)
 
 static void ft_handler(int sig)
 {
-	char *prompt;
-
 	(void) sig;
-	prompt = ft_prompt();
-	rl_replace_line(prompt, 0);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_exit_status = 130;
-	free(prompt);
 }
 
 static char *ft_prompt(void)
