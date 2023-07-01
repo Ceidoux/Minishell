@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_envp_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/01 17:04:20 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/01 17:06:35 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_envp_size(char **envp)
@@ -8,12 +20,12 @@ int	ft_envp_size(char **envp)
 	if (envp)
 	{
 		while (envp[size])
-			size++;	
+			size++;
 	}
 	return (size);
 }
 
-char **ft_envp_realloc(char **old_envp, size_t new_size)
+char	**ft_envp_realloc(char **old_envp, size_t new_size)
 {
 	char	**new_envp;
 	int		old_size;
@@ -42,7 +54,7 @@ void	ft_envp_free(char **envp)
 	free(envp);
 }
 
-char **ft_envp_dup(char **envp)
+char	**ft_envp_dup(char **envp)
 {
 	int		size;
 	char	**envp_dup;
@@ -54,10 +66,10 @@ char **ft_envp_dup(char **envp)
 	envp_dup[--size] = NULL;
 	while (--size >= 0)
 		envp_dup[size] = ft_strdup(envp[size]);
-	return (envp_dup);	
+	return (envp_dup);
 }
 
-char *ft_getenv(char *var, char **envp)
+char	*ft_getenv(char *var, char **envp)
 {
 	int	idx;
 

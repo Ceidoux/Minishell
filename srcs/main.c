@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/01 17:19:39 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
-static char *ft_prompt(char **envp);
-static void ft_loop(char ***envp);
-static void ft_handler(int sig);
+static char	*ft_prompt(char **envp);
+static void	ft_loop(char ***envp);
+static void	ft_handler(int sig);
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	struct sigaction	sig_quit;
 	struct sigaction	sig_int;
@@ -19,17 +31,17 @@ int main(int argc, char **argv, char **envp)
 	sigaction(SIGQUIT, &sig_quit, NULL);
 	ft_bzero(&sig_quit, sizeof(sig_quit));
 	sig_int.sa_handler = ft_handler;
-	sigaction(SIGINT, &sig_int, NULL);	
+	sigaction(SIGINT, &sig_int, NULL);
 	env_copy = ft_envp_dup(envp);
 	ft_loop(&env_copy);
 	return (ft_envp_free(env_copy), g_exit_status);
 }
 
-static void ft_loop(char ***envp)
+static void	ft_loop(char ***envp)
 {
 	char				*prompt;
 	char				*line_read;
-	t_table_of_commands toc;
+	t_table_of_commands	toc;
 
 	while (1)
 	{
@@ -56,7 +68,7 @@ static void ft_loop(char ***envp)
 	rl_clear_history();
 }
 
-static void ft_handler(int sig)
+static void	ft_handler(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
@@ -66,7 +78,7 @@ static void ft_handler(int sig)
 	g_exit_status = 130;
 }
 
-static char *ft_prompt(char **envp)
+static char	*ft_prompt(char **envp)
 {
 	char		*prompt;
 	const char	*user;
