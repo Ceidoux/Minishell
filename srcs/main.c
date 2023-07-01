@@ -1,42 +1,47 @@
 #include "minishell.h"
 
-int	g_exit_status = 0;
+int g_exit_status = 0;
 
-static char	*ft_prompt(void);
-static void	ft_loop(char ***envp, char *prompt);
-static void	ft_handler(int sig);
+static char *ft_prompt(void);
+static void ft_loop(char ***envp, char *prompt);
+static void ft_handler(int sig);
 
 int main(int argc, char **argv, char **envp)
 {
-	(void) argc;
-	(void) argv;
-	
-	struct sigaction	sa;
-	char				*prompt;
-	char				**env_copy;
+	(void)argc;
+	(void)argv;
+
+	struct sigaction sa;
+	struct sigaction sa_ignore;
+	char *prompt;
+	char **env_copy;
+
+	sa_ignore.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa_ignore, NULL);
 
 	sa.sa_handler = ft_handler;
 	sa.sa_flags = 0;
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGINT, &sa, NULL);
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);	
 	prompt = ft_prompt();
 	env_copy = ft_envp_dup(envp);
 	ft_loop(&env_copy, prompt);
 	return (free(prompt), ft_envp_free(env_copy), g_exit_status);
 }
 
-static void	ft_loop(char ***envp, char *prompt)
+static void ft_loop(char ***envp, char *prompt)
 {
-	char				*line_read;
-	t_table_of_commands	toc;
+	char *line_read;
+	t_table_of_commands toc;
 
-	(void) envp;
+	(void)envp;
 	while (1)
 	{
+		write(1, "test2\n", 6);
 		line_read = readline(prompt);
 		if (!line_read)
 		{
-			// rl_replace_line(),
+			// rl_replace_line("TEST", 0); // a quoi correspond le second parametre ???
 			printf("exit\n");
 			exit(g_exit_status);
 		}
@@ -46,7 +51,7 @@ static void	ft_loop(char ***envp, char *prompt)
 			toc = ft_parser(line_read);
 			if (toc.commands[0])
 				pipex(toc, envp);
-			ft_ioclose(toc);
+			// ft_ioclose(toc);
 			ft_tocfree(&toc);
 		}
 		free(line_read);
@@ -54,19 +59,26 @@ static void	ft_loop(char ***envp, char *prompt)
 	// rl_clear_history();
 }
 
-static void	ft_handler(int sig)
+static void ft_handler(int sig)
 {
+	char *prompt;
+
+	prompt = ft_prompt();
 	if (sig == SIGINT)
 	{
-		// rl_on_new_line();
-		// rl_replace_line();
+		rl_replace_line(prompt, 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
+	else if (sig == SIGQUIT)
+		write(1, "", 0);
+	free(prompt);
 }
 
-static char	*ft_prompt(void)
+static char *ft_prompt(void)
 {
-	char		*prompt;
-	const char	*user;
+	char *prompt;
+	const char *user;
 
 	user = getenv("USER");
 	if (!user)

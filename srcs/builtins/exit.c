@@ -7,6 +7,7 @@ int	ft_exit(char *s)
 
 	n = 0;
 	sign = 1;
+	s += 4;
 	while (*s == ' ')
 		s++;
 	if (!*s)
