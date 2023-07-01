@@ -1,17 +1,17 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
-#include <stdlib.h>				// getenv()
-#include <fcntl.h> 				// open()
-#include <unistd.h> 			// getcwd(), read(), write(), chdir(), unlink()
-#include <sys/types.h> 			// read()
-#include <sys/uio.h> 			// read()
-#include <stdio.h> 				// readline()
-#include <readline/readline.h>	// readline()
-#include <readline/history.h>	// readline()
-#include <signal.h>				// sigaction()
+# include <stdlib.h>			// getenv()
+# include <fcntl.h>				// open()
+# include <unistd.h>			// getcwd(), read(), write(), chdir(), unlink()
+# include <sys/types.h>			// read()
+# include <sys/uio.h>			// read()
+# include <stdio.h>				// readline()
+# include <readline/readline.h>	// readline()
+# include <readline/history.h>	// readline()
+# include <signal.h>			// sigaction()
 # include <sys/wait.h>			// wait()
 # include <stdarg.h>			// va_args
 
@@ -35,19 +35,19 @@ typedef struct s_table_of_commands
 
 typedef struct s_tools
 {
-	int			i;
-	int			**pipe_fd;
-	int			file_fd;
-	int			*pid;
-	char		**args;
-	int			saved_std_out;
-	char		*str;
-	char		**paths;
-	int			fd_count;
+	int		i;
+	int		**pipe_fd;
+	int		file_fd;
+	int		*pid;
+	char	**args;
+	int		saved_std_out;
+	char	*str;
+	char	**paths;
+	int		fd_count;
 }	t_tools;
 
 /* builtin directory */
-void		ft_cd(t_tools tools);
+void	ft_cd(t_tools tools);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
 int		ft_exit(char *s);
@@ -81,20 +81,19 @@ void	ft_unquote(char **s);
 
 /* parser directory */
 t_table_of_commands	ft_parser(char *s);
-t_table_of_commands ft_create_table_of_commands(t_list *tokens);
+t_table_of_commands	ft_create_table_of_commands(t_list *tokens);
 int		ft_heredoc(char *delimiter);
 
 /* utils directory */
 int		ft_envp_size(char **envp);
 void	ft_envp_free(char **envp);
-char	 **ft_envp_dup(char **envp);
-char	 **ft_envp_realloc(char **old_envp, size_t new_size);
-char 	*ft_getenv(char *var, char **envp);
+char	**ft_envp_dup(char **envp);
+char	**ft_envp_realloc(char **old_envp, size_t new_size);
+char	*ft_getenv(char *var, char **envp);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
 void	ft_tocprint(t_table_of_commands	toc);
 void	ft_tocfree(t_table_of_commands *toc);
-
 
 /* pipex directory */
 int		pipex(t_table_of_commands toc, char ***envp);
@@ -125,12 +124,12 @@ void	pipex_putunsnbr(unsigned int nbr, int *len);
 void	pipex_putnbr_base(unsigned int nbr, char *base, int *len);
 int		pipex_strncmp(char *s1, char *s2, int n);
 char	*pipex_strdup(char *str);
-char 	*pipex_putstr2(char *str);
+char	*pipex_putstr2(char *str);
 void	free_str_args(t_tools tools);
 void	free_main(t_tools *tools);
 void	free_path(t_tools tools);
 void	free_before(t_tools *tools);
-void	free_all(t_tools tools);
+voi		free_all(t_tools tools);
 void	clean_finish(t_tools tools, t_table_of_commands toc);
 void	no_execution(t_tools tools);
 void	free_no_path(t_tools tools);
