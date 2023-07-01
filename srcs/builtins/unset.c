@@ -29,14 +29,14 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 		new_envp = malloc((old_size) * sizeof(*new_envp));
 		if (!new_envp)
 			exit(EXIT_FAILURE);
-		new_envp[--old_size] = NULL;
-		offset = 1;
+		new_envp[old_size - 1] = NULL;
+		offset = 0;
 		while (--old_size >= 0)
 		{
-			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)) && old_envp[old_size][ft_strlen(varname)] == '=')
-				offset = 0;
+			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)) && (old_envp[old_size][ft_strlen(varname)] == '=' || old_envp[old_size][ft_strlen(varname)] == '\0'))
+				offset = 1;
 			else
-				new_envp[old_size - offset] = ft_strdup(old_envp[old_size]);
+				new_envp[old_size - 1 + offset] = ft_strdup(old_envp[old_size]);
 		}
 		ft_envp_free(old_envp);
 		return (new_envp);

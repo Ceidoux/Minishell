@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/01 15:26:26 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/01 15:33:08 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,9 +206,15 @@ void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
 	else if (ft_strcmp(tools.args[0], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "export"))
+	{
 		*envp = ft_export(tools, *envp);
+		write(1, ">2\n", 3);
+	}
 	else if (ft_strcmp(tools.args[0], "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(tools.args[0], "unset"))
+	{
 		*envp = ft_unset(toc.commands[tools.i], *envp);
+		write(1, ">1\n", 3);
+	}
 }
