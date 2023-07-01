@@ -66,19 +66,20 @@
 
 
 
-void	ft_cd(t_tools tools)
+void	ft_cd(t_tools tools, char **envp)
 {
 	char	*str;
 
 	if (arg_size(tools) > 2)
 	{
 		pipex_printf("%s: too many arguments\n");
+		g_exit_status = 1;
 		return ;
 	}
 	if (arg_size(tools) == 1 || (arg_size(tools) == 2
 		&& ft_strcmp(tools.args[1], "~")))
 	{
-		str = getenv("HOME");
+		str = ft_getenv("HOME", envp);
 		if (str == NULL)
 		{
 			perror(tools.args[0]);

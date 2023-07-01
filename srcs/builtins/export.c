@@ -350,7 +350,10 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 		while (i < size - 1)
 		{
 			if (has_invalid_character(tools.args[i + 1]))
+			{
 				printf("export: %s: not a valid identifier\n", tools.args[i + 1]);
+				g_exit_status = 1;
+			}
 			else
 			{
 				envp = ft_addstr(envp, tools.args[i + 1], envp_size);
