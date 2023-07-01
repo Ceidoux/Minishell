@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:19:39 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/01 18:44:29 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	main(int argc, char **argv, char **envp)
 	struct sigaction	sig_int;
 	char				**env_copy;
 
-	(void)argc;
-	(void)argv;
+	(void) argv;
+	(void) argc;
+	if (isatty(0) != 1)
+		return (1);
 	ft_bzero(&sig_int, sizeof(sig_int));
 	sig_quit.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sig_quit, NULL);
