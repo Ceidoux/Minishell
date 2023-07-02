@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:54 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:00:55 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 16:14:22 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd_tab ft_create_table_of_commands(t_list *tokens)
 
 static int	ft_add_input(t_cmd_tab *toc, t_list **tokens)
 {
-	if (toc->inputs[toc->size - 1])
+	if (toc->inputs[toc->size - 1] >= 0)
 		close(toc->inputs[toc->size - 1]);	
 	if (!ft_strncmp((*tokens)->content, "<", 2))
 		toc->inputs[toc->size - 1] = open((*tokens)->next->content, O_RDONLY);
@@ -64,7 +64,7 @@ static int	ft_add_input(t_cmd_tab *toc, t_list **tokens)
 
 static int	ft_add_output(t_cmd_tab *toc, t_list **tokens)
 {
-	if (toc->outputs[toc->size - 1] && ft_strncmp((*tokens)->content, "<>", 3))
+	if (toc->outputs[toc->size - 1] >= 0 && ft_strncmp((*tokens)->content, "<>", 3))
 		close(toc->outputs[toc->size - 1]);
 	if (!ft_strncmp((*tokens)->content, ">", 2))
 		toc->outputs[toc->size - 1] = open((*tokens)->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);

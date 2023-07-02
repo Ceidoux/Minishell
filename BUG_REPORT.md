@@ -1,3 +1,20 @@
+/!\ WARNING /!\
+
+$> ""
+[1]    240079 segmentation fault (core dumped)  ./minishell
+
+$> ''
+[1]    240079 segmentation fault (core dumped)  ./minishell
+
+$> echo $? | echo $? | echo $?
+
+
+xxx | cat -e
+
+- Other errors - 
+$> :
+$> !
+
 env -i puis ctrl-D  => core dump
 
 echo "-n     mdr"
@@ -6,8 +23,12 @@ echo -n -n
 echo -nnnnnnnnnnnnnnnnnnnnn bonjour
 'echo "$HOME"'
 "" "" echo minishell
+$> echo $""
 
-xxx | cat -e
+
+<!-- Corrected errors -->
+<!-- $> echo NEW FILE > file1
+==225939== Warning: invalid file descriptor -1 in syscall close() -->
 
 <!-- cat hello <>file				doit print hello, créer le fichier file (et NE PAS MODIFIER LE FICHIER), et redirige vers stdout!
 echo hello >outfile <>file 		crée (si nécessaire) les fichiers outfile et file, et redirige vers outfile (pas file ni stdout) -->

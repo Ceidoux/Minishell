@@ -1,3 +1,6 @@
+/?\ SHOW ALL LEAKS:
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
+
 /!\ Pour ignorer les leaks de la lib readline : fichier .supp contenant {Memcheck:Leak fun:readline fun:add_history} 
 ET lancer minishell avec la commande suivante : valgrind --suppressions=readline.supp ./minishell
 
