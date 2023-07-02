@@ -1,11 +1,32 @@
 #include "minishell.h"
 
-void	ft_echo(char *s)
+void	ft_echo(t_tools tools, char *s, t_cmd_tab toc)
 {
 	t_bool	n_flag;
+	int j;
 
+	j = 0;
+	if (toc.inputs[tools.i] != -1)
+		dup2(toc.inputs[tools.i], STDIN_FILENO);
+	else if (tools.i > 0)
+		dup2(tools.pipe_fd[tools.i - 1][0], STDIN_FILENO);
+	if (toc.outputs[tools.i] != -1)
+		dup2(toc.outputs[tools.i], STDOUT_FILENO);
+	else if (tools.i < toc.size - 1)
+		dup2(tools.pipe_fd[tools.i][1], STDOUT_FILENO);
 	n_flag = 0;
-	
+	while (j < toc.size)
+	{
+		if (tools.pipe_fd[j][0] >= 0)
+			close(tools.pipe_fd[j][0]);
+		if (tools.pipe_fd[j][1] >= 0)
+			close(tools.pipe_fd[j][1]);
+		if (toc.inputs[j] >= 0)
+			close(toc.inputs[j]);
+		if (toc.outputs[j] >= 0)
+			close(toc.outputs[j]);
+		j++;
+	}
 	if (!s[4])
 		ft_putchar_fd('\n', 1);
 	else
@@ -17,11 +38,12 @@ void	ft_echo(char *s)
 			s += 3;
 		}
 		if (n_flag)
-			ft_putstr_fd(s, 1);
+			pipex_printf("%s", s);
 		else
-			ft_putendl_fd(s, 1);
+			pipex_printf("%s\n", s);
 	}
 	g_exit_status = 0;
+	exit(0);
 }
 
 /*

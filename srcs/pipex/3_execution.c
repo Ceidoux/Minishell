@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/01 18:07:49 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 19:14:46 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "echo"))
-		ft_echo(toc.commands[tools.i]);
+		ft_echo(tools, toc.commands[tools.i], toc);
 	else if (ft_strcmp(tools.args[0], "env"))
 		ft_env(*envp);
 	else if (ft_strcmp(tools.args[0], "exit"))
