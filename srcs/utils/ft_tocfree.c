@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:05:57 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:06:24 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 13:20:15 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_tocfree(t_cmd_tab *toc)
 	}
 	if (toc->size)
 	{
+		free(toc->commands);
+		toc->commands = NULL;
 		free(toc->inputs);
 		toc->inputs = NULL;
 		free(toc->outputs);
