@@ -43,7 +43,7 @@ static void	ft_loop(char ***envp)
 {
 	char				*prompt;
 	char				*line_read;
-	t_table_of_commands	toc;
+	t_cmd_tab	toc;
 
 	while (1)
 	{

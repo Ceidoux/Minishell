@@ -25,13 +25,13 @@ typedef enum e_bool
 	TRUE
 }	t_bool;
 
-typedef struct s_table_of_commands
+typedef struct s_cmd_tab
 {
 	int		size;
 	char	**commands;
 	int		*inputs;
 	int		*outputs;
-}	t_table_of_commands;
+}	t_cmd_tab;
 
 typedef struct s_tools
 {
@@ -80,8 +80,8 @@ void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
 /* parser directory */
-t_table_of_commands	ft_parser(char *s, char **envp);
-t_table_of_commands	ft_create_table_of_commands(t_list *tokens);
+t_cmd_tab	ft_parser(char *s, char **envp);
+t_cmd_tab	ft_create_table_of_commands(t_list *tokens);
 int		ft_heredoc(char *delimiter);
 
 /* utils directory */
@@ -92,13 +92,13 @@ char	**ft_envp_realloc(char **old_envp, size_t new_size);
 char	*ft_getenv(char *var, char **envp);
 void	ft_lstprint(t_list *lst);
 void	ft_lstremovelast(t_list **lst, void (*del)(void*));
-void	ft_tocprint(t_table_of_commands	toc);
-void	ft_tocfree(t_table_of_commands *toc);
+void	ft_tocprint(t_cmd_tab	toc);
+void	ft_tocfree(t_cmd_tab *toc);
 
 /* pipex directory */
-int		pipex(t_table_of_commands toc, char ***envp);
-void	init_tools(t_tools *tools, t_table_of_commands toc);
-void	command_exec(t_tools tools, t_table_of_commands toc, char **envp);
+int		pipex(t_cmd_tab toc, char ***envp);
+void	init_tools(t_tools *tools, t_cmd_tab toc);
+void	command_exec(t_tools tools, t_cmd_tab toc, char **envp);
 void	absolute_relative_path(t_tools tools);
 void	env_path(t_tools tools, char **envp);
 char	*remove_path(char *str);
@@ -130,13 +130,13 @@ void	free_main(t_tools *tools);
 void	free_path(t_tools tools);
 void	free_before(t_tools *tools);
 void	free_all(t_tools tools);
-void	clean_finish(t_tools tools, t_table_of_commands toc);
+void	clean_finish(t_tools tools, t_cmd_tab toc);
 void	no_execution(t_tools tools);
 void	free_no_path(t_tools tools);
 void	failed_open(t_tools tools, char **argv);
-void	close_pipes(t_tools tools, t_table_of_commands toc);
+void	close_pipes(t_tools tools, t_cmd_tab toc);
 int		is_builtin(char *str);
-void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp);
+void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strsort(char *s1, char *s2);
 char	*get_path(char **envp, char *str);

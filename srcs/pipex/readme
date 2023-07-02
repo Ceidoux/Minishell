@@ -36,7 +36,7 @@ Re organisation des fichiers, afin d'avoir une structure et nomenclature logique
 23/06/2023 1:11 
 
 Changement du fonctionnement de pipex : l'argument est maintenant
-de type t_table_of_commands, afin de pouvoir recevoir la strcture
+de type t_cmd_tab, afin de pouvoir recevoir la strcture
 donnee par le parser. Un main avec une toc test a ete fait.
 
 envp a ete remplace par la fonciton getenv().

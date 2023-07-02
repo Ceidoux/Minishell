@@ -25,7 +25,7 @@
 
 */
 
-void	command_exec(t_tools tools, t_table_of_commands toc, char **envp)
+void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 {
 	int	j;
 
@@ -195,7 +195,7 @@ int	is_builtin(char *str)
 	return (0);
 }
 
-void	builtin_exec(t_tools tools, t_table_of_commands toc, char ***envp)
+void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(tools, *envp);

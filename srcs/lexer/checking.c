@@ -51,7 +51,8 @@ static int	ft_check_last_operator(char *operator)
 		|| !ft_strncmp(operator, "<", 2)
 		|| !ft_strncmp(operator, ">", 2)
 		|| !ft_strncmp(operator, ">>", 3)
-		|| !ft_strncmp(operator, "<<", 3))
+		|| !ft_strncmp(operator, "<<", 3)
+		|| !ft_strncmp(operator, "<>", 3))
 	{
 		g_exit_status = 258;
 		ft_putendl_fd("syntax error near unexpected token 'newline'", 1);
@@ -66,7 +67,8 @@ static int	ft_check_single_operator(char *operator)
 		&& ft_strncmp(operator, ">", 2)
 		&& ft_strncmp(operator, "<", 2)
 		&& ft_strncmp(operator, ">>", 3)
-		&& ft_strncmp(operator, "<<", 3))
+		&& ft_strncmp(operator, "<<", 3)
+		&& ft_strncmp(operator, "<>", 3))
 	{
 		g_exit_status = 258;
 		ft_putstr_fd("parse error near \'", 1);

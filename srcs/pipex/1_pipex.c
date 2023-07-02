@@ -19,7 +19,7 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-int	pipex(t_table_of_commands toc, char ***envp)
+int	pipex(t_cmd_tab toc, char ***envp)
 {
 	t_tools	tools;
 
@@ -48,7 +48,7 @@ int	pipex(t_table_of_commands toc, char ***envp)
 	
 int main(void)
 {
-	t_table_of_commands toc;
+	t_cmd_tab toc;
 
 	toc.commands = malloc(sizeof(char*) * 5);
 	toc.commands[0] = ft_putstr2("grep S");

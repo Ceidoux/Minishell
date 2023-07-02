@@ -19,7 +19,7 @@ Fonction d'initialisation des tools pour pipex.
 
 */
 
-void	init_tools(t_tools *tools, t_table_of_commands toc)
+void	init_tools(t_tools *tools, t_cmd_tab toc)
 {
 	tools->i = 0;
 	tools->pipe_fd = malloc(sizeof(int *) * (toc.size + 1));

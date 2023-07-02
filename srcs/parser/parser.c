@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-t_table_of_commands	ft_parser(char *s, char **envp)
+t_cmd_tab	ft_parser(char *s, char **envp)
 {
-	t_table_of_commands	toc;
+	t_cmd_tab	toc;
 	t_list				*tokens;
 
 	tokens = ft_lexer(s, envp);

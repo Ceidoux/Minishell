@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	clean_finish(t_tools tools, t_table_of_commands toc)
+void	clean_finish(t_tools tools, t_cmd_tab toc)
 {
 	tools.i = 0;
 	while (tools.i < toc.size)
@@ -70,7 +70,7 @@ void	failed_open(t_tools tools, char **argv)
 	exit(0);
 }
 
-void	close_pipes(t_tools tools, t_table_of_commands toc)
+void	close_pipes(t_tools tools, t_cmd_tab toc)
 {
 	int	j;
 

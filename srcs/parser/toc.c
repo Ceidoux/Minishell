@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-static void					ft_add_new_line(t_table_of_commands *toc);
-static void 				ft_add_command(t_table_of_commands *toc, char *command);
-static int					ft_add_input(t_table_of_commands *toc, t_list **tokens);
-static int					ft_add_output(t_table_of_commands *toc, t_list **tokens);
+static void	ft_add_new_line(t_cmd_tab *toc);
+static void ft_add_command(t_cmd_tab *toc, char *command);
+static int	ft_add_input(t_cmd_tab *toc, t_list **tokens);
+static int	ft_add_output(t_cmd_tab *toc, t_list **tokens);
 
-t_table_of_commands ft_create_table_of_commands(t_list *tokens)
+t_cmd_tab ft_create_table_of_commands(t_list *tokens)
 {
-	t_table_of_commands	toc;
+	t_cmd_tab	toc;
 
 	ft_bzero(&toc, sizeof(toc));
 	ft_add_new_line(&toc);
@@ -32,7 +32,7 @@ t_table_of_commands ft_create_table_of_commands(t_list *tokens)
 			if (ft_add_input(&toc, &tokens))
 				return (toc);
 		}
-		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, ">", 2) || !ft_strncmp(tokens->content, ">>", 3)))
+		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, ">", 2) || !ft_strncmp(tokens->content, ">>", 3) || !ft_strncmp(tokens->content, "<>", 3)))
 		{
 			if(ft_add_output(&toc, &tokens))
 				return (toc);
@@ -44,7 +44,7 @@ t_table_of_commands ft_create_table_of_commands(t_list *tokens)
 	return (toc);
 }
 
-static int	ft_add_input(t_table_of_commands *toc, t_list **tokens)
+static int	ft_add_input(t_cmd_tab *toc, t_list **tokens)
 {
 	if (toc->inputs[toc->size - 1])
 		close(toc->inputs[toc->size - 1]);	
@@ -62,15 +62,17 @@ static int	ft_add_input(t_table_of_commands *toc, t_list **tokens)
 	return (0);
 }
 
-static int	ft_add_output(t_table_of_commands *toc, t_list **tokens)
+static int	ft_add_output(t_cmd_tab *toc, t_list **tokens)
 {
-	if (toc->outputs[toc->size - 1])
+	if (toc->outputs[toc->size - 1] && ft_strncmp((*tokens)->content, "<>", 3))
 		close(toc->outputs[toc->size - 1]);
 	if (!ft_strncmp((*tokens)->content, ">", 2))
 		toc->outputs[toc->size - 1] = open((*tokens)->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (!ft_strncmp((*tokens)->content, "<>", 3))
+		close(open((*tokens)->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644));
 	else
 		toc->outputs[toc->size - 1] = open((*tokens)->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (toc->outputs[toc->size - 1] == -1)
+	if (toc->outputs[toc->size - 1] == -1 && ft_strncmp((*tokens)->content, "<>", 3))
 	{
 		perror((*tokens)->next->content);
 		ft_tocfree(toc);
@@ -80,9 +82,9 @@ static int	ft_add_output(t_table_of_commands *toc, t_list **tokens)
 	return (0);
 }
 
-static void	ft_add_new_line(t_table_of_commands *toc)
+static void	ft_add_new_line(t_cmd_tab *toc)
 {
-	t_table_of_commands	new_toc;
+	t_cmd_tab	new_toc;
 	int					line;
 
 	new_toc.size = toc->size + 1;
@@ -105,7 +107,7 @@ static void	ft_add_new_line(t_table_of_commands *toc)
 	*toc = new_toc;
 }
 
-static void ft_add_command(t_table_of_commands *toc, char *command)
+static void ft_add_command(t_cmd_tab *toc, char *command)
 {
 	char	*temp;
 

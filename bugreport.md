@@ -1,4 +1,17 @@
+env -i puis ctrl-D  => core dump
+
+echo "-n     mdr"
+echo -n -n lol -n
+echo -n -n 
+echo -nnnnnnnnnnnnnnnnnnnnn bonjour
+'echo "$HOME"'
+"" "" echo minishell
+
+xxx | cat -e
+
+<!-- cat hello <>file				doit print hello, créer le fichier file (et NE PAS MODIFIER LE FICHIER), et redirige vers stdout!
+echo hello >outfile <>file 		crée (si nécessaire) les fichiers outfile et file, et redirige vers outfile (pas file ni stdout) -->
+<!-- heredoc:  \n a la fin -->
 <!-- cat < ''			segmentation fault -->
-cmd					pointer being freed was not allocated
-cat hello <>file	doit print hello, créer le fichier file (et ne rien mettre dedans)!
+<!-- cmd					pointer being freed was not allocated -->
 <!-- cat /dev/random | head -c 10	cat: No such file or directory -->

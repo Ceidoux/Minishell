@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_tocfree(t_table_of_commands *toc)
+void	ft_tocfree(t_cmd_tab *toc)
 {
 	int	line;
 
