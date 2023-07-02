@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/02 17:08:43 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/02 17:10:46 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	ft_exit(char *s)
+int	ft_exit(char *s)
 {
 	unsigned char	n;
-	int 			sign;
+	int				sign;
 
 	n = 0;
 	sign = 1;
@@ -11,14 +23,14 @@ void	ft_exit(char *s)
 	while (*s == ' ')
 		s++;
 	if (!*s)
-		return ;
+		return (1);
 	if (*s == '+' || *s == '-')
 		sign = 44 - *(s++);
 	if (!ft_isdigit(*s))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
 		g_exit_status = 2;
-		return ;
+		return (1);
 	}
 	while (ft_isdigit(*s))
 		n = n * 10 + *(s++) - '0';
@@ -28,19 +40,27 @@ void	ft_exit(char *s)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		g_exit_status = 1;
-		return ;
+		return (0);
 	}
 	g_exit_status = sign * n;
+	return (1);
 }
 
 /*
 A gérer:
-[ok] exit						-> If N is not given, the exit status code is that of the last executed command
-[ok] exit [space][space][space] -> renvoie le dernier statut de sortie (identique à exit)
-[ok] exit N						-> returns N (avec N unsigned char)
-[ok] exit -N					-> renvoie la valeur en unsigned char
-[ok] exit 123D					-> print error: numeric argument required ET exit avec 255 en return value
-[ok] exit D123					-> idem
-[~] exit 123 123				-> print error: too many arguments (MAIS en principe n'exit pas)
+[ok] exit
+-> If N is not given, the exit status code is that of the last executed command
+[ok] exit [space][space][space]
+-> renvoie le dernier statut de sortie (identique à exit)
+[ok] exit N
+-> returns N (avec N unsigned char)
+[ok] exit -N
+-> renvoie la valeur en unsigned char
+[ok] exit 123D
+-> print error: numeric argument required ET exit avec 255 en return value
+[ok] exit D123
+-> idem
+[~] exit 123 123
+-> print error: too many arguments (MAIS en principe n'exit pas)
 Note: exit ne gère pas l'overflow ! (exit 256 renvoie 0)
 */

@@ -1,26 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/02 17:16:09 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/02 17:37:17 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-int	arg_size(t_tools tools)   /*  Me permet d'avoir le nombres d'arguments passe (toos.args)*/
+/*  Me permet d'avoir le nombres d'arguments passe (toos.args)*/
+int	arg_size(t_tools tools)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(tools.args[i])
+	while (tools.args[i])
 		i++;
 	return (i);
 }
 
-void	ft_swap(char **s1, char **s2)     /* Un simple echange de valeurs de str*/
+/* Un simple echange de valeurs de str*/
+void	ft_swap(char **s1, char **s2)
 {
-	char *temp;
+	char	*temp;
+
 	temp = ft_strdup(*s1);
 	*s1 = ft_strdup(*s2);
 	*s2 = ft_strdup(temp);
 }
 
-int	env_size(char **envp)         /* Nombre de lignes dans env*/ 
+/* Nombre de lignes dans env*/
+int	env_size(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -28,9 +44,11 @@ int	env_size(char **envp)         /* Nombre de lignes dans env*/
 	return (i);
 }
 
-int	has_car(char *str, char c)      /*  permet de saboir si un caractere est dans une chaine (notamment pour =, ' ou encore ")*/
+/*  permet de saboir si un caractere est dans une chaine 
+(notamment pour =, ' ou encore ")*/
+int	has_car(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -42,18 +60,20 @@ int	has_car(char *str, char c)      /*  permet de saboir si un caractere est dan
 	return (-1);
 }
 
-int	is_char(char str, char c)      /*  permet de savoir si un caractere est le mem element)*/
+/*  permet de savoir si un caractere est le mem element)*/
+int	is_char(char str, char c)
 {
 	if (str == c)
 		return (1);
 	return (0);
 }
 
-char	**split_two(char *str, int i)		/*la suite de separation_two. Ces deux fonctions servent a faire un split mais
-												que pour la premiere instance du charset, divisant le tableau en 2*/
+/*la suite de separation_two. Ces deux fonctions servent a faire un split mais
+que pour la premiere instance du charset, divisant le tableau en 2*/
+char	**split_two(char *str, int i)
 {
-	int j;
-	char **res;
+	int		j;
+	char	**res;
 
 	res = malloc(sizeof(char *) * 3);
 	res[2] = NULL;
@@ -78,10 +98,11 @@ char	**split_two(char *str, int i)		/*la suite de separation_two. Ces deux fonct
 	return (res);
 }
 
-char	**separate_two(char	*str)						/* voir split_two*/
+/* voir split_two*/
+char	**separate_two(char	*str)
 {
-	char **res;
-	int i;
+	char	**res;
+	int		i;
 
 	i = 0;
 	while (str[i])
@@ -106,7 +127,8 @@ char	**separate_two(char	*str)						/* voir split_two*/
 	return (res);
 }
 
-char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presents dans la variable"*/
+/*  Fonction  qui retire tous les ' et les " presents dans la variable"*/
+char	*modify_var(char *str) 
 {
 	char	**res;
 	int		i;
@@ -124,7 +146,7 @@ char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presen
 			i++;
 		}
 		i = 1;
-		while(res[i])
+		while (res[i])
 		{
 			free(res[i]);
 			i++;
@@ -171,9 +193,11 @@ char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presen
 	return (str);
 }
 
-int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant le premier signe '=' (utile pour savoir s la variable existe deja avec strncmp() )*/
+/* permet de savoir combien de caracters avant le premier signe '='
+(utile pour savoir s la variable existe deja avec strncmp() )*/
+int	ft_len_dif(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (has_car(str, '=') != -1)
@@ -182,13 +206,14 @@ int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant 
 			i++;
 		return (i);
 	}
-	else 
+	else
 		return (ft_strlen(str));
 }
 
-int	plus_equal(char *str)				/* permet de savoir si l'enchainement "+="  est present dans la string*/
+/* permet de savoir si l'enchainement "+="  est present dans la string*/
+int	plus_equal(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -205,29 +230,29 @@ int	plus_equal(char *str)				/* permet de savoir si l'enchainement "+="  est pre
 	return (-1);
 }
 
-int	has_invalid_character(char *str) /* verifie que la variable exportee respecte bien les regles de syntaxe */
+/* verifie que la variable exportee respecte bien les regles de syntaxe */
+int	has_invalid_character(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if ((str[i] >= '0' && str[i] <= '9') || str[i] == '=')
 		return (1);
 	while (str[i] && str[i] != '=')
 	{
-		if  ((str[i] < 'A'
+		if ((str[i] < 'A'
 				|| str[i] > 'Z') && (str[i] < 'a'
-				|| str[i] > 'z') && (str[i] < '0' || str[i] > '9') 
-				&& str[i] != '_' && str[i] != '='
-				&& plus_equal(str) != 1)
+				|| str[i] > 'z') && (str[i] < '0' || str[i] > '9')
+			&& str[i] != '_' && str[i] != '='
+			&& plus_equal(str) != 1)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-
-
-char	*remove_plus(char *str)					/* retire le '+' dune string */
+/* retire le '+' dune string */
+char	*remove_plus(char *str)
 {
 	int		i;
 	char	**cut;
@@ -251,12 +276,13 @@ char	*remove_plus(char *str)					/* retire le '+' dune string */
 	return (str);
 }
 
-char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse la chaine avec modify_var(), permet de ajouter
-															la variable dans envp ! */
+/*  apres avoir lisse la chaine avec modify_var(),
+permet de ajouter la variable dans envp ! */
+char	**ft_addstr(char **envp, char *str, int envp_size)
 {
 	int		i;
 	char	**res;
-	char 	*str_no_plus;
+	char	*str_no_plus;
 
 	i = 0;
 	str = modify_var(str);
@@ -288,7 +314,7 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	i = 0;
 	res = malloc(sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
-	while(envp_size > 0)
+	while (envp_size > 0)
 	{
 		res[envp_size - 1] = ft_strdup(envp[envp_size - 1]);
 		free(envp[envp_size - 1]);
@@ -300,14 +326,15 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	return (res);
 }
 
-char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche env par ordre alphabetique si aucun paramtere, sinon
-													export les variables selon des regles precises.*/
+/* fonction principale. Affiche env par ordre alphabetique si aucun paramtere,
+sinon export les variables selon des regles precises.*/
+char	**ft_export(t_tools tools, char **envp)
 {
-	int i;
-	int j;
-	int size;
-	int	envp_size;
-	char **export_var;
+	int		i;
+	int		j;
+	int		size;
+	int		envp_size;
+	char	**export_var;
 
 	i = 0;
 	j = 0;
@@ -320,7 +347,7 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 			while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
 			{
 				ft_swap(&envp[j - 1], &envp[j]);
-				j--;					
+				j--;
 			}
 			i++;
 			j = i;
@@ -366,9 +393,8 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 }
 
 /*
-
-
-REMARQUE : Un nombre INCALCULABLE de cas specifiques en plus ont ete corrige, je ne peux malheuresement pas tous les repertorie ici... 
+REMARQUE : Un nombre INCALCULABLE de cas specifiques en plus ont ete corrige,
+je ne peux malheuresement pas tous les repertorie ici... 
 
 A gérer :
 [ok] export								-> affiche env par ordre alphabetique
@@ -382,7 +408,7 @@ A gérer :
 [ok] export MA_VAR_QUI_EXISTE_DEJA=y	-> modifie la variable qui existe deja
 [**] export MA_VAR1=$MA_VAR2			-> MA_VAR1 prend la valeur de MA_VAR2
 [**] export MA_VAR1="$MA_VAR2"			-> idem
-[**] export MA_VAR1='$MA_VAR2'			-> MA_VAR1 pre  nd pour valeur : "MA_VAR2"
+[**] export MA_VAR1='$MA_VAR2'			-> MA_VAR1 prend pour valeur:"MA_VAR2"
 [ok] export MA_VAR1=1 MA_VAR2=2			-> export les deux variables
 [ok] export MA_VAR1=MA_VAR2=2			-> MA_VAR1 prend la valeur "MA_VAR2=2"
 [ok] export MA@_VAR						-> Erreur syntaxe

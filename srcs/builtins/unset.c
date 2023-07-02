@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/02 17:06:01 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/02 17:08:06 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	**ft_unset_my_var(char *varname, char **old_envp);
@@ -33,22 +45,20 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 		offset = 0;
 		while (--old_size >= 0)
 		{
-			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)) && (old_envp[old_size][ft_strlen(varname)] == '=' || old_envp[old_size][ft_strlen(varname)] == '\0'))
+			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname))
+				&& (old_envp[old_size][ft_strlen(varname)] == '='
+				|| old_envp[old_size][ft_strlen(varname)] == '\0'))
 				offset = 1;
 			else
 				new_envp[old_size - 1 + offset] = ft_strdup(old_envp[old_size]);
 		}
-		ft_envp_free(old_envp);
-		return (new_envp);
+		return (ft_envp_free(old_envp), new_envp);
 	}
 	else
 		return (old_envp);
 }
 
-
 /*
-
-
 A gérer :
 [**] unset VAR_QUI_EXISTE		-> supprime la variable de l'environnement
 [**] unset VAR_QUI_N'EXISTE_PAS	-> ne fait rien

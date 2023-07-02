@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/02 17:40:14 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/02 17:43:15 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -50,7 +62,7 @@ typedef struct s_tools
 void	ft_cd(t_tools tools, char **envp);
 void	ft_echo(char *s);
 int		ft_env(char **envp);
-void	ft_exit(char *s);
+int		ft_exit(char *s);
 int		ft_pwd(t_tools tools);
 char	**ft_unset(char *s, char **envp);
 

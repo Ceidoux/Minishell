@@ -11,7 +11,12 @@ $> echo $? | echo $? | echo $?
 
 xxx | cat -e
 
+- Parsing error
+$> echo coucou | >file
+
 - Other errors - 
+$> echo $"HOME"
+
 $> :
 $> !
 
