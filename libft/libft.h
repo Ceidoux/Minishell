@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:56:47 by jleguay           #+#    #+#             */
-/*   Updated: 2023/06/17 16:39:45 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/02 16:53:26 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 
 typedef enum e_type
-{ 
+{
 	OPERATOR,
 	WORD
 }	t_type;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:21 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:01:22 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:44:38 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static int	ft_addoperator(char *s, t_list **tokens)
 	int	len;
 
 	len = 0;
-	while(ft_ismetachar(s[len]))
+	while (ft_ismetachar(s[len]))
 		len++;
 	ft_lstadd_back(tokens, ft_lstnew(ft_substr(s, 0, len), OPERATOR));
 	return (len);
 }
 
-static int ft_addword(char *s, t_list **tokens)
+static int	ft_addword(char *s, t_list **tokens)
 {
 	int		len;
 	t_bool	simple_quote;
@@ -77,7 +77,8 @@ static int ft_addword(char *s, t_list **tokens)
 	len = 0;
 	simple_quote = FALSE;
 	double_quote = FALSE;
-	while (s[len] && (simple_quote || double_quote || !(ft_ismetachar(s[len]) || ft_isblank(s[len]))))
+	while (s[len] && (simple_quote || double_quote
+			|| !(ft_ismetachar(s[len]) || ft_isblank(s[len]))))
 	{
 		if (s[len] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);

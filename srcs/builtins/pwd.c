@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/02 17:37:44 by jleguay           #+#    #+#             */
+/*   Updated: 2023/07/02 17:38:27 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	invalid_option(char *str)
 {
-	int i;
+	int	i;
 	int	change_fd;
 
 	change_fd = dup(STDOUT_FILENO);
@@ -18,7 +30,7 @@ int	invalid_option(char *str)
 			close(change_fd);
 			return (1);
 		}
-		else if (str[1] && str[1] == '-' 
+		else if (str[1] && str[1] == '-'
 			&& str[2])
 		{
 			pipex_printf("pwd: --: invalid option\n");
@@ -32,9 +44,10 @@ int	invalid_option(char *str)
 	close(change_fd);
 	return (0);
 }
+
 int	ft_pwd(t_tools tools)
 {
-	char *current_dir;
+	char	*current_dir;
 
 	if (tools.args[1])
 	{

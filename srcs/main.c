@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 18:44:29 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:22:05 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,40 @@ int	main(int argc, char **argv, char **envp)
 
 static void	ft_loop(char ***envp)
 {
-	char				*prompt;
-	char				*line_read;
+	char		*prompt;
+	char		*line_read;
 	t_cmd_tab	toc;
+	int			ret;
 
-	while (1)
+	ret = 0;
+	while (!ret)
 	{
 		prompt = ft_prompt(*envp);
 		line_read = readline(prompt);
 		free(prompt);
 		if (!line_read)
-			break ;
+			ret = 1;
 		else if (*line_read)
 		{
 			add_history(line_read);
 			toc = ft_parser(line_read, *envp);
 			if (toc.commands[0])
-				pipex(toc, envp);
+				ret = pipex(toc, envp);
 			ft_tocfree(&toc);
 		}
 		free(line_read);
 	}
 	printf("exit\n");
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	g_exit_status = 130;
 }
 
@@ -93,8 +95,10 @@ static char	*ft_prompt(char **envp)
 ! théoriquement, le format du prompt est donné par la variable PS1:
 Exemple:
 $>echo $PS1
-$>%n@%m %1~ %#		->Signifie que le prompt est au format suivant:	user@hostname cwd %
-Nb : impossible d'affichier l'hostname sans la fonction uname(), gethostname() ou set()
+$>%n@%m %1~ %#		->Signifie que le prompt est au format suivant:	
+	user@hostname cwd %
+Nb : impossible d'affichier l'hostname sans la fonction uname(), 
+gethostname() ou set()
 
 Attention à check si toutes les variables existent pour ft_prompt
 

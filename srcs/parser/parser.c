@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:48 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:06:56 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:05:26 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_cmd_tab	ft_parser(char *s, char **envp)
 {
 	t_cmd_tab	toc;
-	t_list				*tokens;
+	t_list		*tokens;
 
 	tokens = ft_lexer(s, envp);
 	toc = ft_create_table_of_commands(tokens);

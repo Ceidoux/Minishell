@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:16 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:01:18 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:45:01 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int	ft_expand_exit_status(char **s, int idx)
 	ft_strlcpy(new_s, *s, idx);
 	if (exit_status && *exit_status)
 		ft_strlcpy(new_s + idx - 1, exit_status, exit_status_length + 1);
-	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1, ft_strlen(*s) - idx);
+	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1,
+		ft_strlen(*s) - idx);
 	free(exit_status);
 	old_s = *s;
 	*s = new_s;
@@ -89,18 +90,19 @@ static int	ft_expand_var(char **s, int idx, char **envp)
 	ft_strlcpy(new_s, *s, idx);
 	if (var)
 		ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
-	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len, ft_strlen(*s) - (idx + len) + 1);
+	ft_strlcpy(new_s + idx - 1 + ft_strlen(var),
+		*s + idx + len, ft_strlen(*s) - (idx + len) + 1);
 	old_s = *s;
 	*s = new_s;
-	free(old_s);
-	return (ft_strlen(var));
+	return (free(old_s), ft_strlen(var));
 }
 
 /*
 A gerer:
 [**] $VAR_DEFINIE
 [**] $VAR_NON_DEFINIE	-> echo $VAR_UNDEFINIED Output: (nothing)
-[**] $ blabla 			--> e.g. echo $ qs ($ immediatement suivi d'un espace) Output: $ qs ($ conserve)
+[**] $ blabla 			
+--> e.g. echo $ qs ($ immediatement suivi d'un espace) Output: $ qs ($ conserve)
 [**] blabla$			->
 [**] "$USER"			--> jle
 [**] '$USER'			--> $USER
