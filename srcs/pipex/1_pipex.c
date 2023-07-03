@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 15:37:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 16:23:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	pipex(t_cmd_tab toc, char ***envp)
 				if (tools.pid[tools.i] == 0)
 					ft_echo(tools, toc.commands[tools.i], toc, *envp);
 			}
-			else if (is_builtin(tools.args[0]))
+			else if (is_builtin(tools.args[0], *envp))
 				builtin_exec(tools, toc, envp);
 			else
 			{

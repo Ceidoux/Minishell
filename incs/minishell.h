@@ -136,7 +136,7 @@ void	no_execution(t_tools tools);
 void	free_no_path(t_tools tools);
 void	failed_open(t_tools tools, char **argv);
 void	close_pipes(t_tools tools, t_cmd_tab toc);
-int		is_builtin(char *str);
+int		is_builtin(char *str, char **envp);
 void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strsort(char *s1, char *s2);

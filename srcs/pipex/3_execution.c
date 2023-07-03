@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 14:29:06 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 16:28:05 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,17 +188,31 @@ int	ft_strsort(char *s1, char *s2)
 	return (0);
 } 
 
-int	is_builtin(char *str)
+int	is_builtin(char *str, char **envp)
 {
-	if (ft_strcmp(str, "cd") || ft_strcmp(str, "echo")
-		|| ft_strcmp(str, "env") || ft_strcmp(str, "exit")
-		|| ft_strcmp(str, "export") || ft_strcmp(str, "pwd") || ft_strcmp(str, "unset"))
+	char *copy;
+
+	copy = ft_strdup(str);
+	ft_expand(&copy, envp);
+	ft_unquote(&copy);
+	if (ft_strcmp(copy, "cd") || ft_strcmp(copy, "echo")
+		|| ft_strcmp(copy, "env") || ft_strcmp(copy, "exit")
+		|| ft_strcmp(copy, "export") || ft_strcmp(copy, "pwd") || ft_strcmp(copy, "unset"))
 		return (1);
 	return (0);
 }
 
 void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
+	int i;
+
+	i = 0;
+	while (tools.args[i])
+	{
+		ft_expand(&tools.args[i], *envp);
+		ft_unquote(&tools.args[i]);
+		i++;
+	}
 	ft_expand(tools.args, *envp);
 	ft_unquote(tools.args);
 	if (ft_strcmp(tools.args[0], "cd"))
