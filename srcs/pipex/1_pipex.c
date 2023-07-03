@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 14:30:28 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 15:37:37 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,25 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{
-		tools.args = ft_split(toc.commands[tools.i], ' ');
-		if (ft_strcmp(tools.args[0], "echo"))
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-				ft_echo(tools, toc.commands[tools.i], toc, *envp);
-		}
-		else if (is_builtin(tools.args[0]))
-			builtin_exec(tools, toc, envp);
+		if (toc.commands[tools.i] == NULL)
+			;
 		else
 		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-				command_exec(tools, toc, *envp);
+			tools.args = ft_split(toc.commands[tools.i], ' ');
+			if (ft_strcmp(tools.args[0], "echo"))
+			{
+				tools.pid[tools.i] = fork();
+				if (tools.pid[tools.i] == 0)
+					ft_echo(tools, toc.commands[tools.i], toc, *envp);
+			}
+			else if (is_builtin(tools.args[0]))
+				builtin_exec(tools, toc, envp);
+			else
+			{
+				tools.pid[tools.i] = fork();
+				if (tools.pid[tools.i] == 0)
+					command_exec(tools, toc, *envp);
+			}
 		}
 		(tools.i)++;
 	}
