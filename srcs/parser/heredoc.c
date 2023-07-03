@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-static int	ft_create_heredoc(char *delimiter);
+static int	ft_create_heredoc(char *delimiter, char **envp);
 
-int	ft_heredoc(char *delimiter)
+int	ft_heredoc(char *delimiter, char **envp)
 {
 	int	fd;
 
-	if (ft_create_heredoc(delimiter) == -1)
+	if (ft_create_heredoc(delimiter, envp) == -1)
 		return (-1);
 	fd = open(".heredoc", O_RDONLY);
 	if (fd == -1)
@@ -27,7 +27,7 @@ int	ft_heredoc(char *delimiter)
 	return (fd);
 }
 
-static int	ft_create_heredoc(char *delimiter)
+static int	ft_create_heredoc(char *delimiter, char **envp)
 {
 	int		fd;
 	char	*line;
@@ -44,6 +44,7 @@ static int	ft_create_heredoc(char *delimiter)
 			break ;
 		if (idx > 1)
 			write(fd, "\n", 1);
+		ft_expand(&line, envp);
 		write(fd, line, ft_strlen(line));
 		free(line);
 	}

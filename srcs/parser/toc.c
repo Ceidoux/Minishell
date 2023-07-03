@@ -57,7 +57,7 @@ static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp)
 	else
 	{
 		ft_unquote(&(*tokens)->next->content);
-		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content);
+		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content, envp);
 	}
 	if (toc->inputs[toc->size - 1] == -1)
 	{
