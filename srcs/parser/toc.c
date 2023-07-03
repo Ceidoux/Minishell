@@ -14,10 +14,10 @@
 
 static void	ft_add_new_line(t_cmd_tab *toc);
 static void ft_add_command(t_cmd_tab *toc, char *command);
-static int	ft_add_input(t_cmd_tab *toc, t_list **tokens);
-static int	ft_add_output(t_cmd_tab *toc, t_list **tokens);
+static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp);
+static int	ft_add_output(t_cmd_tab *toc, t_list **tokens, char **envp);
 
-t_cmd_tab ft_create_table_of_commands(t_list *tokens)
+t_cmd_tab ft_create_table_of_commands(t_list *tokens, char **envp)
 {
 	t_cmd_tab	toc;
 
@@ -29,12 +29,12 @@ t_cmd_tab ft_create_table_of_commands(t_list *tokens)
 			ft_add_command(&toc, tokens->content);
 		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, "<", 2) || !ft_strncmp(tokens->content, "<<", 3)))
 		{
-			if (ft_add_input(&toc, &tokens))
+			if (ft_add_input(&toc, &tokens, envp))
 				return (toc);
 		}
 		else if (tokens->type == OPERATOR && (!ft_strncmp(tokens->content, ">", 2) || !ft_strncmp(tokens->content, ">>", 3) || !ft_strncmp(tokens->content, "<>", 3)))
 		{
-			if(ft_add_output(&toc, &tokens))
+			if(ft_add_output(&toc, &tokens, envp))
 				return (toc);
 		}
 		else
@@ -44,14 +44,21 @@ t_cmd_tab ft_create_table_of_commands(t_list *tokens)
 	return (toc);
 }
 
-static int	ft_add_input(t_cmd_tab *toc, t_list **tokens)
+static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp)
 {
 	if (toc->inputs[toc->size - 1] >= 0)
 		close(toc->inputs[toc->size - 1]);	
 	if (!ft_strncmp((*tokens)->content, "<", 2))
+	{
+		ft_expand(&(*tokens)->next->content, envp);
+		ft_unquote(&(*tokens)->next->content);
 		toc->inputs[toc->size - 1] = open((*tokens)->next->content, O_RDONLY);
-	else 
+	}
+	else
+	{
+		ft_unquote(&(*tokens)->next->content);
 		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content);
+	}
 	if (toc->inputs[toc->size - 1] == -1)
 	{
 		perror((*tokens)->next->content);
@@ -62,8 +69,10 @@ static int	ft_add_input(t_cmd_tab *toc, t_list **tokens)
 	return (0);
 }
 
-static int	ft_add_output(t_cmd_tab *toc, t_list **tokens)
+static int	ft_add_output(t_cmd_tab *toc, t_list **tokens, char **envp)
 {
+	ft_expand(&(*tokens)->next->content, envp);
+	ft_unquote(&(*tokens)->next->content);
 	if (toc->outputs[toc->size - 1] >= 0 && ft_strncmp((*tokens)->content, "<>", 3))
 		close(toc->outputs[toc->size - 1]);
 	if (!ft_strncmp((*tokens)->content, ">", 2))

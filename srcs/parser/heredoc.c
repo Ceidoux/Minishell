@@ -52,3 +52,9 @@ static int	ft_create_heredoc(char *delimiter)
 	close(fd);
 	return (0);
 }
+/*
+export VAR=END
+cat << $VAR		-> le délimitateur est $VAR
+cat << "$VAR" 	-> le délimitateur est VAR
+cat << $"VAR" 	-> le délimitateur est VAR
+*/

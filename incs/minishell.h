@@ -82,7 +82,7 @@ void	ft_unquote(char **s);
 
 /* parser directory */
 t_cmd_tab	ft_parser(char *s, char **envp);
-t_cmd_tab	ft_create_table_of_commands(t_list *tokens);
+t_cmd_tab	ft_create_table_of_commands(t_list *tokens, char **envp);
 int		ft_heredoc(char *delimiter);
 
 /* utils directory */
