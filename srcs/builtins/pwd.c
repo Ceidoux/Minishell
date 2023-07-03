@@ -30,7 +30,7 @@ int	invalid_option(char *str)
 	close(change_fd);
 	return (0);
 }
-int	ft_pwd(t_tools tools)
+int	ft_pwd(t_tools tools, t_cmd_tab toc)
 {
 	char *current_dir;
 
@@ -42,15 +42,21 @@ int	ft_pwd(t_tools tools)
 			return (0);
 		}
 	}
-	current_dir = NULL;
-	current_dir = getcwd(current_dir, 4096);
-	if (!current_dir)
+	tools.pid[tools.i] = fork();
+	if (tools.pid[tools.i] == 0)
 	{
-		perror("pwd");
-		return (1);
+		ft_pipe_manager(tools, toc);
+		current_dir = NULL;
+		current_dir = getcwd(current_dir, 4096);
+		if (!current_dir)
+		{
+			perror("pwd");
+				exit(1);
+		}
+		ft_putendl_fd(current_dir, 1);
+		free(current_dir);
+		exit(0);
 	}
-	ft_putendl_fd(current_dir, 1);
-	free(current_dir);
 	return (0);
 }
 

@@ -300,7 +300,7 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	return (res);
 }
 
-char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche env par ordre alphabetique si aucun paramtere, sinon
+char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)   /* fonction principale. Affiche env par ordre alphabetique si aucun paramtere, sinon
 													export les variables selon des regles precises.*/
 {
 	int i;
@@ -315,34 +315,40 @@ char	**ft_export(t_tools tools, char **envp)   /* fonction principale. Affiche e
 	envp_size = env_size(envp);
 	if (size == 1)
 	{
-		while (i < envp_size)
+		tools.pid[tools.i] = fork();
+		if (tools.pid[tools.i] == 0)
 		{
-			while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
+			ft_pipe_manager(tools, toc);
+			while (i < envp_size)
 			{
-				ft_swap(&envp[j - 1], &envp[j]);
-				j--;					
+				while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
+				{
+					ft_swap(&envp[j - 1], &envp[j]);
+					j--;					
+				}
+				i++;
+				j = i;
 			}
-			i++;
-			j = i;
-		}
-		i = 0;
-		j = 0;
-		while (envp[i])
-		{
-			if (has_car(envp[i], '=') != -1)
+			i = 0;
+			j = 0;
+			while (envp[i])
 			{
-				export_var = separate_two(envp[i]);
-				if (env_size(export_var) == 2)
-					printf("export %s=\"%s\"\n", export_var[0], export_var[1]);
-				else if (env_size(export_var) == 1 && envp[i][ft_strlen(envp[i]) - 1] == '=')
-					printf("export %s=\"\"\n", export_var[0]);
-				while (export_var[j])
-					free(export_var[j++]);
-				free(export_var);
+				if (has_car(envp[i], '=') != -1)
+				{
+					export_var = separate_two(envp[i]);
+					if (env_size(export_var) == 2)
+						printf("export %s=\"%s\"\n", export_var[0], export_var[1]);
+					else if (env_size(export_var) == 1 && envp[i][ft_strlen(envp[i]) - 1] == '=')
+						printf("export %s=\"\"\n", export_var[0]);
+					while (export_var[j])
+						free(export_var[j++]);
+					free(export_var);
+				}
+				else
+					pipex_printf("export %s\n", envp[i]);
+				i++;
 			}
-			else
-				pipex_printf("export %s\n", envp[i]);
-			i++;
+			exit(0);
 		}
 	}
 	else

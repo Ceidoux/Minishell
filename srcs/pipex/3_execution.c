@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 16:28:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 21:33:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,16 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 {
 	int	j;
 
-	ft_expand(tools.args, envp);
-	ft_unquote(tools.args);
 	j = 0;
-	tools.saved_std_out = dup(1);
-	if (toc.inputs[tools.i] != -1)
-		dup2(toc.inputs[tools.i], STDIN_FILENO);
-	else if (tools.i > 0)
-		dup2(tools.pipe_fd[tools.i - 1][0], STDIN_FILENO);
-	if (toc.outputs[tools.i] != -1)
-		dup2(toc.outputs[tools.i], STDOUT_FILENO);
-	else if (tools.i < toc.size - 1)
-		dup2(tools.pipe_fd[tools.i][1], STDOUT_FILENO);
-	while (j < toc.size)
+	while (tools.args[j])
 	{
-		if (tools.pipe_fd[j][0] >= 0)
-			close(tools.pipe_fd[j][0]);
-		if (tools.pipe_fd[j][1] >= 0)
-			close(tools.pipe_fd[j][1]);
-		if (toc.inputs[j] >= 0)
-			close(toc.inputs[j]);
-		if (toc.outputs[j] >= 0)
-			close(toc.outputs[j]);
+		ft_expand(&tools.args[j], envp);
+		ft_unquote(&tools.args[j]);
 		j++;
 	}
+	j = 0;
+	tools.saved_std_out = dup(1);
+	ft_pipe_manager(tools, toc);
 	close(tools.saved_std_out);
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
@@ -139,13 +125,10 @@ char	*get_path(char **envp, char *str)
 
 void	env_path(t_tools tools, char **envp)
 {
-	// tools.str = getenv("PATH");
 	tools.str = get_path(envp, "PATH=");
 	if (tools.str == NULL)
 		no_path(tools);
 	tools.paths = pipex_split_slash(tools.str, ":");
-	// for (int i = 0; tools.args[i]; i++)
-	// 	fprintf(stderr,"ARG %d: %s\n", i, tools.args[i]);
 	tools.i = 0;
 	while (tools.paths[tools.i])
 	{
@@ -156,7 +139,6 @@ void	env_path(t_tools tools, char **envp)
 		g_exit_status = execve(tools.paths[tools.i], tools.args, NULL);
 		(tools.i)++;
 	}
-	// perror(tools.args[0]);
 	no_execution(tools);
 }
 
@@ -213,8 +195,6 @@ void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 		ft_unquote(&tools.args[i]);
 		i++;
 	}
-	ft_expand(tools.args, *envp);
-	ft_unquote(tools.args);
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "echo"))
@@ -224,9 +204,9 @@ void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 	else if (ft_strcmp(tools.args[0], "exit"))
 		ft_exit(toc.commands[tools.i]);
 	else if (ft_strcmp(tools.args[0], "export"))
-		*envp = ft_export(tools, *envp);
+		*envp = ft_export(tools, toc, *envp);
 	else if (ft_strcmp(tools.args[0], "pwd"))
-		ft_pwd(tools);
+		ft_pwd(tools, toc);
 	else if (ft_strcmp(tools.args[0], "unset"))
 		*envp = ft_unset(toc.commands[tools.i], *envp);
 }

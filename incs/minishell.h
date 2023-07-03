@@ -51,11 +51,11 @@ void	ft_cd(t_tools tools, char **envp);
 void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp);
 int		ft_env(char **envp);
 void	ft_exit(char *s);
-int		ft_pwd(t_tools tools);
+int		ft_pwd(t_tools tools, t_cmd_tab toc);
 char	**ft_unset(char *s, char **envp);
 
 /*  Function in Export */
-char	**ft_export(t_tools tools, char **envp);
+char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp);
 int		arg_size(t_tools tools);
 void	ft_swap(char **s1, char **s2);
 int		env_size(char **envp);
@@ -98,6 +98,7 @@ void	ft_tocfree(t_cmd_tab *toc);
 
 /* pipex directory */
 int		pipex(t_cmd_tab toc, char ***envp);
+void	ft_pipe_manager(t_tools tools, t_cmd_tab toc);
 void	init_tools(t_tools *tools, t_cmd_tab toc);
 void	command_exec(t_tools tools, t_cmd_tab toc, char **envp);
 void	absolute_relative_path(t_tools tools);

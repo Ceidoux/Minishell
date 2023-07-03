@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 16:23:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 21:17:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,32 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	return (0);
 }
 
+void	ft_pipe_manager(t_tools tools, t_cmd_tab toc)
+{
+	int j;
 
+	j = 0;
+	if (toc.inputs[tools.i] != -1)
+		dup2(toc.inputs[tools.i], STDIN_FILENO);
+	else if (tools.i > 0)
+		dup2(tools.pipe_fd[tools.i - 1][0], STDIN_FILENO);
+	if (toc.outputs[tools.i] != -1)
+		dup2(toc.outputs[tools.i], STDOUT_FILENO);
+	else if (tools.i < toc.size - 1)
+		dup2(tools.pipe_fd[tools.i][1], STDOUT_FILENO);
+	while (j < toc.size)
+	{
+		if (tools.pipe_fd[j][0] >= 0)
+			close(tools.pipe_fd[j][0]);
+		if (tools.pipe_fd[j][1] >= 0)
+			close(tools.pipe_fd[j][1]);
+		if (toc.inputs[j] >= 0)
+			close(toc.inputs[j]);
+		if (toc.outputs[j] >= 0)
+			close(toc.outputs[j]);
+		j++;
+	}
+}
 
 /**se tout seul et a configurer manuellement pour simuler une arrivee de T.O.C dans Pipex
 	sans passer par minishell !
