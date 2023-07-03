@@ -14,6 +14,7 @@
 
 static int	ft_expand_var(char **s, int idx, char **envp);
 static int	ft_expand_exit_status(char **s, int idx);
+static int	ft_remove_dollar_sign(char **s, int idx);
 
 /* expansion des variables unquoted
 nb: char** car on passe l'adresse d'un str */
@@ -30,7 +31,9 @@ void	ft_expand(char **s, char **envp)
 	{
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
 		{
-			if ((*s)[idx + 1] == '?')
+			if (double_quote == FALSE && ((*s)[idx + 1] == '\'' || (*s)[idx + 1] == '\"'))
+				idx += ft_remove_dollar_sign(s, idx + 1);
+			else if ((*s)[idx + 1] == '?')
 				idx += ft_expand_exit_status(s, idx + 1);
 			else
 				idx += ft_expand_var(s, idx + 1, envp);
@@ -42,6 +45,24 @@ void	ft_expand(char **s, char **envp)
 			simple_quote = (simple_quote == FALSE);
 		idx++;
 	}
+}
+
+static int	ft_remove_dollar_sign(char **s, int idx)
+{
+	char	*new_s;
+	char	*old_s;
+	int		old_size;
+	
+	old_size = ft_strlen(*s);
+	new_s = malloc(old_size * sizeof(*new_s));
+	if (!new_s)
+		exit(EXIT_FAILURE);
+	ft_strlcpy(new_s, *s, idx);
+	ft_strlcpy(new_s + idx - 1, *s + idx, old_size - idx + 1);
+	old_s = *s;
+	*s = new_s;
+	free(old_s);
+	return (1);	
 }
 
 static int	ft_expand_exit_status(char **s, int idx)

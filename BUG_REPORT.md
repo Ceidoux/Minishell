@@ -6,16 +6,16 @@ $> ""
 $> ''
 [1]    240079 segmentation fault (core dumped)  ./minishell
 
-$> echo $? | echo $? | echo $?
+<!-- $> echo $? | echo $? | echo $? -->
 
 
-xxx | cat -e
-
+<!-- xxx | cat -e -->
+<!-- 
 - Parsing error
-$> echo coucou | >file
+$> echo coucou | >file -->
 
 - Other errors - 
-$> echo $"HOME"
+<!-- $> echo $"HOME" -->
 
 $> :
 $> !
