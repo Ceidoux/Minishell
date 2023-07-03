@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 13:36:49 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/03 14:29:06 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "echo"))
-		ft_echo(tools, toc.commands[tools.i], toc);
+		ft_echo(tools, toc.commands[tools.i], toc, *envp);
 	else if (ft_strcmp(tools.args[0], "env"))
 		ft_env(*envp);
 	else if (ft_strcmp(tools.args[0], "exit"))

@@ -1,9 +1,28 @@
 #include "minishell.h"
 
-void	ft_echo(t_tools tools, char *s, t_cmd_tab toc)
+
+int	is_slash_n(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str[i] != '-')
+		return (0);
+	i++;
+	if ((!str[i]) || (str[i] && str[i] != 'n'))
+		return (0);
+	while (str[i] == 'n')
+		i++;
+	if (str[i] && str[i] != ' ')
+		return (0);
+	return (i);
+} 
+
+void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 {
 	t_bool	n_flag;
 	int j;
+	char *copy;
 
 	j = 0;
 	if (toc.inputs[tools.i] != -1)
@@ -27,20 +46,28 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc)
 			close(toc.outputs[j]);
 		j++;
 	}
+	j = 0;
 	if (!s[4])
 		ft_putchar_fd('\n', 1);
 	else
 	{
 		s += 5;
-		if (!ft_strncmp(s, "-n", 2) && (s[2] == ' ' || s[2] == '\0'))
+		j = is_slash_n(s);
+		if (/*!ft_strncmp(s, "-n", 2) && (s[2] == ' ' || s[2] == '\0')*/ j != 0)
 		{
+
 			n_flag = 1;
-			s += 3;
+			s += j;
+			while (*s && *s == ' ')
+				s++;
 		}
+		copy = ft_strdup(s);
+		ft_expand(&copy, envp);
+		ft_unquote(&copy);
 		if (n_flag)
-			pipex_printf("%s", s);
+			pipex_printf("%s", copy);
 		else
-			pipex_printf("%s\n", s);
+			pipex_printf("%s\n", copy);
 	}
 	g_exit_status = 0;
 	exit(0);

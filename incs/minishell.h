@@ -48,7 +48,7 @@ typedef struct s_tools
 
 /* builtin directory */
 void	ft_cd(t_tools tools, char **envp);
-void	ft_echo(t_tools tools, char *s, t_cmd_tab toc);
+void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp);
 int		ft_env(char **envp);
 void	ft_exit(char *s);
 int		ft_pwd(t_tools tools);
