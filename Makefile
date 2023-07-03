@@ -29,10 +29,10 @@ SRCS	:= main.c \
 		   builtins/export.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
+		   converter/expand.c \
+		   converter/unquote.c \
 		   lexer/checking.c \
-		   lexer/expanding.c \
 		   lexer/lexer.c \
-		   lexer/quotes.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
 		   parser/toc.c \

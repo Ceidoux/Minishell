@@ -15,6 +15,7 @@
 static int	ft_check_single_operator(char *operator);
 static int	ft_check_two_operators(char *operator1, char *operator2);
 static int	ft_check_last_operator(char *operator);
+static int	ft_check_quotes(char *word);
 
 int	ft_check(t_list	*tokens)
 {
@@ -34,12 +35,12 @@ int	ft_check(t_list	*tokens)
 			return (0);
 		else if (!tokens->next && tokens->type == OPERATOR && !ft_check_last_operator(tokens->content))
 			return (0);
-		// else if (tokens->type == WORD)
-		// {
-		// 	if (!ft_check_quotes(tokens->content))
-		// 		return (0);
+		else if (tokens->type == WORD)
+		{
+			if (!ft_check_quotes(tokens->content))
+				return (0);
 		// 	ft_unquote(&(tokens->content));
-		// }
+		}
 		tokens = tokens->next;
 	}
 	return (1);
@@ -95,3 +96,29 @@ static int	ft_check_two_operators(char *operator1, char *operator2)
 	return (0);
 }
 /* exit_status en cas d'erreur est de 258  */
+
+static int	ft_check_quotes(char *word)
+{
+	int		idx;
+	t_bool	simple_quote;
+	t_bool	double_quote;
+
+	idx = -1;
+	simple_quote = FALSE;
+	double_quote = FALSE;
+	while (word[++idx])
+	{
+		if (word[idx] == '\"' && simple_quote == FALSE)
+			double_quote = (double_quote == FALSE);
+		else if (word[idx] == '\'' && double_quote == FALSE)
+			simple_quote = (simple_quote == FALSE);
+	}
+	if (double_quote == FALSE && simple_quote == FALSE)
+		return (1);
+	g_exit_status = 258;
+	if (double_quote == TRUE)
+		ft_putendl_fd("syntax error: expected \" not found", 1);
+	else if (simple_quote == TRUE)
+		ft_putendl_fd("syntax error: expected \' not found", 1);
+	return (0);
+}

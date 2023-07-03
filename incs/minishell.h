@@ -74,8 +74,9 @@ char	**ft_addstr(char **envp, char *str, int envp_size);
 
 /* lexer (lexical analyser) directory */
 int		ft_check(t_list	*tokens);
-int		ft_check_quotes(char *word);
 t_list	*ft_lexer(char *s, char **envp);
+
+/* converter directory */
 void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
 
