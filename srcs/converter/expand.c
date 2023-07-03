@@ -14,7 +14,7 @@
 
 static int	ft_expand_var(char **s, int idx, char **envp);
 static int	ft_expand_exit_status(char **s, int idx);
-static int	ft_remove_dollar_sign(char **s, int idx);
+static void	ft_remove_dollar_sign(char **s, int idx);
 
 /* expansion des variables unquoted
 nb: char** car on passe l'adresse d'un str */
@@ -24,6 +24,7 @@ void	ft_expand(char **s, char **envp)
 	t_bool	simple_quote;
 	t_bool	double_quote;
 
+	printf("%s\n", *s);
 	idx = 0;
 	simple_quote = FALSE;
 	double_quote = FALSE;
@@ -32,7 +33,7 @@ void	ft_expand(char **s, char **envp)
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
 		{
 			if (double_quote == FALSE && ((*s)[idx + 1] == '\'' || (*s)[idx + 1] == '\"'))
-				idx += ft_remove_dollar_sign(s, idx + 1);
+				ft_remove_dollar_sign(s, idx + 1);
 			else if ((*s)[idx + 1] == '?')
 				idx += ft_expand_exit_status(s, idx + 1);
 			else
@@ -45,9 +46,10 @@ void	ft_expand(char **s, char **envp)
 			simple_quote = (simple_quote == FALSE);
 		idx++;
 	}
+	printf("%s\n", *s);
 }
 
-static int	ft_remove_dollar_sign(char **s, int idx)
+static void	ft_remove_dollar_sign(char **s, int idx)
 {
 	char	*new_s;
 	char	*old_s;
@@ -62,7 +64,6 @@ static int	ft_remove_dollar_sign(char **s, int idx)
 	old_s = *s;
 	*s = new_s;
 	free(old_s);
-	return (1);	
 }
 
 static int	ft_expand_exit_status(char **s, int idx)
