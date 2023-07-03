@@ -1,10 +1,10 @@
 /!\ WARNING /!\
 
-$> ""
+<!-- $> ""
 [1]    240079 segmentation fault (core dumped)  ./minishell
 
 $> ''
-[1]    240079 segmentation fault (core dumped)  ./minishell
+[1]    240079 segmentation fault (core dumped)  ./minishell -->
 
 <!-- $> echo $? | echo $? | echo $? -->
 
