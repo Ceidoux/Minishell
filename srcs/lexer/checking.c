@@ -34,12 +34,12 @@ int	ft_check(t_list	*tokens)
 			return (0);
 		else if (!tokens->next && tokens->type == OPERATOR && !ft_check_last_operator(tokens->content))
 			return (0);
-		else if (tokens->type == WORD)
-		{
-			if (!ft_check_quotes(tokens->content))
-				return (0);
-			ft_unquote(&(tokens->content));
-		}
+		// else if (tokens->type == WORD)
+		// {
+		// 	if (!ft_check_quotes(tokens->content))
+		// 		return (0);
+		// 	ft_unquote(&(tokens->content));
+		// }
 		tokens = tokens->next;
 	}
 	return (1);
