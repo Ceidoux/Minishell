@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/02 19:14:46 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:36:49 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 {
 	int	j;
 
+	ft_expand(tools.args, envp);
+	ft_unquote(tools.args);
 	j = 0;
 	tools.saved_std_out = dup(1);
 	if (toc.inputs[tools.i] != -1)
@@ -197,6 +199,8 @@ int	is_builtin(char *str)
 
 void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
+	ft_expand(tools.args, *envp);
+	ft_unquote(tools.args);
 	if (ft_strcmp(tools.args[0], "cd"))
 		ft_cd(tools, *envp);
 	else if (ft_strcmp(tools.args[0], "echo"))
