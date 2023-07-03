@@ -2,11 +2,9 @@
 
 int	invalid_option(char *str)
 {
-	int i;
 	int	change_fd;
 
 	change_fd = dup(STDOUT_FILENO);
-	i = 0;
 	dup2(STDOUT_FILENO, STDERR_FILENO);
 	if (str [0] && str[0] == '-')
 	{
