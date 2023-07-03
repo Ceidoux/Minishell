@@ -88,7 +88,10 @@ static int	ft_check_single_operator(char *operator)
 
 static int	ft_check_two_operators(char *operator1, char *operator2)
 {
-	(void) operator1;
+	if (!ft_strncmp(operator1, "|", 2) && (!ft_strncmp(operator2, "<", 2)
+		|| !ft_strncmp(operator2, ">", 2) || !ft_strncmp(operator2, "<<", 3)
+		|| !ft_strncmp(operator2, ">>", 3)))
+		return (1);
 	g_exit_status = 258;
 	ft_putstr_fd("syntax error near unexpected token \'", 1);
 	ft_putstr_fd(operator2, 1);

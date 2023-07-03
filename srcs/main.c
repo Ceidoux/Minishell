@@ -56,8 +56,8 @@ static void	ft_loop(char ***envp)
 		{
 			add_history(line_read);
 			toc = ft_parser(line_read, *envp);
-			if (toc.commands[0])
-				pipex(toc, envp);
+			// if (toc.commands[0])
+			pipex(toc, envp);
 			ft_tocfree(&toc);
 		}
 		free(line_read);

@@ -31,7 +31,7 @@ SRCS	:= main.c \
 		   builtins/unset.c \
 		   converter/expand.c \
 		   converter/unquote.c \
-		   lexer/checking.c \
+		   lexer/checker.c \
 		   lexer/lexer.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
