@@ -41,23 +41,24 @@ int	main(int argc, char **argv, char **envp)
 
 static void	ft_loop(char ***envp)
 {
-	char				*prompt;
-	char				*line_read;
+	char		*prompt;
+	char		*line_read;
 	t_cmd_tab	toc;
+	int			ret;
 
-	while (1)
+	ret = 0;
+	while (!ret)
 	{
 		prompt = ft_prompt(*envp);
 		line_read = readline(prompt);
 		free(prompt);
 		if (!line_read)
-			break ;
+			ret = 1;
 		else if (*line_read)
 		{
 			add_history(line_read);
 			toc = ft_parser(line_read, *envp);
-			// if (toc.commands[0])
-			pipex(toc, envp);
+			ret = pipex(toc, envp);
 			ft_tocfree(&toc);
 		}
 		free(line_read);

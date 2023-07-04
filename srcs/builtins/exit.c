@@ -2,7 +2,7 @@
 
 
 
-int	ft_exit(char *s, int size)
+int	ft_exit(char *s)
 {
 	unsigned char	n;
 	int 			sign;
@@ -13,33 +13,33 @@ int	ft_exit(char *s, int size)
 	while (*s == ' ')
 		s++;
 	if (!*s)
-		return (0);
+		return (1);
 	if (*s == '+' || *s == '-')
 		sign = 44 - *(s++);
 	if (!ft_isdigit(*s))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		g_exit_status = 2;
-		if (size == 1)
-			return (1);
-		return (0);
+		g_exit_status = 255;
+		return (1);
 	}
 	while (ft_isdigit(*s))
 		n = n * 10 + *(s++) - '0';
+	if (*s && *s != ' ')
+	{
+		ft_putendl_fd("exit: numeric argument required", 2);
+		g_exit_status = 255;
+		return (1);
+	}
 	while (*s == ' ')
 		s++;
 	if (*s)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		g_exit_status = 1;
-		if (size == 1)
-			return (1);
 		return (0);
 	}
 	g_exit_status = sign * n;
-	if (size == 1)
-		return (1);
-	return (0);
+	return (1);
 }
 
 /*
