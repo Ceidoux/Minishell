@@ -42,7 +42,12 @@ static int	ft_create_heredoc(char *delimiter, char **envp)
 		line = readline(">");
 		if (g_exit_status == 130)
 			return (-1);
-		else if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+		else if (!line)
+		{
+			write(1, "\n", 1);
+			break;
+		}
+		else if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 			break ;
 		else if (idx > 1)
 			write(fd, "\n", 1);
