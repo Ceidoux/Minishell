@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 22:52:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/04 01:57:35 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	clean_finish(t_tools tools, t_cmd_tab toc)
 void	no_execution(t_tools tools)
 {
 	// perror(tools.args[0]);
-	pipex_printf("%s: command not found\n", tools.args[0]);
+	error_pipex_printf("%s: command not found\n", tools.args[0]);
 	free_all(tools);
 	free_main(&tools);
 	exit(127);
@@ -62,7 +62,6 @@ void	failed_open(t_tools tools, char **argv)
 	perror(argv[1]);
 	close(tools.pipe_fd[0][1]);
 	close(tools.pipe_fd[0][0]);
-	close(tools.saved_std_out);
 	while (tools.args[i])
 		free(tools.args[i++]);
 	free(tools.args);
@@ -84,5 +83,4 @@ void	close_pipes(t_tools tools, t_cmd_tab toc)
 		close(toc.outputs[j]);
 		j++;
 	}
-	close(tools.saved_std_out);
 }

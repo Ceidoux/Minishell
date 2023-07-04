@@ -40,7 +40,6 @@ typedef struct s_tools
 	int		file_fd;
 	int		*pid;
 	char	**args;
-	int		saved_std_out;
 	char	*str;
 	char	**paths;
 	int		fd_count;
@@ -144,5 +143,13 @@ int		ft_strsort(char *s1, char *s2);
 char	*get_path(char **envp, char *str);
 int		ft_len_before_equal(char *str);
 int		env_var_exists(char **envp, char *str);
+int		error_pipex_printf(const char *str, ...);
+void	error_pipex_putpoint_base(long unsigned int nbr, char *base, int *len);
+void	error_pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len);
+void	error_pipex_putchar(char c, int *len);
+void	error_pipex_putstr(char *str, int *len);
+void	error_pipex_putnbr(int nbr, int *len);
+void	error_pipex_putunsnbr(unsigned int nbr, int *len);
+void	error_pipex_putnbr_base(unsigned int nbr, char *base, int *len);
 
 #endif

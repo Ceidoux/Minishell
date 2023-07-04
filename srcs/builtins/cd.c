@@ -72,7 +72,7 @@ void	ft_cd(t_tools tools, char **envp)
 
 	if (arg_size(tools) > 2)
 	{
-		pipex_printf("%s: too many arguments\n");
+		error_pipex_printf("%s: too many arguments\n");
 		g_exit_status = 1;
 		return ;
 	}

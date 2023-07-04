@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 21:33:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/04 01:56:40 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 		j++;
 	}
 	j = 0;
-	tools.saved_std_out = dup(1);
 	ft_pipe_manager(tools, toc);
-	close(tools.saved_std_out);
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools);
 	else

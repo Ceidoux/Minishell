@@ -2,32 +2,22 @@
 
 int	invalid_option(char *str)
 {
-	int	change_fd;
-
-	change_fd = dup(STDOUT_FILENO);
-	dup2(STDOUT_FILENO, STDERR_FILENO);
 	if (str [0] && str[0] == '-')
 	{
 		if (str[1] && str[1] != '-')
 		{
-			pipex_printf("pwd: -%c: invalid option\n", str[1]);
-			pipex_printf("pwd: usage: pwd [-LP]\n");
-			dup2(STDOUT_FILENO, change_fd);
-			close(change_fd);
+			error_pipex_printf("pwd: -%c: invalid option\n", str[1]);
+			error_pipex_printf("pwd: usage: pwd [-LP]\n");
 			return (1);
 		}
 		else if (str[1] && str[1] == '-' 
 			&& str[2])
 		{
-			pipex_printf("pwd: --: invalid option\n");
-			pipex_printf("pwd: usage: pwd [-LP]\n");
-			dup2(STDOUT_FILENO, change_fd);
-			close(change_fd);
+			error_pipex_printf("pwd: --: invalid option\n");
+			error_pipex_printf("pwd: usage: pwd [-LP]\n");
 			return (1);
 		}
 	}
-	dup2(STDOUT_FILENO, change_fd);
-	close(change_fd);
 	return (0);
 }
 int	ft_pwd(t_tools tools, t_cmd_tab toc)
