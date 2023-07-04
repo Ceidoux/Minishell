@@ -5,16 +5,22 @@ static int	ft_has_equal_sign(char *s);
 int	ft_env(char **envp)
 {
 	while (*envp)
-	if (ft_has_equal_sign(*envp))
-		ft_putendl_fd(*(envp++), 1);
+	{
+		if (ft_has_equal_sign(*envp))
+			ft_putendl_fd(*(envp), 1);
+		envp++;
+	}
 	return (0);
 }
 
 static int	ft_has_equal_sign(char *s)
 {
 	while (*s)
+	{
 		if (*s == '=')
 			return (1);
+		s++;
+	}
 	return (0);
 }
 
