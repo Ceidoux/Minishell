@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/03 22:47:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/04 16:44:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-void command_type(t_tools tools, t_cmd_tab toc, char ***envp)
+int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (toc.commands[tools.i] == NULL)
-		;
+		return(0);
 	else
 	{
 		tools.args = ft_split(toc.commands[tools.i], ' ');
@@ -33,7 +33,10 @@ void command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				ft_echo(tools, toc.commands[tools.i], toc, *envp);
 		}
 		else if (is_builtin(tools.args[0], *envp))
-			builtin_exec(tools, toc, envp);
+		{
+			if(builtin_exec(tools, toc, envp) == 1)
+				return (1);
+		}
 		else
 		{
 			tools.pid[tools.i] = fork();
@@ -41,6 +44,7 @@ void command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				command_exec(tools, toc, *envp);
 		}
 	}
+	return(0);
 }
 int	pipex(t_cmd_tab toc, char ***envp)
 {
@@ -49,7 +53,8 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{
-		command_type(tools, toc, envp);
+		if (command_type(tools, toc, envp) == 1)
+			return(1);
 		(tools.i)++;
 	}
 	clean_finish(tools, toc);
@@ -82,6 +87,9 @@ void	ft_pipe_manager(t_tools tools, t_cmd_tab toc)
 		j++;
 	}
 }
+
+
+
 
 /**se tout seul et a configurer manuellement pour simuler une arrivee de T.O.C dans Pipex
 	sans passer par minishell !

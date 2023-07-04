@@ -66,7 +66,7 @@
 
 
 
-void	ft_cd(t_tools tools, char **envp)
+int	ft_cd(t_tools tools, char **envp)
 {
 	char	*str;
 
@@ -74,7 +74,7 @@ void	ft_cd(t_tools tools, char **envp)
 	{
 		error_pipex_printf("%s: too many arguments\n");
 		g_exit_status = 1;
-		return ;
+		return (0);
 	}
 	if (arg_size(tools) == 1 || (arg_size(tools) == 2
 		&& ft_strcmp(tools.args[1], "~")))
@@ -83,7 +83,7 @@ void	ft_cd(t_tools tools, char **envp)
 		if (str == NULL)
 		{
 			perror(tools.args[0]);
-			return ;
+			return (0);
 		}
 		if (chdir(str) == -1)
 		{
@@ -99,6 +99,7 @@ void	ft_cd(t_tools tools, char **envp)
 			g_exit_status = 1;
 		}
 	}
+	return (0);
 }
 
 

@@ -46,10 +46,10 @@ typedef struct s_tools
 }	t_tools;
 
 /* builtin directory */
-void	ft_cd(t_tools tools, char **envp);
+int		ft_cd(t_tools tools, char **envp);
 void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp);
 int		ft_env(char **envp);
-void	ft_exit(char *s);
+int		ft_exit(char *s, int size);
 int		ft_pwd(t_tools tools, t_cmd_tab toc);
 char	**ft_unset(char *s, char **envp);
 
@@ -68,6 +68,13 @@ int		plus_equal(char *str);
 int		has_invalid_character(char *str);
 char	*remove_plus(char *str);
 char	**ft_addstr(char **envp, char *str, int envp_size);
+void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size);
+void	print_env(char **export_var, char **envp, int i);
+void	child_export(char **export_var, char **envp, int i, int envp_size);
+char	**ft_addstr_end(char **envp, char *str, int envp_size);
+char	**ft_addstr_plus(char **res, char **envp, char *str, int i);
+char	**ft_addstr_replace(char **envp, char *str, int i);
+
 
 /* End of functions in export*/
 
@@ -137,7 +144,7 @@ void	free_no_path(t_tools tools);
 void	failed_open(t_tools tools, char **argv);
 void	close_pipes(t_tools tools, t_cmd_tab toc);
 int		is_builtin(char *str, char **envp);
-void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp);
+int		builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strsort(char *s1, char *s2);
 char	*get_path(char **envp, char *str);

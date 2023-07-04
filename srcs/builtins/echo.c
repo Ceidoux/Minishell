@@ -24,28 +24,8 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 	int j;
 	char *copy;
 
-	j = 0;
-	if (toc.inputs[tools.i] != -1)
-		dup2(toc.inputs[tools.i], STDIN_FILENO);
-	else if (tools.i > 0)
-		dup2(tools.pipe_fd[tools.i - 1][0], STDIN_FILENO);
-	if (toc.outputs[tools.i] != -1)
-		dup2(toc.outputs[tools.i], STDOUT_FILENO);
-	else if (tools.i < toc.size - 1)
-		dup2(tools.pipe_fd[tools.i][1], STDOUT_FILENO);
+	ft_pipe_manager(tools, toc);
 	n_flag = 0;
-	while (j < toc.size)
-	{
-		if (tools.pipe_fd[j][0] >= 0)
-			close(tools.pipe_fd[j][0]);
-		if (tools.pipe_fd[j][1] >= 0)
-			close(tools.pipe_fd[j][1]);
-		if (toc.inputs[j] >= 0)
-			close(toc.inputs[j]);
-		if (toc.outputs[j] >= 0)
-			close(toc.outputs[j]);
-		j++;
-	}
 	j = 0;
 	if (!s[4])
 		ft_putchar_fd('\n', 1);
@@ -53,7 +33,7 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 	{
 		s += 5;
 		j = is_slash_n(s);
-		if (/*!ft_strncmp(s, "-n", 2) && (s[2] == ' ' || s[2] == '\0')*/ j != 0)
+		if (j != 0)
 		{
 
 			n_flag = 1;

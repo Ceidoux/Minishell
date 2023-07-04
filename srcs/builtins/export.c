@@ -106,70 +106,67 @@ char	**separate_two(char	*str)						/* voir split_two*/
 	return (res);
 }
 
-char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presents dans la variable"*/
-{
-	char	**res;
-	int		i;
-	// int flag;
-
-	// flag = 0;
-	i = 0;
-	if (has_car(str, '\'') != -1 || has_car(str, '\"') != -1)
-	{
-		res = pipex_split(str, "'\"");
-		i++;
-		while (res[i])
-		{
-			res[0] = ft_strjoin(res[0], res[i]);
-			i++;
-		}
-		i = 1;
-		while(res[i])
-		{
-			free(res[i]);
-			i++;
-		}
-		str = ft_strdup(res[0]);
-		free(res[0]);
-		free(res);
-		i = 0;
-	}
-	// if (has_car(str, '=') != -1)
-	// {
-		// res = pipex_split(str, "=");
-	// 	// res[0] = ft_strjoin(res[0], "=\"");
-	// 	// i++;
-	// 	// while(res[i])
-	// 	// {
-	// 	// 	if (flag == 1)
-	// 	// 		res[0] = ft_strjoin(res[0], "=");
-	// 	// 	else
-	// 	// 		flag = 1;
-	// 	// 	res[0] = ft_strjoin(res[0], res[i]);
-	// 	// 	i++;
-	// 	// }
-	// 	// res[0] = ft_strjoin(res[0], "\"");
-	// 	res = separate_two(str);
-	// 	res[0] = ft_strjoin(res[0], "=\"");
-	// 	i = 1;
-	// 	while (res[i])
-	// 	{
-	// 		res[0] = ft_strjoin(res[0], res[i]);
-	// 		i++;
-	// 	}
-	// 	res[0] = ft_strjoin(res[0], "\"");
-	// 	i = 1;
-	// 	while(res[i])
-	// 	{
-	// 		free(res[i]);
-	// 		i++;
-	// 	}
-	// 	str = ft_strdup(res[0]);
-	// 	free(res[0]);
-	// 	free(res);
-	// }
-	return (str);
-}
+// char	*modify_var(char *str)  /*  Fonction  qui retire tous les ' et les " presents dans la variable"*/
+// {
+// 	char	**res;
+// 	int		i;
+// 	i = 0;
+// 	if (has_car(str, '\'') != -1 || has_car(str, '\"') != -1)
+// 	{
+// 		res = pipex_split(str, "'\"");
+// 		i++;
+// 		while (res[i])
+// 		{
+// 			res[0] = ft_strjoin(res[0], res[i]);
+// 			i++;
+// 		}
+// 		i = 1;
+// 		while(res[i])
+// 		{
+// 			free(res[i]);
+// 			i++;
+// 		}
+// 		str = ft_strdup(res[0]);
+// 		free(res[0]);
+// 		free(res);
+// 		i = 0;
+// 	}
+// 	// if (has_car(str, '=') != -1)
+// 	// {
+// 		// res = pipex_split(str, "=");
+// 	// 	// res[0] = ft_strjoin(res[0], "=\"");
+// 	// 	// i++;
+// 	// 	// while(res[i])
+// 	// 	// {
+// 	// 	// 	if (flag == 1)
+// 	// 	// 		res[0] = ft_strjoin(res[0], "=");
+// 	// 	// 	else
+// 	// 	// 		flag = 1;
+// 	// 	// 	res[0] = ft_strjoin(res[0], res[i]);
+// 	// 	// 	i++;
+// 	// 	// }
+// 	// 	// res[0] = ft_strjoin(res[0], "\"");
+// 	// 	res = separate_two(str);
+// 	// 	res[0] = ft_strjoin(res[0], "=\"");
+// 	// 	i = 1;
+// 	// 	while (res[i])
+// 	// 	{
+// 	// 		res[0] = ft_strjoin(res[0], res[i]);
+// 	// 		i++;
+// 	// 	}
+// 	// 	res[0] = ft_strjoin(res[0], "\"");
+// 	// 	i = 1;
+// 	// 	while(res[i])
+// 	// 	{
+// 	// 		free(res[i]);
+// 	// 		i++;
+// 	// 	}
+// 	// 	str = ft_strdup(res[0]);
+// 	// 	free(res[0]);
+// 	// 	free(res);
+// 	// }
+// 	return (str);
+// }
 
 int	ft_len_dif(char *str)        /* permet de savoir combien de caracters avant le premier signe '=' (utile pour savoir s la variable existe deja avec strncmp() )*/
 {
@@ -251,6 +248,22 @@ char	*remove_plus(char *str)					/* retire le '+' dune string */
 	return (str);
 }
 
+char	**ft_addstr_replace(char **envp, char *str, int i)
+{
+	free(envp[i]);
+	envp[i] = ft_strdup(str);
+	return (envp);
+}
+char	**ft_addstr_plus(char **res, char **envp, char *str, int i)
+{
+	res = separate_two(str);
+	if (has_car(envp[i], '=') == -1)
+		envp[i] = ft_strjoin(envp[i], "=");
+	if (env_size(res) > 1)
+		envp[i] = ft_strjoin(envp[i], res[1]);
+	return (envp);	
+}
+
 char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse la chaine avec modify_var(), permet de ajouter
 															la variable dans envp ! */
 {
@@ -259,7 +272,8 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	char 	*str_no_plus;
 
 	i = 0;
-	str = modify_var(str);
+	res = NULL;
+	// str = modify_var(str);
 	str_no_plus = ft_strdup(str);
 	str_no_plus = remove_plus(str_no_plus);
 	while (envp[i])
@@ -268,24 +282,22 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 			&& ft_len_dif(str) == ft_len_dif(envp[i]))
 			return (envp);
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str)) && ft_len_dif(str) == ft_len_dif(envp[i]))
-		{
-			free(envp[i]);
-			envp[i] = ft_strdup(str);
-			return (envp);
-		}
+			return(ft_addstr_replace(envp, str, i));
 		if (pipex_strncmp(str_no_plus, envp[i], ft_len_dif(str_no_plus)) && plus_equal(str) == 1)
-		{
-			res = separate_two(str);
-			if (has_car(envp[i], '=') == -1)
-				envp[i] = ft_strjoin(envp[i], "=");
-			if (env_size(res) > 1)
-				envp[i] = ft_strjoin(envp[i], res[1]);
-			return (envp);
-		}
+			return(ft_addstr_plus(res, envp, str, i));
 		i++;
 	}
-	str = remove_plus(str);
+	res = ft_addstr_end(envp, str, envp_size);
+	return (res);
+}
+
+char	**ft_addstr_end(char **envp, char *str, int envp_size)
+{
+	int i;
+	char **res;
+
 	i = 0;
+	str = remove_plus(str);
 	res = malloc(sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
 	while(envp_size > 0)
@@ -300,17 +312,17 @@ char	**ft_addstr(char **envp, char *str, int envp_size)  /*  apres avoir lisse l
 	return (res);
 }
 
+
 char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)   /* fonction principale. Affiche env par ordre alphabetique si aucun paramtere, sinon
 													export les variables selon des regles precises.*/
 {
 	int i;
-	int j;
 	int size;
 	int	envp_size;
 	char **export_var;
 
 	i = 0;
-	j = 0;
+	export_var = NULL;
 	size = arg_size(tools);
 	envp_size = env_size(envp);
 	if (size == 1)
@@ -319,60 +331,76 @@ char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)   /* fonction princi
 		if (tools.pid[tools.i] == 0)
 		{
 			ft_pipe_manager(tools, toc);
-			while (i < envp_size)
-			{
-				while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
-				{
-					ft_swap(&envp[j - 1], &envp[j]);
-					j--;					
-				}
-				i++;
-				j = i;
-			}
-			i = 0;
-			j = 0;
-			while (envp[i])
-			{
-				if (has_car(envp[i], '=') != -1)
-				{
-					export_var = separate_two(envp[i]);
-					if (env_size(export_var) == 2)
-						printf("export %s=\"%s\"\n", export_var[0], export_var[1]);
-					else if (env_size(export_var) == 1 && envp[i][ft_strlen(envp[i]) - 1] == '=')
-						printf("export %s=\"\"\n", export_var[0]);
-					while (export_var[j])
-						free(export_var[j++]);
-					free(export_var);
-				}
-				else
-					pipex_printf("export %s\n", envp[i]);
-				i++;
-			}
-			exit(0);
+			child_export(export_var, envp, i, envp_size);
 		}
 	}
 	else
-	{
-		while (i < size - 1)
-		{
-			if (has_invalid_character(tools.args[i + 1]))
-			{
-				printf("export: %s: not a valid identifier\n", tools.args[i + 1]);
-				g_exit_status = 1;
-			}
-			else
-			{
-				envp = ft_addstr(envp, tools.args[i + 1], envp_size);
-				envp_size = env_size(envp);
-			}
-			i++;
-		}
-	}
+		add_to_env(&tools, &envp, &size, &envp_size);
 	return (envp);
 }
 
-/*
+void	child_export(char **export_var, char **envp, int i, int envp_size)
+{
+	int j;
 
+	j = 0;
+	while (i < envp_size)
+	{
+		while (j > 0 && ft_strsort(envp[j - 1], envp[j]) < 0)
+		{
+			ft_swap(&envp[j - 1], &envp[j]);
+			j--;					
+		}
+		i++;
+		j = i;
+	}
+	i = -1;
+	while (envp[++i])
+		print_env(export_var, envp, i);
+	exit(0);
+}
+
+void	print_env(char **export_var, char **envp, int i)
+{
+	int j;
+
+	j = 0;
+	if (has_car(envp[i], '=') != -1)
+	{
+		export_var = separate_two(envp[i]);
+		if (env_size(export_var) == 2)
+			printf("export %s=\"%s\"\n", export_var[0], export_var[1]);
+		else if (env_size(export_var) == 1 && envp[i][ft_strlen(envp[i]) - 1] == '=')
+			printf("export %s=\"\"\n", export_var[0]);
+		while (export_var[j])
+			free(export_var[(j)++]);
+		free(export_var);
+	}
+	else
+		pipex_printf("export %s\n", envp[i]);
+}
+
+void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size)
+{
+	int i;
+
+	i = 0;
+	while (i < *size - 1)
+	{
+		if (has_invalid_character(tools->args[i + 1]))
+		{
+			error_pipex_printf("export: %s: not a valid identifier\n", tools->args[i + 1]);
+			g_exit_status = 1;
+		}
+		else
+		{
+			*envp = ft_addstr(*envp, tools->args[i + 1], *envp_size);
+			*envp_size = env_size(*envp);
+		}
+		i++;
+	}
+}
+/*
 
 REMARQUE : Un nombre INCALCULABLE de cas specifiques en plus ont ete corrige, je ne peux malheuresement pas tous les repertorie ici... 
 

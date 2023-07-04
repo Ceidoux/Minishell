@@ -1,6 +1,8 @@
 #include "minishell.h"
 
-void	ft_exit(char *s)
+
+
+int	ft_exit(char *s, int size)
 {
 	unsigned char	n;
 	int 			sign;
@@ -11,14 +13,16 @@ void	ft_exit(char *s)
 	while (*s == ' ')
 		s++;
 	if (!*s)
-		return ;
+		return (0);
 	if (*s == '+' || *s == '-')
 		sign = 44 - *(s++);
 	if (!ft_isdigit(*s))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
 		g_exit_status = 2;
-		return ;
+		if (size == 1)
+			return (1);
+		return (0);
 	}
 	while (ft_isdigit(*s))
 		n = n * 10 + *(s++) - '0';
@@ -28,9 +32,14 @@ void	ft_exit(char *s)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		g_exit_status = 1;
-		return ;
+		if (size == 1)
+			return (1);
+		return (0);
 	}
 	g_exit_status = sign * n;
+	if (size == 1)
+		return (1);
+	return (0);
 }
 
 /*

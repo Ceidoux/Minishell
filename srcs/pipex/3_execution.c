@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/04 01:56:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/04 16:45:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	absolute_relative_path(t_tools tools)
 	else if (end_slash(tools.str))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
-		pipex_printf("%s: Is a directory\n", tools.str);
+		error_pipex_printf("%s: Is a directory\n", tools.str);
 		free_str_args(tools);
 		free_main(&tools);
 		exit(0);
@@ -182,7 +182,7 @@ int	is_builtin(char *str, char **envp)
 	return (0);
 }
 
-void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
+int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	int i;
 
@@ -194,17 +194,22 @@ void	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 		i++;
 	}
 	if (ft_strcmp(tools.args[0], "cd"))
-		ft_cd(tools, *envp);
-	else if (ft_strcmp(tools.args[0], "echo"))
-		ft_echo(tools, toc.commands[tools.i], toc, *envp);
+		return(ft_cd(tools, *envp));
 	else if (ft_strcmp(tools.args[0], "env"))
-		ft_env(*envp);
+		return(ft_env(*envp));
 	else if (ft_strcmp(tools.args[0], "exit"))
-		ft_exit(toc.commands[tools.i]);
+		return(ft_exit(toc.commands[tools.i], toc.size));
 	else if (ft_strcmp(tools.args[0], "export"))
+	{
 		*envp = ft_export(tools, toc, *envp);
+		return (0);
+	}
 	else if (ft_strcmp(tools.args[0], "pwd"))
-		ft_pwd(tools, toc);
+		return(ft_pwd(tools, toc));
 	else if (ft_strcmp(tools.args[0], "unset"))
+	{
 		*envp = ft_unset(toc.commands[tools.i], *envp);
+		return (0);
+	}
+	return (0);
 }
