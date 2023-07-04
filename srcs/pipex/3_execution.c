@@ -198,7 +198,7 @@ int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 	else if (ft_strcmp(tools.args[0], "env"))
 		return(ft_env(*envp));
 	else if (ft_strcmp(tools.args[0], "exit"))
-		return(ft_exit(toc.commands[tools.i]) & (toc.size == 1));
+		return(ft_exit(toc.commands[tools.i], toc.size));
 	else if (ft_strcmp(tools.args[0], "export"))
 	{
 		*envp = ft_export(tools, toc, *envp);

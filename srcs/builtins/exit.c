@@ -2,7 +2,7 @@
 
 
 
-int	ft_exit(char *s)
+int	ft_exit(char *s, int toc_size)
 {
 	unsigned char	n;
 	int 			sign;
@@ -19,7 +19,8 @@ int	ft_exit(char *s)
 	if (!ft_isdigit(*s))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		g_exit_status = 255;
+		if (toc_size == 1)
+			g_exit_status = 255;
 		return (1);
 	}
 	while (ft_isdigit(*s))
@@ -27,7 +28,8 @@ int	ft_exit(char *s)
 	if (*s && *s != ' ')
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		g_exit_status = 255;
+		if (toc_size == 1)
+			g_exit_status = 255;
 		return (1);
 	}
 	while (*s == ' ')
@@ -35,10 +37,12 @@ int	ft_exit(char *s)
 	if (*s)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		g_exit_status = 1;
+		if (toc_size == 1)
+			g_exit_status = 1;
 		return (0);
 	}
-	g_exit_status = sign * n;
+	if (toc_size == 1)
+		g_exit_status = sign * n;
 	return (1);
 }
 
