@@ -1,5 +1,19 @@
-/!\ WARNING /!\
 
+$> :
+$> !
+$> ""''echo hola""'''' que""'' tal""''
+$> echo -n -n
+$> e'cho hola'
+$> e"cho hola"
+$> "e"'c'ho 'b'"o"nj"o"'u'r
+
+$> cd "srcs"
+$> cd -
+$> cd $HOME
+
+$> pwd>bonjour (pas de redirection)
+
+<!-- Corrected errors -->
 <!-- $> ""
 [1]    240079 segmentation fault (core dumped)  ./minishell
 
@@ -14,24 +28,13 @@ $> ''
 - Parsing error
 $> echo coucou | >file -->
 
-- Other errors - 
 <!-- $> echo $"HOME" -->
 
-$> :
-$> !
-
-env -i puis ctrl-D  => core dump
-
-echo "-n     mdr"
-echo -n -n lol -n
-echo -n -n 
-echo -nnnnnnnnnnnnnnnnnnnnn bonjour
-'echo "$HOME"'
-"" "" echo minishell
-$> echo $""
 
 
-<!-- Corrected errors -->
+
+<!-- env -i puis ctrl-D  => core dump -->
+
 <!-- $> echo NEW FILE > file1
 ==225939== Warning: invalid file descriptor -1 in syscall close() -->
 

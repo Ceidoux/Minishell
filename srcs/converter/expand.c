@@ -24,7 +24,6 @@ void	ft_expand(char **s, char **envp)
 	t_bool	simple_quote;
 	t_bool	double_quote;
 
-	printf("%s\n", *s);
 	idx = 0;
 	simple_quote = FALSE;
 	double_quote = FALSE;
@@ -46,7 +45,6 @@ void	ft_expand(char **s, char **envp)
 			simple_quote = (simple_quote == FALSE);
 		idx++;
 	}
-	printf("%s\n", *s);
 }
 
 static void	ft_remove_dollar_sign(char **s, int idx)
