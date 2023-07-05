@@ -30,9 +30,11 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_bzero(&sig_int, sizeof(sig_int));
 	sig_quit.sa_handler = SIG_IGN;
+	sig_quit.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &sig_quit, NULL);
 	ft_bzero(&sig_quit, sizeof(sig_quit));
 	sig_int.sa_handler = ft_handler;
+	sig_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sig_int, NULL);
 	env_copy = ft_envp_dup(envp);
 	ft_loop(&env_copy);
@@ -70,7 +72,7 @@ static void	ft_loop(char ***envp)
 static void	ft_handler(int sig)
 {
 	(void) sig;
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
 	// rl_replace_line("", 0);
 	// rl_on_new_line();
 	// rl_redisplay();
