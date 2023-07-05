@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:40 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 18:28:42 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:33:54 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_pwd(t_tools tools, t_cmd_tab toc)
 	if (tools.args[1])
 	{
 		if (invalid_option(tools.args[1]))
-			g_exit_status = 2;
+			return (g_exit_status = 2, 0);
 		else
 			g_exit_status = 0;
 	}
