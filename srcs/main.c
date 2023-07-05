@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 18:44:29 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:08:11 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_bzero(&sig_int, sizeof(sig_int));
 	sig_quit.sa_handler = SIG_IGN;
+	sig_quit.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &sig_quit, NULL);
 	ft_bzero(&sig_quit, sizeof(sig_quit));
 	sig_int.sa_handler = ft_handler;
+	sig_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sig_int, NULL);
 	env_copy = ft_envp_dup(envp);
 	ft_loop(&env_copy);
@@ -60,11 +62,11 @@ static void	ft_loop(char ***envp)
 			toc = ft_parser(line_read, *envp);
 			ret = pipex(toc, envp);
 			ft_tocfree(&toc);
+			free(line_read);
 		}
-		free(line_read);
 	}
 	printf("exit\n");
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)

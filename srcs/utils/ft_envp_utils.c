@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:04:20 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 17:06:35 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:45:05 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,13 @@ void	ft_envp_free(char **envp)
 	int	i;
 
 	i = -1;
-	while (envp[++i])
-		free(envp[i]);
-	free(envp);
+	if (envp)
+	{
+		while (envp[++i])
+			free(envp[i]);
+		free(envp);
+		envp = NULL;
+	}
 }
 
 char	**ft_envp_dup(char **envp)
@@ -60,10 +64,12 @@ char	**ft_envp_dup(char **envp)
 	char	**envp_dup;
 
 	size = ft_envp_size(envp);
-	envp_dup = malloc(size * sizeof(*envp_dup));
+	if (!size)
+		return (NULL);
+	envp_dup = malloc((size + 1) * sizeof(*envp_dup));
 	if (!envp_dup)
 		exit(EXIT_FAILURE);
-	envp_dup[--size] = NULL;
+	envp_dup[size] = NULL;
 	while (--size >= 0)
 		envp_dup[size] = ft_strdup(envp[size]);
 	return (envp_dup);
@@ -74,8 +80,11 @@ char	*ft_getenv(char *var, char **envp)
 	int	idx;
 
 	idx = -1;
-	while (envp[++idx])
-		if (!ft_strncmp(envp[idx], var, ft_strlen(var)) && envp[idx][ft_strlen(var)] == '=')
-			return (envp[idx] + ft_strlen(var) + 1);
+	if (envp)
+	{
+		while (envp[++idx])
+			if (!ft_strncmp(envp[idx], var, ft_strlen(var)) && envp[idx][ft_strlen(var)] == '=')
+				return (envp[idx] + ft_strlen(var) + 1);
+	}
 	return (NULL);
 }

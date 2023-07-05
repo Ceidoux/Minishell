@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   6_ft_split_slash.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:27:20 by kali              #+#    #+#             */
-/*   Updated: 2023/06/24 06:07:35 by kali             ###   ########.fr       */
+/*   Updated: 2023/07/05 14:09:53 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ char	*put_word_slash(char *str, int start, int end)
 	res[i] = '\0';
 	return (res);
 }
-

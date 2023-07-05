@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/04 16:44:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:04:53 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,24 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
+int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (toc.commands[tools.i] == NULL)
-		return(0);
+		return (0);
 	else
 	{
-		tools.args = ft_split(toc.commands[tools.i], ' ');
+		tools.args = pipex_split(toc.commands[tools.i], " ");
 		if (ft_strcmp(tools.args[0], "echo"))
 		{
 			tools.pid[tools.i] = fork();
 			if (tools.pid[tools.i] == 0)
 				ft_echo(tools, toc.commands[tools.i], toc, *envp);
+			else
+				g_exit_status = 0;
 		}
 		else if (is_builtin(tools.args[0], *envp))
 		{
-			if(builtin_exec(tools, toc, envp) == 1)
+			if (builtin_exec(tools, toc, envp) == 1)
 				return (1);
 		}
 		else
@@ -44,26 +46,33 @@ int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				command_exec(tools, toc, *envp);
 		}
 	}
-	return(0);
+	return (0);
 }
+
 int	pipex(t_cmd_tab toc, char ***envp)
 {
 	t_tools	tools;
 
+	ft_bzero(&tools, sizeof(tools));
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{
 		if (command_type(tools, toc, envp) == 1)
-			return(1);
+		{
+			free_all(tools);
+			clean_finish(tools, toc);
+			return (1);
+		}
 		(tools.i)++;
 	}
 	clean_finish(tools, toc);
+	free_all(tools);
 	return (0);
 }
 
 void	ft_pipe_manager(t_tools tools, t_cmd_tab toc)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (toc.inputs[tools.i] != -1)

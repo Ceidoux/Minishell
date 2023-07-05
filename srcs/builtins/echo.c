@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/05 14:16:25 by smestre           #+#    #+#             */
+/*   Updated: 2023/07/05 19:27:22 by jleguay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 
@@ -24,6 +36,7 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 	int j;
 	char *copy;
 
+	copy = NULL;
 	ft_pipe_manager(tools, toc);
 	n_flag = 0;
 	j = 0;
@@ -49,7 +62,11 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 		else
 			printf("%s\n", copy);
 	}
-	g_exit_status = 0;
+	free(copy);
+	clean_finish(tools, toc);
+	ft_tocfree(&toc);
+	free_all(tools);
+	ft_envp_free(envp);
 	exit(0);
 }
 
