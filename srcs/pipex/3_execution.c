@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:09:23 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:40:15 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 	j = 0;
 	ft_pipe_manager(tools, toc);
 	if (is_slash(tools.args[0]))
-		absolute_relative_path(tools);
+		absolute_relative_path(tools, envp);
 	else
 		env_path(tools, envp);
 }
 
-void	absolute_relative_path(t_tools tools)
+void	absolute_relative_path(t_tools tools, char **envp)
 {
 	tools.str = ft_strdup(tools.args[0]);
 	if (tools.str == NULL)
@@ -67,7 +67,7 @@ void	absolute_relative_path(t_tools tools)
 		exit(0);
 	}
 	tools.args[0] = remove_path(tools.args[0]);
-	g_exit_status = execve(tools.str, tools.args, NULL);
+	g_exit_status = execve(tools.str, tools.args, envp);
 	perror(tools.str);
 	no_execution(tools);
 }
@@ -134,7 +134,7 @@ void	env_path(t_tools tools, char **envp)
 				tools.args[0]);
 		if (tools.paths[tools.i] == NULL)
 			return ;
-		g_exit_status = execve(tools.paths[tools.i], tools.args, NULL);
+		g_exit_status = execve(tools.paths[tools.i], tools.args, envp);
 		(tools.i)++;
 	}
 	no_execution(tools);
