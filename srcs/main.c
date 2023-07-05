@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/05 17:32:25 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:08:11 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_bzero(&sig_int, sizeof(sig_int));
 	sig_quit.sa_handler = SIG_IGN;
+	sig_quit.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &sig_quit, NULL);
 	ft_bzero(&sig_quit, sizeof(sig_quit));
 	sig_int.sa_handler = ft_handler;
+	sig_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sig_int, NULL);
 	env_copy = ft_envp_dup(envp);
 	ft_loop(&env_copy);
@@ -71,9 +73,9 @@ static void	ft_handler(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_redisplay();
 	g_exit_status = 130;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 18:22:23 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:04:53 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,20 @@ int	pipex(t_cmd_tab toc, char ***envp)
 {
 	t_tools	tools;
 
+	ft_bzero(&tools, sizeof(tools));
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{
 		if (command_type(tools, toc, envp) == 1)
+		{
+			free_all(tools);
+			clean_finish(tools, toc);
 			return (1);
+		}
 		(tools.i)++;
 	}
 	clean_finish(tools, toc);
+	free_all(tools);
 	return (0);
 }
 

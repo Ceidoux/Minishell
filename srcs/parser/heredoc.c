@@ -43,17 +43,11 @@ static int	ft_create_heredoc(char *delimiter, char **envp)
 	while (++idx)
 	{
 		line = readline(">");
-		// ft_putnbr_fd(g_exit_status, 1);
 		if (g_exit_status == 130)
-			return (-1);
-		// else if (!line)
-		// {
-		// 	write(1, "\n", 1);
-		// 	break;
-		// }
+			return (free(line), close(fd), -1);
 		else if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 			break ;
-		else if (idx > 1)
+		if (idx > 1)
 			write(fd, "\n", 1);
 		ft_expand(&line, envp);
 		write(fd, line, ft_strlen(line));

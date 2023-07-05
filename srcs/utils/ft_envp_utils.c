@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:04:20 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/05 17:32:58 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:45:05 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_envp_free(char **envp)
 		while (envp[++i])
 			free(envp[i]);
 		free(envp);
+		envp = NULL;
 	}
 }
 
@@ -65,10 +66,10 @@ char	**ft_envp_dup(char **envp)
 	size = ft_envp_size(envp);
 	if (!size)
 		return (NULL);
-	envp_dup = malloc(size * sizeof(*envp_dup));
+	envp_dup = malloc((size + 1) * sizeof(*envp_dup));
 	if (!envp_dup)
 		exit(EXIT_FAILURE);
-	envp_dup[--size] = NULL;
+	envp_dup[size] = NULL;
 	while (--size >= 0)
 		envp_dup[size] = ft_strdup(envp[size]);
 	return (envp_dup);
