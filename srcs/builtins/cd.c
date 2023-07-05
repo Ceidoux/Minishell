@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:14 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:48:44 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:39:41 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	ft_cd(t_tools tools, char **envp)
 			g_exit_status = 1;
 		}
 	}
+	g_exit_status = 0;
 	return (0);
 }
 

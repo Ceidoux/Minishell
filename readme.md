@@ -9,3 +9,7 @@ ET lancer minishell avec la commande suivante : valgrind --suppressions=readline
 /!\ le checker doit vérifier que :
 - après une redirection (< ou >), le token qui suit existe, et qu'il est bien de type WORD
   à défaut : bash: syntax error near unexpected token 'newline' / '|' / '>' ...
+
+
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
+
