@@ -6,24 +6,24 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:40 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 18:12:20 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:28:42 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_invalid(char *str)
-{
-	if (str [0] && str[0] == '-')
-	{
-		if (str[1] && str[1] != '-')
-			return (1);
-		else if (str[1] && str[1] == '-'
-			&& str[2])
-			return (1);
-	}
-	return (0);
-}
+// int	is_invalid(char *str)
+// {
+// 	if (str [0] && str[0] == '-')
+// 	{
+// 		if (str[1] && str[1] != '-')
+// 			return (1);
+// 		else if (str[1] && str[1] == '-'
+// 			&& str[2])
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 int	invalid_option(char *str)
 {
@@ -50,10 +50,13 @@ int	ft_pwd(t_tools tools, t_cmd_tab toc)
 {
 	char	*current_dir;
 
-	if (tools.args[1] && is_invalid(tools.args[1]))
-		g_exit_status = 2;
-	else
-		g_exit_status = 0;
+	if (tools.args[1])
+	{
+		if (invalid_option(tools.args[1]))
+			g_exit_status = 2;
+		else
+			g_exit_status = 0;
+	}
 	tools.pid[tools.i] = fork();
 	if (tools.pid[tools.i] == 0)
 	{
