@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   10_close_free_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:39:32 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:10:58 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:56:38 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	free_main(t_tools *tools)
 		(tools->i)++;
 	}
 	free(tools->pipe_fd);
+	tools->pipe_fd = NULL;
 	free(tools->pid);
+	tools->pid = NULL;
 }
 
 void	free_path(t_tools tools)
@@ -61,12 +63,20 @@ void	free_all(t_tools tools)
 	int	i;
 
 	i = 0;
-	// free(tools.str);
-	while (tools.paths[i])
-		free(tools.paths[i++]);
-	free(tools.paths);
+	free(tools.str);
+	if (tools.paths)
+	{
+		while (tools.paths[i])
+			free(tools.paths[i++]);
+		free(tools.paths);
+		tools.paths = NULL;
+	}
 	i = 0;
-	while (tools.args[i])
-		free(tools.args[i++]);
-	free(tools.args);
+	if (tools.args)
+	{
+		while (tools.args[i])
+			free(tools.args[i++]);
+		free(tools.args);
+		tools.args = NULL;
+	}
 }
