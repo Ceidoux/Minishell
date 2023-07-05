@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:34 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:48:10 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:59:45 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@ static int	ft_has_equal_sign(char *s);
 
 int	ft_env(t_tools tools, t_cmd_tab toc, char **envp)
 {
+	int	i;
+
+	i = 0;
 	tools.pid[tools.i] = fork();
 	if (tools.pid[tools.i] == 0)
 	{
 		ft_pipe_manager(tools, toc);
-		while (*envp)
+		while (envp[i])
 		{
-			if (ft_has_equal_sign(*envp))
-				ft_putendl_fd(*(envp), 1);
-			envp++;
+			if (ft_has_equal_sign(envp[i]))
+				ft_putendl_fd(envp[i], 1);
+			i++;
 		}
+		clean_finish(tools, toc);
+		ft_tocfree(&toc);
+		free_all(tools);
+		ft_envp_free(envp);
 		exit(0);
 	}
 	return (0);

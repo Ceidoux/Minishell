@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 16:40:15 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:31:53 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int	is_builtin(char *str, char **envp)
 {
 	char	*copy;
 
+	copy = NULL;
 	copy = ft_strdup(str);
 	ft_expand(&copy, envp);
 	ft_unquote(&copy);
@@ -179,7 +180,11 @@ int	is_builtin(char *str, char **envp)
 		|| ft_strcmp(copy, "env") || ft_strcmp(copy, "exit")
 		|| ft_strcmp(copy, "export") || ft_strcmp(copy, "pwd")
 		|| ft_strcmp(copy, "unset"))
+	{	
+		free(copy);
 		return (1);
+	}
+	free(copy);
 	return (0);
 }
 
@@ -206,7 +211,7 @@ int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 		return (0);
 	}
 	else if (ft_strcmp(tools.args[0], "pwd"))
-		return (ft_pwd(tools, toc));
+		return (ft_pwd(tools, toc, *envp));
 	else if (ft_strcmp(tools.args[0], "unset"))
 	{
 		*envp = ft_unset(toc.commands[tools.i], *envp);

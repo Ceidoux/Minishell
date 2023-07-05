@@ -6,74 +6,11 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:14 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 18:39:41 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:05:15 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	ft_cd_relative_path(char *path);
-// static int	ft_cd_from_home(char *path);
-
-// int		ft_cd(char *s)
-// {
-// 	int		ret;
-
-// 	if (!*s || *(s + 1) == '~')
-// 		ret = ft_cd_from_home(s);
-// 	else if (*s != ' ')
-// 		return (-1);
-// 	else if (*(s + 1) == '-' && !*(s + 2))
-// 		ret = chdir(getenv("OLDPWD"));
-// 	else if (*(s + 1) == '/')
-// 		ret = chdir(s + 1);
-// 	else
-// 		ret = ft_cd_relative_path(s + 1);
-// 	if (ret)
-// 		perror("cd");
-// 	return (ret != 0);
-// }
-
-// static int	ft_cd_relative_path(char *path)
-// {
-// 	int		ret;
-// 	char	*current_dir;
-// 	char	*target_dir;
-
-// 	current_dir = NULL;
-// 	current_dir = getcwd(current_dir, 4096);
-// 	if (!current_dir)
-// 		return (1);
-// 	target_dir = ft_strjoin(current_dir, "/");
-// 	free(current_dir);
-// 	current_dir = target_dir;
-// 	target_dir = ft_strjoin(current_dir, path);
-// 	free(current_dir);
-// 	ret = chdir(target_dir);
-// 	free(target_dir);
-// 	return (ret);
-// }
-
-// static int	ft_cd_from_home(char *path)
-// {
-// 	int		ret;
-// 	char	*home_dir;
-// 	char	*target_dir;
-
-// 	home_dir = getenv("HOME");
-// 	if (!home_dir || !home_dir[0])
-// 		return (0);
-// 	if (!path || !path[0] || (path[1] == '~' && !path[2])
-// 		|| (path[1] == '~' && path[2] == '/' && !path[3]))
-// 		ret = chdir(home_dir);
-// 	else
-// 	{
-// 		target_dir = ft_strjoin(home_dir, path + 2);
-// 		ret = chdir(target_dir);
-// 		free(target_dir);
-// 	}
-// 	return (ret);
-// }
 
 int	ft_cd(t_tools tools, char **envp)
 {
