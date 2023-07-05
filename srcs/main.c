@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/01 18:44:29 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:08:11 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ static void	ft_loop(char ***envp)
 			toc = ft_parser(line_read, *envp);
 			ret = pipex(toc, envp);
 			ft_tocfree(&toc);
+			free(line_read);
 		}
-		free(line_read);
 	}
 	printf("exit\n");
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)
 {
 	(void) sig;
-	// write(1, "\n", 1);
+	write(1, "\n", 1);
 	// rl_replace_line("", 0);
 	// rl_on_new_line();
 	// rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/04 16:45:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/05 19:31:53 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 	j = 0;
 	ft_pipe_manager(tools, toc);
 	if (is_slash(tools.args[0]))
-		absolute_relative_path(tools);
+		absolute_relative_path(tools, envp);
 	else
 		env_path(tools, envp);
 }
 
-
-
-void	absolute_relative_path(t_tools tools)
+void	absolute_relative_path(t_tools tools, char **envp)
 {
 	tools.str = ft_strdup(tools.args[0]);
 	if (tools.str == NULL)
@@ -69,7 +67,7 @@ void	absolute_relative_path(t_tools tools)
 		exit(0);
 	}
 	tools.args[0] = remove_path(tools.args[0]);
-	g_exit_status = execve(tools.str, tools.args, NULL);
+	g_exit_status = execve(tools.str, tools.args, envp);
 	perror(tools.str);
 	no_execution(tools);
 }
@@ -93,25 +91,27 @@ int	env_var_exists(char **envp, char *str)
 	int	i;
 
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 	{
-		if (((size_t)ft_len_before_equal(envp[i]) == ft_strlen(str) && ft_strncmp(envp[i], str, ft_len_before_equal(envp[i])) == 0))
+		if (((size_t)ft_len_before_equal(envp[i]) == ft_strlen(str)
+				&& ft_strncmp(envp[i], str, ft_len_before_equal(envp[i])) == 0))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-
 char	*get_path(char **envp, char *str)
 {
-	int i;
+	int		i;
 	char	*res;
 
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 	{
-		if ((ft_strlen(envp[i]) == ft_strlen(str) && ft_strncmp(envp[i], str, ft_strlen(str)) == 0) || ft_strncmp(envp[i], str, 5) == 0)
+		if ((ft_strlen(envp[i]) == ft_strlen(str)
+				&& ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
+			|| ft_strncmp(envp[i], str, 5) == 0)
 		{
 			res = ft_strdup(envp[i]);
 			return (res);
@@ -134,7 +134,7 @@ void	env_path(t_tools tools, char **envp)
 				tools.args[0]);
 		if (tools.paths[tools.i] == NULL)
 			return ;
-		g_exit_status = execve(tools.paths[tools.i], tools.args, NULL);
+		g_exit_status = execve(tools.paths[tools.i], tools.args, envp);
 		(tools.i)++;
 	}
 	no_execution(tools);
@@ -142,7 +142,7 @@ void	env_path(t_tools tools, char **envp)
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] || s2[i])
@@ -152,11 +152,11 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (1);
-} 
+}
 
 int	ft_strsort(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] || s2[i])
@@ -170,21 +170,27 @@ int	ft_strsort(char *s1, char *s2)
 
 int	is_builtin(char *str, char **envp)
 {
-	char *copy;
+	char	*copy;
 
+	copy = NULL;
 	copy = ft_strdup(str);
 	ft_expand(&copy, envp);
 	ft_unquote(&copy);
 	if (ft_strcmp(copy, "cd") || ft_strcmp(copy, "echo")
 		|| ft_strcmp(copy, "env") || ft_strcmp(copy, "exit")
-		|| ft_strcmp(copy, "export") || ft_strcmp(copy, "pwd") || ft_strcmp(copy, "unset"))
+		|| ft_strcmp(copy, "export") || ft_strcmp(copy, "pwd")
+		|| ft_strcmp(copy, "unset"))
+	{	
+		free(copy);
 		return (1);
+	}
+	free(copy);
 	return (0);
 }
 
 int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tools.args[i])
@@ -194,18 +200,18 @@ int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 		i++;
 	}
 	if (ft_strcmp(tools.args[0], "cd"))
-		return(ft_cd(tools, *envp));
+		return (ft_cd(tools, *envp));
 	else if (ft_strcmp(tools.args[0], "env"))
-		return(ft_env(*envp));
+		return (ft_env(tools, toc, *envp));
 	else if (ft_strcmp(tools.args[0], "exit"))
-		return(ft_exit(toc.commands[tools.i], toc.size) & (toc.size == 1));
+		return (ft_exit(toc.commands[tools.i], toc.size) & (toc.size == 1));
 	else if (ft_strcmp(tools.args[0], "export"))
 	{
 		*envp = ft_export(tools, toc, *envp);
 		return (0);
 	}
 	else if (ft_strcmp(tools.args[0], "pwd"))
-		return(ft_pwd(tools, toc));
+		return (ft_pwd(tools, toc, *envp));
 	else if (ft_strcmp(tools.args[0], "unset"))
 	{
 		*envp = ft_unset(toc.commands[tools.i], *envp);

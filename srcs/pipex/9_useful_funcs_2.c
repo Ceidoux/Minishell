@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   9_useful_funcs_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:01:49 by kali              #+#    #+#             */
-/*   Updated: 2023/06/23 14:57:51 by kali             ###   ########.fr       */
+/*   Updated: 2023/07/05 14:10:54 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char	*pipex_strdup(char *str)
 	return (res);
 }
 
-char *ft_putstr2(char *str)
+char	*ft_putstr2(char *str)
 {
-	char *res;
-	int i;
+	char	*res;
+	int		i;
 
 	i = 0;
 	res = malloc(sizeof(char ) * (pipex_strlen(str) + 1));

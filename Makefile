@@ -27,6 +27,9 @@ SRCS	:= main.c \
 		   builtins/env.c \
 		   builtins/exit.c \
 		   builtins/export.c \
+		   builtins/export2.c \
+		   builtins/export3.c \
+		   builtins/export4.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
 		   converter/expand.c \
@@ -114,8 +117,8 @@ nof: all
 
 .PHONY: debug
 debug: CC := gcc
-debug: LDFLAGS += -g -fsanitize=address
-debug: CFLAGS += -g
+#debug: LDFLAGS += -g -fsanitize=address
+debug: CFLAGS += -g3
 debug: re
 
 .PHONY: sanitize
