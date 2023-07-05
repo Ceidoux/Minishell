@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 17:42:49 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:03:49 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 		tools.args = pipex_split(toc.commands[tools.i], " ");
 		if (ft_strcmp(tools.args[0], "echo"))
 		{
+			g_exit_status = 0;
 			tools.pid[tools.i] = fork();
 			if (tools.pid[tools.i] == 0)
 				ft_echo(tools, toc.commands[tools.i], toc, *envp);
@@ -46,6 +47,7 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 	}
 	return (0);
 }
+
 int	pipex(t_cmd_tab toc, char ***envp)
 {
 	t_tools	tools;
