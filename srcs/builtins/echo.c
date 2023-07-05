@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:25 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:16:27 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:03:29 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 		else
 			printf("%s\n", copy);
 	}
-	g_exit_status = 0;
 	exit(0);
 }
 
