@@ -2,13 +2,19 @@
 
 static int	ft_has_equal_sign(char *s);
 
-int	ft_env(char **envp)
+int	ft_env(t_tools tools, t_cmd_tab toc, char **envp)
 {
-	while (*envp)
+	tools.pid[tools.i] = fork();
+	if (tools.pid[tools.i] == 0)
 	{
-		if (ft_has_equal_sign(*envp))
-			ft_putendl_fd(*(envp), 1);
-		envp++;
+		ft_pipe_manager(tools, toc);
+		while (*envp)
+		{
+			if (ft_has_equal_sign(*envp))
+				ft_putendl_fd(*(envp), 1);
+			envp++;
+		}
+		exit(0);
 	}
 	return (0);
 }
