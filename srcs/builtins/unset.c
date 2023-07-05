@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/05 14:49:08 by smestre           #+#    #+#             */
+/*   Updated: 2023/07/05 14:49:30 by smestre          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	**ft_unset_my_var(char *varname, char **old_envp);
@@ -33,7 +45,9 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 		offset = 0;
 		while (--old_size >= 0)
 		{
-			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname)) && (old_envp[old_size][ft_strlen(varname)] == '=' || old_envp[old_size][ft_strlen(varname)] == '\0'))
+			if (!ft_strncmp(varname, old_envp[old_size], ft_strlen(varname))
+				&& (old_envp[old_size][ft_strlen(varname)] == '='
+				|| old_envp[old_size][ft_strlen(varname)] == '\0'))
 				offset = 1;
 			else
 				new_envp[old_size - 1 + offset] = ft_strdup(old_envp[old_size]);
@@ -44,7 +58,6 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 	else
 		return (old_envp);
 }
-
 
 /*
 

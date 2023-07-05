@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:14 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:16:19 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:48:44 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@
 // 	return (ret);
 // }
 
-
-
-
 int	ft_cd(t_tools tools, char **envp)
 {
 	char	*str;
@@ -89,7 +86,7 @@ int	ft_cd(t_tools tools, char **envp)
 		return (0);
 	}
 	if (arg_size(tools) == 1 || (arg_size(tools) == 2
-		&& ft_strcmp(tools.args[1], "~")))
+			&& ft_strcmp(tools.args[1], "~")))
 	{
 		str = ft_getenv("HOME", envp);
 		if (str == NULL)
@@ -113,21 +110,6 @@ int	ft_cd(t_tools tools, char **envp)
 	}
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* 
 ____ A gérer ____

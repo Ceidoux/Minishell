@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:41 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:16:44 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:47:55 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_exit(char *s, int toc_size)
 {
 	unsigned char	n;
-	int 			sign;
+	int				sign;
 
 	n = 0;
 	sign = 1;
@@ -56,14 +56,17 @@ int	ft_exit(char *s, int toc_size)
 	return (1);
 }
 
-/*
-A gérer:
-[ok] exit						-> If N is not given, the exit status code is that of the last executed command
-[ok] exit [space][space][space] -> renvoie le dernier statut de sortie (identique à exit)
-[ok] exit N						-> returns N (avec N unsigned char)
-[ok] exit -N					-> renvoie la valeur en unsigned char
-[ok] exit 123D					-> print error: numeric argument required ET exit avec 255 en return value
-[ok] exit D123					-> idem
-[~] exit 123 123				-> print error: too many arguments (MAIS en principe n'exit pas)
-Note: exit ne gère pas l'overflow ! (exit 256 renvoie 0)
-*/
+// A gérer:
+// [ok] exit						
+// -> If N is not given, the exit status code 
+// is that of the last executed command
+// [ok] exit [space][space][space] 
+// -> renvoie le dernier statut de sortie (identique à exit)
+// [ok] exit N						-> returns N (avec N unsigned char)
+// [ok] exit -N					-> renvoie la valeur en unsigned char
+// [ok] exit 123D					
+// -> print error: numeric argument required ET exit avec 255 en return value
+// [ok] exit D123					-> idem
+// [~] exit 123 123				
+// -> print error: too many arguments (MAIS en principe n'exit pas)
+// Note: exit ne gère pas l'overflow ! (exit 256 renvoie 0)
