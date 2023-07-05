@@ -66,7 +66,7 @@ char	*modify_var(char *str);
 int		ft_len_dif(char *str);
 int		plus_equal(char *str);
 int		has_invalid_character(char *str);
-char	*remove_plus(char **str);
+char	*remove_plus(char *str);
 char	**ft_addstr(char **envp, char *str, int envp_size);
 void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size);
 void	print_env(char **export_var, char **envp, int i);
