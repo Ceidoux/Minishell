@@ -117,8 +117,8 @@ nof: all
 
 .PHONY: debug
 debug: CC := gcc
-debug: LDFLAGS += -g -fsanitize=address
-debug: CFLAGS += -g
+#debug: LDFLAGS += -g -fsanitize=address
+debug: CFLAGS += -g3
 debug: re
 
 .PHONY: sanitize
