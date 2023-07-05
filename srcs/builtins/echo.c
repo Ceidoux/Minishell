@@ -45,9 +45,9 @@ void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
 		ft_expand(&copy, envp);
 		ft_unquote(&copy);
 		if (n_flag)
-			pipex_printf("%s", copy);
+			printf("%s", copy);
 		else
-			pipex_printf("%s\n", copy);
+			printf("%s\n", copy);
 	}
 	g_exit_status = 0;
 	exit(0);
