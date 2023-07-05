@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/04 16:44:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/05 13:28:22 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 		return(0);
 	else
 	{
-		tools.args = ft_split(toc.commands[tools.i], ' ');
+		tools.args = pipex_split(toc.commands[tools.i], " ");
+		int i = 0;
+		while (tools.args[i])
+		{
+			printf("args[%d] = %s\n", i, tools.args[i]);
+			i++;
+		}
 		if (ft_strcmp(tools.args[0], "echo"))
 		{
 			tools.pid[tools.i] = fork();
