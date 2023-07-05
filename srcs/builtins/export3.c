@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:54 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:38:37 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:19:13 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 //retire le '+' dune string
-char	*remove_plus(char *str)
+char	*remove_plus(char **str)
 {
 	int		i;
 	char	**cut;
+	char	*ret;
 
 	i = 1;
-	if (has_car(str, '+') != -1)
+	ret = NULL;
+	if (has_car(*str, '+') != -1)
 	{
-		cut = ft_split(str, '+');
+		cut = ft_split(*str, '+');
 		while (cut[i])
 		{
 			cut[0] = ft_strjoin(cut[0], cut[i]);
@@ -30,11 +32,12 @@ char	*remove_plus(char *str)
 		i = 1;
 		while (cut[i])
 			free(cut[i++]);
-		str = ft_strdup(cut[0]);
+		ret = ft_strdup(cut[0]);
+		free(*str);
 		free(cut[0]);
 		free(cut);
 	}
-	return (str);
+	return (ret);
 }
 //remplace la variable dans envp par la nouvelle variable
 
@@ -69,7 +72,7 @@ char	**ft_addstr(char **envp, char *str, int envp_size)
 	i = 0;
 	res = NULL;
 	str_no_plus = ft_strdup(str);
-	str_no_plus = remove_plus(str_no_plus);
+	str_no_plus = remove_plus(&str_no_plus);
 	while (envp[i])
 	{
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str))
@@ -94,7 +97,7 @@ char	**ft_addstr_end(char **envp, char *str, int envp_size)
 	char	**res;
 
 	i = 0;
-	str = remove_plus(str);
+	str = remove_plus(&str);
 	res = malloc(sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
 	while (envp_size > 0)
