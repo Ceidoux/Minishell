@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 13:28:22 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:06:59 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
-int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
+int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (toc.commands[tools.i] == NULL)
-		return(0);
+		return (0);
 	else
 	{
 		tools.args = pipex_split(toc.commands[tools.i], " ");
@@ -40,7 +40,7 @@ int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 		}
 		else if (is_builtin(tools.args[0], *envp))
 		{
-			if(builtin_exec(tools, toc, envp) == 1)
+			if (builtin_exec(tools, toc, envp) == 1)
 				return (1);
 		}
 		else
@@ -50,7 +50,7 @@ int command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				command_exec(tools, toc, *envp);
 		}
 	}
-	return(0);
+	return (0);
 }
 int	pipex(t_cmd_tab toc, char ***envp)
 {
@@ -60,7 +60,7 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	while (tools.i < toc.size)
 	{
 		if (command_type(tools, toc, envp) == 1)
-			return(1);
+			return (1);
 		(tools.i)++;
 	}
 	clean_finish(tools, toc);
@@ -69,7 +69,7 @@ int	pipex(t_cmd_tab toc, char ***envp)
 
 void	ft_pipe_manager(t_tools tools, t_cmd_tab toc)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (toc.inputs[tools.i] != -1)

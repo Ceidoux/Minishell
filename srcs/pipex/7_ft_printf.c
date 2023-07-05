@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   7_ft_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:37:45 by kali              #+#    #+#             */
-/*   Updated: 2023/07/04 01:50:50 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/05 14:10:27 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ void	print_format(char *str, int *i, va_list args, int *len)
 		else if (str[*i] == 'u')
 			error_pipex_putunsnbr(va_arg(args, unsigned int), len);
 		else if (str[*i] == 'x')
-			error_pipex_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef", len);
+			error_pipex_putnbr_base(va_arg(args, unsigned int),
+				"0123456789abcdef", len);
 		else if (str[*i] == 'X')
-			error_pipex_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF", len);
+			error_pipex_putnbr_base(va_arg(args, unsigned int),
+				"0123456789ABCDEF", len);
 		else if (str[*i] == '%')
 			error_pipex_putchar('%', len);
 	}

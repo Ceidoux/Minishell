@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 13:26:13 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:09:45 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_words(char *str, char *charset)
 	flag = 0;
 	while (str[i])
 	{
-		if(str[i] == '\"')
+		if (str[i] == '\"')
 		{
 			i++;
 			if (flag == 0)
@@ -74,7 +74,7 @@ int	count_words(char *str, char *charset)
 			flag = 0;
 			i++;
 		}
-		else if(str[i])
+		else if (str[i])
 			i++;
 	}
 	return (compteur);
@@ -117,7 +117,7 @@ char	**pipex_split(char *str, char *charset)
 		if (not_blank(str[i], charset))
 		{
 			ancre = i;
-			while(str[i] && not_blank(str[i], charset))
+			while (str[i] && not_blank(str[i], charset))
 			{
 				if (str[i] == '\"')
 				{
