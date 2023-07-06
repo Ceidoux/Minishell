@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:54 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 14:57:25 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 15:14:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char	**ft_addstr(char **envp, char *str, int envp_size)
 				return (ft_addstr_replace(envp, str, i));
 			}
 		if (pipex_strncmp(str_no_plus, envp[i],
-				ft_len_dif(str_no_plus)) && plus_equal(str) == 1)
+				ft_len_dif(str_no_plus)) && plus_equal(str) == 1
+			&& ft_len_dif(str_no_plus) == ft_len_dif(envp[i]))
 			{
 				free(str_no_plus);
 				return (ft_addstr_plus(res, envp, str, i));
