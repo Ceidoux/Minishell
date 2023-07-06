@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:54 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 15:14:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 19:49:41 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	**ft_addstr_end(char **envp, char *str, int envp_size)
 	i = 0;
 	str_no_plus = remove_plus(str);
 	res = malloc(sizeof(char *) * (envp_size + 2));
-	ft_bzero(res, sizeof(char *) * (envp_size + 2));
+	ft_memset(res, 0, sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
 	while (envp_size > 0)
 	{

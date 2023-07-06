@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 16:57:06 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 19:50:55 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	pipex(t_cmd_tab toc, char ***envp)
 {
 	t_tools	tools;
 
-	ft_bzero(&tools, sizeof(tools));
+	ft_memset(&tools, 0, sizeof(tools));
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{

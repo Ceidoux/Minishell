@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/05 19:08:11 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/06 19:46:29 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	if (isatty(0) != 1)
 		return (1);
-	ft_bzero(&sig_int, sizeof(sig_int));
+	ft_memset(&sig_int, 0, sizeof(sig_int));
+	ft_memset(&sig_quit, 0, sizeof(sig_quit));
 	sig_quit.sa_handler = SIG_IGN;
 	sig_quit.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &sig_quit, NULL);
-	ft_bzero(&sig_quit, sizeof(sig_quit));
 	sig_int.sa_handler = ft_handler;
 	sig_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sig_int, NULL);
@@ -66,16 +66,16 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	g_exit_status = 130;
 }
 
