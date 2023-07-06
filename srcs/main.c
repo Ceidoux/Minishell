@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/06 19:46:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:56:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	ft_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");	
 	g_exit_status = 130;
 }
 

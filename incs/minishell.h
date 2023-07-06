@@ -14,7 +14,7 @@
 # include <signal.h>			// sigaction()
 # include <sys/wait.h>			// wait()
 # include <stdarg.h>			// va_args
-
+# include <sys/ioctl.h>         // ioctl()
 /* nb: use -lreadline when compiling */
 
 extern int	g_exit_status;
