@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 19:31:53 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/06 11:43:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 	if (is_slash(tools.args[0]))
 		absolute_relative_path(tools, envp);
 	else
-		env_path(tools, envp);
+		env_path(tools, envp, toc);
 }
 
 void	absolute_relative_path(t_tools tools, char **envp)
@@ -121,7 +121,7 @@ char	*get_path(char **envp, char *str)
 	return (NULL);
 }
 
-void	env_path(t_tools tools, char **envp)
+void	env_path(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	tools.str = get_path(envp, "PATH=");
 	if (tools.str == NULL)
@@ -130,13 +130,16 @@ void	env_path(t_tools tools, char **envp)
 	tools.i = 0;
 	while (tools.paths[tools.i])
 	{
-		tools.paths[tools.i] = ft_strjoin(tools.paths[(tools.i)],
+		tools.paths[tools.i] = pipex_strjoin(tools.paths[(tools.i)],
 				tools.args[0]);
 		if (tools.paths[tools.i] == NULL)
 			return ;
-		g_exit_status = execve(tools.paths[tools.i], tools.args, envp);
+		execve(tools.paths[tools.i], tools.args, envp);
 		(tools.i)++;
 	}
+	// free(tools.paths[tools.i]);
+	ft_tocfree(&toc);
+	ft_envp_free(envp);
 	no_execution(tools);
 }
 

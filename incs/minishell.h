@@ -108,7 +108,7 @@ void	ft_pipe_manager(t_tools tools, t_cmd_tab toc);
 void	init_tools(t_tools *tools, t_cmd_tab toc);
 void	command_exec(t_tools tools, t_cmd_tab toc, char **envp);
 void	absolute_relative_path(t_tools tools, char **envp);
-void	env_path(t_tools tools, char **envp);
+void	env_path(t_tools tools, char **envp, t_cmd_tab toc);
 char	*remove_path(char *str);
 int		is_slash(char *str);
 int		end_slash(char *str);

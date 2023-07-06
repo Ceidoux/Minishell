@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   11_close_free_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:11:09 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 11:34:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	no_execution(t_tools tools)
 {
 	// perror(tools.args[0]);
 	error_pipex_printf("%s: command not found\n", tools.args[0]);
-	free_all(tools);
 	free_main(&tools);
+	free_all(tools);
 	exit(127);
 }
 
