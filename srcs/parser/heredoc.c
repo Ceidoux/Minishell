@@ -39,7 +39,7 @@ static int	ft_create_heredoc(char *delimiter, char **envp)
 		return (-1);
 	idx = 0;
 	tp_exit_status = g_exit_status;
-	g_exit_status = 0;
+	g_exit_status = -1;
 	while (++idx)
 	{
 		line = readline(">");

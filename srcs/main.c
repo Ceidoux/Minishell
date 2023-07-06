@@ -72,7 +72,8 @@ static void	ft_loop(char ***envp)
 static void	ft_handler(int sig)
 {
 	(void) sig;
-	write(1, "\n", 1);
+	if (g_exit_status != -1)
+		write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
