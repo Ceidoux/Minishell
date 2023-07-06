@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:54 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:38:37 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:57:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ char	*remove_plus(char *str)
 {
 	int		i;
 	char	**cut;
+	char	*res;
 
+	res = ft_strdup(str);
 	i = 1;
-	if (has_car(str, '+') != -1)
+	if (has_car(res, '+') != -1)
 	{
-		cut = ft_split(str, '+');
+		cut = ft_split(res, '+');
 		while (cut[i])
 		{
-			cut[0] = ft_strjoin(cut[0], cut[i]);
+			cut[0] = pipex_strjoin(cut[0], cut[i]);
 			i++;
 		}
 		i = 1;
 		while (cut[i])
 			free(cut[i++]);
-		str = ft_strdup(cut[0]);
-		free(cut[0]);
+		free(res);
+		res = pipex_strdup(cut[0]);
 		free(cut);
 	}
-	return (str);
+	return (res);
 }
 //remplace la variable dans envp par la nouvelle variable
 
@@ -49,11 +51,17 @@ char	**ft_addstr_replace(char **envp, char *str, int i)
 
 char	**ft_addstr_plus(char **res, char **envp, char *str, int i)
 {
+	int		j;
+
+	j = 0;
 	res = separate_two(str);
 	if (has_car(envp[i], '=') == -1)
-		envp[i] = ft_strjoin(envp[i], "=");
+		envp[i] = pipex_strjoin(envp[i], "=");
 	if (env_size(res) > 1)
-		envp[i] = ft_strjoin(envp[i], res[1]);
+		envp[i] = pipex_strjoin(envp[i], res[1]);
+	while (res[j])
+		free(res[j++]);
+	free(res);
 	return (envp);
 }
 
@@ -68,22 +76,31 @@ char	**ft_addstr(char **envp, char *str, int envp_size)
 
 	i = 0;
 	res = NULL;
-	str_no_plus = ft_strdup(str);
-	str_no_plus = remove_plus(str_no_plus);
+	str_no_plus = remove_plus(str);
 	while (envp[i])
 	{
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str))
 			&& has_car(str, '=') == -1
 			&& ft_len_dif(str) == ft_len_dif(envp[i]))
-			return (envp);
+			{
+				free(str_no_plus);
+				return (envp);
+			}
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str))
 			&& ft_len_dif(str) == ft_len_dif(envp[i]))
-			return (ft_addstr_replace(envp, str, i));
+			{
+				free(str_no_plus);
+				return (ft_addstr_replace(envp, str, i));
+			}
 		if (pipex_strncmp(str_no_plus, envp[i],
 				ft_len_dif(str_no_plus)) && plus_equal(str) == 1)
-			return (ft_addstr_plus(res, envp, str, i));
+			{
+				free(str_no_plus);
+				return (ft_addstr_plus(res, envp, str, i));
+			}
 		i++;
 	}
+	free(str_no_plus);
 	res = ft_addstr_end(envp, str, envp_size);
 	return (res);
 }
@@ -92,10 +109,12 @@ char	**ft_addstr_end(char **envp, char *str, int envp_size)
 {
 	int		i;
 	char	**res;
+	char	*str_no_plus;
 
 	i = 0;
-	str = remove_plus(str);
+	str_no_plus = remove_plus(str);
 	res = malloc(sizeof(char *) * (envp_size + 2));
+	ft_bzero(res, sizeof(char *) * (envp_size + 2));
 	res[envp_size + 1] = NULL;
 	while (envp_size > 0)
 	{
@@ -104,7 +123,7 @@ char	**ft_addstr_end(char **envp, char *str, int envp_size)
 		i++;
 		envp_size--;
 	}
-	res[i] = ft_strdup(str);
+	res[i] = pipex_strdup(str_no_plus);
 	free(envp);
 	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   9_useful_funcs_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:01:49 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:10:54 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:28:21 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*pipex_strdup(char *str)
 		i++;
 	}
 	res[i] = 0;
+	free(str);
 	return (res);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:56 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:40:16 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:33:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_swap(char **s1, char **s2)
 {
 	char	*temp;
 
-	temp = ft_strdup(*s1);
-	*s1 = ft_strdup(*s2);
-	*s2 = ft_strdup(temp);
+	temp = pipex_strdup(*s1);
+	*s1 = pipex_strdup(*s2);
+	*s2 = pipex_strdup(temp);
 }

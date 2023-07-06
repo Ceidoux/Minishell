@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:49 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:40:02 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:25:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,11 @@ char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)
 		{
 			ft_pipe_manager(tools, toc);
 			child_export(export_var, envp, i, envp_size);
+			ft_tocfree(&toc);
+			ft_envp_free(envp);
+			free_main(&tools);
+			free_all(tools);
+			exit(0);
 		}
 	}
 	else
@@ -122,7 +127,6 @@ void	child_export(char **export_var, char **envp, int i, int envp_size)
 	i = -1;
 	while (envp[++i])
 		print_env(export_var, envp, i);
-	exit(0);
 }
 
 void	print_env(char **export_var, char **envp, int i)
