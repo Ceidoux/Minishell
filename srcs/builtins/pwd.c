@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:40 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 19:29:24 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:17:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_pwd(t_tools tools, t_cmd_tab toc, char **envp)
 			ft_tocfree(&toc);
 			free_all(tools);
 			ft_envp_free(envp);
-			exit(1);
+			exit(0);
 		}
 		ft_putendl_fd(current_dir, 1);
 		free(current_dir);

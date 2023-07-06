@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 11:21:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:26:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@ cree autant de child processes que le "size" de toc. On a donc un fork() par com
 
 */
 
+void	free_args(t_tools tools)
+{
+	int	i;
+
+	i = 0;
+	if (tools.args)
+	{
+		while (tools.args[i])
+		{
+			free(tools.args[i]);
+			i++;
+		}
+		free(tools.args);
+	}
+}
 int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (toc.commands[tools.i] == NULL)
@@ -38,8 +53,7 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 		{
 			if (builtin_exec(tools, toc, envp) == 1)
 			{
-				clean_finish(tools, toc);
-				free_all(tools);
+				free_args(tools);
 				return (1);
 			}
 		}
@@ -50,8 +64,7 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				command_exec(tools, toc, *envp);
 		}
 	}
-	clean_finish(tools, toc);
-	free_all(tools);
+	free_args(tools);
 	return (0);
 }
 
@@ -64,9 +77,15 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	while (tools.i < toc.size)
 	{
 		if (command_type(tools, toc, envp) == 1)
+		{
+			clean_finish(tools, toc);
+			free_all(tools);
 			return (1);
+		}
 		(tools.i)++;
 	}
+	clean_finish(tools, toc);
+	free_all(tools);
 	return (0);
 }
 
