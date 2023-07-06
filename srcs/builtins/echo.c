@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:25 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 19:27:22 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/06 15:36:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,40 @@ int	is_slash_n(char *str)
 	int i;
 
 	i = 0;
+	if (str[i] == '\"')
+	{
+		i++;
+		if (!str[i] || str[i] != '-')
+			return (0);
+		i++;
+		if ((!str[i]) || (str[i] && str[i] != 'n'))
+			return (0);
+		while (str[i] == 'n')
+			i++;
+		if (!str[i] || str[i] != '\"')
+			return (0);
+		i++;
+		if (str[i] && str[i] != ' ')
+			return (0);
+		return (i);
+	}
+	if (str[i] == '\'')
+	{
+		i++;
+		if (!str[i] || str[i] != '-')
+			return (0);
+		i++;
+		if ((!str[i]) || (str[i] && str[i] != 'n'))
+			return (0);
+		while (str[i] == 'n')
+			i++;
+		if (!str[i] || str[i] != '\'')
+			return (0);
+		i++;
+		if (str[i] && str[i] != ' ')
+			return (0);
+		return (i);
+	}
 	if (str[i] != '-')
 		return (0);
 	i++;
