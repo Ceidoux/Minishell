@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 11:57:50 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 00:12:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 		ft_envp_free(envp);
 		free_main(&tools);
 		free_all(tools);
-		exit(0);
+		exit(127);
 	}
 	else if (access(tools.str, X_OK) == -1)
 	{
@@ -65,7 +65,7 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 		ft_envp_free(envp);
 		free_main(&tools);
 		free_all(tools);
-		exit(0);
+		exit(126);
 	}
 	else if (end_slash(tools.str))
 	{
@@ -75,7 +75,7 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 		ft_envp_free(envp);
 		free_main(&tools);
 		free_all(tools);
-		exit(0);
+		exit(126);
 	}
 	tools.args[0] = remove_path(tools.args[0]);
 	execve(tools.str, tools.args, envp);
@@ -134,12 +134,39 @@ char	*get_path(char **envp, char *str)
 	return (NULL);
 }
 
+char	*remove_beginning(char *str)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if (str[i] == '=')
+		i++;
+	res = malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (res == NULL)
+		return (NULL);
+	while (str[i])
+		res[j++] = str[i++];
+	res[j] = 0;
+	free(str);
+	return (res);
+}
 void	env_path(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	tools.str = get_path(envp, "PATH=");
-	if (tools.str == NULL)
+	if (tools.str == NULL || tools.str[5] == 0)
+	{
+		ft_tocfree(&toc);
+		ft_envp_free(envp);
 		no_path(tools);
+	}
 	tools.paths = pipex_split_slash(tools.str, ":");
+	if (tools.paths[0])
+		tools.paths[0] = remove_beginning(tools.paths[0]);
 	tools.i = 0;
 	while (tools.paths[tools.i])
 	{

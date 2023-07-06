@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_paths.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:31:07 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:09:26 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/06 23:57:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	end_slash(char *str)
 
 void	no_path(t_tools tools)
 {
-	error_pipex_printf("Command not found : %s \n", tools.args[0]);
+	error_pipex_printf("%s: No such file or directory\n", tools.args[0]);
 	free_no_path(tools);
 	free_main(&tools);
-	exit(0);
+	exit(127);
 }

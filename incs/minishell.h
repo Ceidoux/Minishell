@@ -15,6 +15,7 @@
 # include <sys/wait.h>			// wait()
 # include <stdarg.h>			// va_args
 # include <sys/ioctl.h>         // ioctl()
+# include <errno.h>			 // errno
 /* nb: use -lreadline when compiling */
 
 extern int	g_exit_status;
