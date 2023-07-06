@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 11:43:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 11:57:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,49 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 	j = 0;
 	ft_pipe_manager(tools, toc);
 	if (is_slash(tools.args[0]))
-		absolute_relative_path(tools, envp);
+		absolute_relative_path(tools, envp, toc);
 	else
 		env_path(tools, envp, toc);
 }
 
-void	absolute_relative_path(t_tools tools, char **envp)
+void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	tools.str = ft_strdup(tools.args[0]);
 	if (tools.str == NULL)
 		return ;
 	if (access(tools.str, F_OK) == -1)
-		free_path(tools);
+	{
+		perror(tools.str);
+		ft_tocfree(&toc);
+		ft_envp_free(envp);
+		free_main(&tools);
+		free_all(tools);
+		exit(0);
+	}
 	else if (access(tools.str, X_OK) == -1)
 	{
 		perror(tools.str);
-		free_str_args(tools);
+		ft_tocfree(&toc);
+		ft_envp_free(envp);
 		free_main(&tools);
+		free_all(tools);
 		exit(0);
 	}
 	else if (end_slash(tools.str))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
 		error_pipex_printf("%s: Is a directory\n", tools.str);
-		free_str_args(tools);
+		ft_tocfree(&toc);
+		ft_envp_free(envp);
 		free_main(&tools);
+		free_all(tools);
 		exit(0);
 	}
 	tools.args[0] = remove_path(tools.args[0]);
-	g_exit_status = execve(tools.str, tools.args, envp);
+	execve(tools.str, tools.args, envp);
 	perror(tools.str);
+	ft_tocfree(&toc);
+	ft_envp_free(envp);
 	no_execution(tools);
 }
 
