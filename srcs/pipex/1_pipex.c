@@ -46,6 +46,8 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 				command_exec(tools, toc, *envp);
 		}
 	}
+	clean_finish(tools, toc);
+	free_all(tools);
 	return (0);
 }
 
@@ -65,8 +67,6 @@ int	pipex(t_cmd_tab toc, char ***envp)
 		}
 		(tools.i)++;
 	}
-	clean_finish(tools, toc);
-	free_all(tools);
 	return (0);
 }
 

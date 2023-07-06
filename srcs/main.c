@@ -66,7 +66,7 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	rl_clear_history();
+	// rl_clear_history();
 }
 
 static void	ft_handler(int sig)
