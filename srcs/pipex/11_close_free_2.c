@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 11:34:24 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:59:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	clean_finish(t_tools tools, t_cmd_tab toc)
 {
+	int exit_status;
+
 	tools.i = 0;
 	while (tools.i < toc.size)
 	{
@@ -29,7 +31,8 @@ void	clean_finish(t_tools tools, t_cmd_tab toc)
 	}
 	while (toc.size > 0)
 	{
-		wait(NULL);
+		wait(&exit_status);
+		g_exit_status = WEXITSTATUS(exit_status);
 		(toc.size)--;
 	}
 	free_main(&tools);
