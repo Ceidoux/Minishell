@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:49 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 12:25:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 14:22:04 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,20 @@ char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)
 	}
 	else
 		add_to_env(&tools, &envp, &size, &envp_size);
+	if (tools.status_flag == 0 && size > 1)
+	{
+		tools.pid[tools.i] = fork();
+		if (tools.pid[tools.i] == 0)
+		{
+			ft_pipe_manager(tools, toc);
+			ft_tocfree(&toc);
+			ft_envp_free(envp);
+			free_main(&tools);
+			free_all(tools);
+			exit(0);
+		}
+	}
+	g_exit_status = 0;
 	return (envp);
 }
 
@@ -147,7 +161,7 @@ void	print_env(char **export_var, char **envp, int i)
 		free(export_var);
 	}
 	else
-		pipex_printf("export %s\n", envp[i]);
+		printf("export %s\n", envp[i]);
 }
 
 void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size)
@@ -159,9 +173,14 @@ void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size)
 	{
 		if (has_invalid_character(tools->args[i + 1]))
 		{
-			error_pipex_printf("export: %s: not a valid identifier\n",
-				tools->args[i + 1]);
-			g_exit_status = 1;
+			tools->status_flag = 1;
+			tools->pid[tools->i] = fork();
+			if (tools->pid[tools->i] == 0)
+			{
+				error_pipex_printf("export: %s: not a valid identifier\n",
+					tools->args[i + 1]);
+				exit(1);
+			}
 		}
 		else
 		{

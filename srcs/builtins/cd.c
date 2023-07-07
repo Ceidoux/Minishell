@@ -3,23 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:14 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 20:05:15 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/07 14:17:35 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(t_tools tools, char **envp)
+int	ft_cd(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	char	*str;
 
 	if (arg_size(tools) > 2)
 	{
-		error_pipex_printf("%s: too many arguments\n");
-		g_exit_status = 1;
+		tools.pid[tools.i] = fork();
+		if (tools.pid[tools.i] == 0)
+		{
+			ft_pipe_manager(tools, toc);
+			error_pipex_printf("cd: too many arguments\n");
+			ft_tocfree(&toc);
+			ft_envp_free(envp);
+			free_main(&tools);
+			free_all(tools);
+			exit(1);
+		}
 		return (0);
 	}
 	if (arg_size(tools) == 1 || (arg_size(tools) == 2
@@ -28,21 +37,52 @@ int	ft_cd(t_tools tools, char **envp)
 		str = ft_getenv("HOME", envp);
 		if (str == NULL)
 		{
-			perror(tools.args[0]);
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				// error_pipex_printf("cd: HOME not set\n")
+				perror(tools.args[0]);
+				ft_tocfree(&toc);
+				ft_envp_free(envp);
+				free_main(&tools);
+				free_all(tools);
+				exit(1);
+			}
 			return (0);
 		}
 		if (chdir(str) == -1)
 		{
-			perror(str);
-			g_exit_status = 1;
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				perror(str);
+				ft_tocfree(&toc);
+				ft_envp_free(envp);
+				free_main(&tools);
+				free_all(tools);
+				exit(1);
+			}
+			return (0);
 		}
 	}
 	else if (arg_size(tools) == 2)
 	{
 		if (chdir(tools.args[1]) == -1)
 		{
-			perror(tools.args[1]);
-			g_exit_status = 1;
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				perror(tools.args[1]);
+				ft_tocfree(&toc);
+				ft_envp_free(envp);
+				free_main(&tools);
+				free_all(tools);
+				exit(1);
+			}
+			return (0);
 		}
 	}
 	g_exit_status = 0;

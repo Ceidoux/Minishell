@@ -44,10 +44,11 @@ typedef struct s_tools
 	char	*str;
 	char	**paths;
 	int		fd_count;
+	int		status_flag;
 }	t_tools;
 
 /* builtin directory */
-int		ft_cd(t_tools tools, char **envp);
+int		ft_cd(t_tools tools, char **envp, t_cmd_tab toc);
 void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp);
 int		ft_env(t_tools tools, t_cmd_tab toc, char **envp);
 int		ft_exit(char *s, int toc_size);

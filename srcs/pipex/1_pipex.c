@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 19:50:55 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 12:50:31 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_args(t_tools tools)
 		free(tools.args);
 	}
 }
+
 int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
 	if (toc.commands[tools.i] == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 00:12:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 14:08:21 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 		i++;
 	}
 	if (ft_strcmp(tools.args[0], "cd"))
-		return (ft_cd(tools, *envp));
+		return (ft_cd(tools, *envp, toc));
 	else if (ft_strcmp(tools.args[0], "env"))
 		return (ft_env(tools, toc, *envp));
 	else if (ft_strcmp(tools.args[0], "exit"))

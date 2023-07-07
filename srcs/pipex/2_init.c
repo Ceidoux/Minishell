@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:39:35 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:07:05 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 11:34:52 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,3 @@ void	init_tools(t_tools *tools, t_cmd_tab toc)
 		return ;
 	tools->i = 0;
 }
-
-
-
-
