@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:49 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/07 14:22:04 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 01:04:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)
 		}
 	}
 	else
-		add_to_env(&tools, &envp, &size, &envp_size);
+		add_to_env(&tools, &envp, &size, toc);
 	if (tools.status_flag == 0 && size > 1)
 	{
 		tools.pid[tools.i] = fork();
@@ -164,11 +164,14 @@ void	print_env(char **export_var, char **envp, int i)
 		printf("export %s\n", envp[i]);
 }
 
-void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size)
+void	add_to_env(t_tools *tools, char ***envp, int *size, t_cmd_tab toc)
 {
 	int	i;
+	int		envp_size;
+
 
 	i = 0;
+	envp_size = env_size(*envp);
 	while (i < *size - 1)
 	{
 		if (has_invalid_character(tools->args[i + 1]))
@@ -179,13 +182,18 @@ void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size)
 			{
 				error_pipex_printf("export: %s: not a valid identifier\n",
 					tools->args[i + 1]);
+				ft_pipe_manager(*tools, toc);
+				ft_tocfree(&toc);
+				ft_envp_free(*envp);
+				free_main(tools);
+				free_all(*tools);
 				exit(1);
 			}
 		}
 		else
 		{
-			*envp = ft_addstr(*envp, tools->args[i + 1], *envp_size);
-			*envp_size = env_size(*envp);
+			*envp = ft_addstr(*envp, tools->args[i + 1], envp_size);
+			envp_size = env_size(*envp);
 		}
 		i++;
 	}

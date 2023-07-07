@@ -71,7 +71,7 @@ int		plus_equal(char *str);
 int		has_invalid_character(char *str);
 char	*remove_plus(char *str);
 char	**ft_addstr(char **envp, char *str, int envp_size);
-void	add_to_env(t_tools *tools, char ***envp, int *size, int *envp_size);
+void	add_to_env(t_tools *tools, char ***envp, int *size, t_cmd_tab toc);
 void	print_env(char **export_var, char **envp, int i);
 void	child_export(char **export_var, char **envp, int i, int envp_size);
 char	**ft_addstr_end(char **envp, char *str, int envp_size);
