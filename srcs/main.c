@@ -75,12 +75,10 @@ static void	ft_handler(int sig)
 	if (g_exit_status == -1)
 		ioctl(STDIN_FILENO, TIOCSTI, "\0");
 	else 
-	{
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	g_exit_status = 130;
 }
 
