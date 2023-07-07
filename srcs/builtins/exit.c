@@ -6,13 +6,13 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:41 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:47:55 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 17:19:52 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(char *s, int toc_size)
+int	ft_exit(char *s, t_tools tools, t_cmd_tab toc, char **envp)
 {
 	unsigned char	n;
 	int				sign;
@@ -29,8 +29,19 @@ int	ft_exit(char *s, int toc_size)
 	if (!ft_isdigit(*s))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		if (toc_size == 1)
-			g_exit_status = 255;
+		if (toc.size == 1)
+		{
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				clean_finish(tools, toc);
+				ft_tocfree(&toc);
+				free_all(tools);
+				ft_envp_free(envp);
+				exit(2);
+			}
+		}
 		return (1);
 	}
 	while (ft_isdigit(*s))
@@ -38,8 +49,19 @@ int	ft_exit(char *s, int toc_size)
 	if (*s && *s != ' ')
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		if (toc_size == 1)
-			g_exit_status = 255;
+		if (toc.size == 1)
+		{
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				clean_finish(tools, toc);
+				ft_tocfree(&toc);
+				free_all(tools);
+				ft_envp_free(envp);
+				exit(2);
+			}
+		}
 		return (1);
 	}
 	while (*s == ' ')
@@ -47,12 +69,31 @@ int	ft_exit(char *s, int toc_size)
 	if (*s)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		if (toc_size == 1)
-			g_exit_status = 1;
+		if (toc.size == 1)
+		{
+			tools.pid[tools.i] = fork();
+			if (tools.pid[tools.i] == 0)
+			{
+				ft_pipe_manager(tools, toc);
+				clean_finish(tools, toc);
+				ft_tocfree(&toc);
+				free_all(tools);
+				ft_envp_free(envp);
+				exit(1);
+			}	
+		}
 		return (0);
 	}
-	if (toc_size == 1)
-		g_exit_status = sign * n;
+	tools.pid[tools.i] = fork();
+	if (tools.pid[tools.i] == 0)
+	{
+		ft_pipe_manager(tools, toc);
+		clean_finish(tools, toc);
+		ft_tocfree(&toc);
+		free_all(tools);
+		ft_envp_free(envp);
+		exit(n * sign);
+	}
 	return (1);
 }
 

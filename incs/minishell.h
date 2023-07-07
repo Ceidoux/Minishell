@@ -51,7 +51,7 @@ typedef struct s_tools
 int		ft_cd(t_tools tools, char **envp, t_cmd_tab toc);
 void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp);
 int		ft_env(t_tools tools, t_cmd_tab toc, char **envp);
-int		ft_exit(char *s, int toc_size);
+int		ft_exit(char *s, t_tools tools, t_cmd_tab toc, char **envp);
 int		ft_pwd(t_tools tools, t_cmd_tab toc, char **envp);
 char	**ft_unset(char *s, char **envp);
 

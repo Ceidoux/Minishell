@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:40 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 17:09:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 17:28:03 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,21 @@ int	ft_pwd(t_tools tools, t_cmd_tab toc, char **envp)
 		if (tools.args[1])
 		{
 			if (invalid_option(tools.args[1]))
+			{
+				clean_finish(tools, toc);
+				ft_tocfree(&toc);
+				free_all(tools);
+				ft_envp_free(envp);
 				exit(2);
+			}
 			else
+			{
+				clean_finish(tools, toc);
+				ft_tocfree(&toc);
+				free_all(tools);
+				ft_envp_free(envp);
 				exit(0);
+			}
 		}
 		ft_pipe_manager(tools, toc);
 		current_dir = NULL;
