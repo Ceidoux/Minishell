@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 static int	ft_create_heredoc(char *delimiter, char **envp);
+static int	ft_realdine_heredoc(char *delimiter, char **envp, int fd);
 
 int	ft_heredoc(char *delimiter, char **envp)
 {
@@ -30,21 +31,32 @@ int	ft_heredoc(char *delimiter, char **envp)
 static int	ft_create_heredoc(char *delimiter, char **envp)
 {
 	int		fd;
-	char	*line;
-	int		idx;
 	int		tp_exit_status;
 
 	fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
 		return (-1);
-	idx = 0;
 	tp_exit_status = g_exit_status;
 	g_exit_status = -1;
+	if (ft_realdine_heredoc(delimiter, envp, fd) == -1)
+		return (close(fd), -1);
+	g_exit_status = tp_exit_status;
+	close(fd);
+	return (0);
+}
+
+static int	ft_realdine_heredoc(char *delimiter, char **envp, int fd)
+{
+	int		idx;
+	char	*line;
+
+	idx = 0;
+	line = NULL;
 	while (++idx)
 	{
 		line = readline(">");
 		if (g_exit_status == 130)
-			return (free(line), close(fd), -1);
+			return (free(line), -1);
 		else if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 			break ;
 		if (idx > 1)
@@ -54,11 +66,10 @@ static int	ft_create_heredoc(char *delimiter, char **envp)
 		free(line);
 	}
 	write(fd, "\n", 1);
-	g_exit_status = tp_exit_status;
 	free(line);
-	close(fd);
 	return (0);
 }
+
 /*
 export VAR=END
 cat << $VAR		-> le délimitateur est $VAR

@@ -24,14 +24,15 @@ void	ft_expand(char **s, char **envp)
 	t_bool	simple_quote;
 	t_bool	double_quote;
 
-	idx = 0;
+	idx = -1;
 	simple_quote = FALSE;
 	double_quote = FALSE;
-	while ((*s)[idx])
+	while ((*s)[++idx])
 	{
 		if ((*s)[idx] == '$' && simple_quote == FALSE)
 		{
-			if (double_quote == FALSE && ((*s)[idx + 1] == '\'' || (*s)[idx + 1] == '\"'))
+			if (double_quote == FALSE
+				&& ((*s)[idx + 1] == '\'' || (*s)[idx + 1] == '\"'))
 				ft_remove_dollar_sign(s, idx + 1);
 			else if ((*s)[idx + 1] == '?')
 				idx += ft_expand_exit_status(s, idx + 1);
@@ -43,7 +44,6 @@ void	ft_expand(char **s, char **envp)
 			double_quote = (double_quote == FALSE);
 		else if ((*s)[idx] == '\'' && double_quote == FALSE)
 			simple_quote = (simple_quote == FALSE);
-		idx++;
 	}
 }
 
@@ -52,7 +52,7 @@ static void	ft_remove_dollar_sign(char **s, int idx)
 	char	*new_s;
 	char	*old_s;
 	int		old_size;
-	
+
 	old_size = ft_strlen(*s);
 	new_s = malloc(old_size * sizeof(*new_s));
 	if (!new_s)
@@ -79,7 +79,8 @@ static int	ft_expand_exit_status(char **s, int idx)
 	ft_strlcpy(new_s, *s, idx);
 	if (exit_status && *exit_status)
 		ft_strlcpy(new_s + idx - 1, exit_status, exit_status_length + 1);
-	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1, ft_strlen(*s) - idx);
+	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1,
+		ft_strlen(*s) - idx);
 	free(exit_status);
 	old_s = *s;
 	*s = new_s;
@@ -109,11 +110,11 @@ static int	ft_expand_var(char **s, int idx, char **envp)
 	ft_strlcpy(new_s, *s, idx);
 	if (var)
 		ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
-	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len, ft_strlen(*s) - (idx + len) + 1);
+	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len,
+		ft_strlen(*s) - (idx + len) + 1);
 	old_s = *s;
 	*s = new_s;
-	free(old_s);
-	return (ft_strlen(var));
+	return (free(old_s), ft_strlen(var));
 }
 
 /*
