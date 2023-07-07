@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 15:48:11 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 19:00:25 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,27 @@ void	free_args(t_tools tools)
 
 int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 {
-	if (toc.commands[tools.i] == NULL)
-		return (0);
+	tools.args = pipex_split(toc.commands[tools.i], " ");
+	if (ft_strcmp(tools.args[0], "echo"))
+	{
+		tools.pid[tools.i] = fork();
+		if (tools.pid[tools.i] == 0)
+			ft_echo(tools, toc.commands[tools.i], toc, *envp);
+		else
+			g_exit_status = 0;
+	}
+	else if (is_builtin(tools.args[0], *envp))
+	{
+		if (builtin_exec(tools, toc, envp) == 1)
+			return (free_args(tools), 1);
+	}
 	else
 	{
-		tools.args = pipex_split(toc.commands[tools.i], " ");
-		if (ft_strcmp(tools.args[0], "echo"))
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-				ft_echo(tools, toc.commands[tools.i], toc, *envp);
-			else
-				g_exit_status = 0;
-		}
-		else if (is_builtin(tools.args[0], *envp))
-		{
-			if (builtin_exec(tools, toc, envp) == 1)
-			{
-				free_args(tools);
-				return (1);
-			}
-		}
-		else
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-				command_exec(tools, toc, *envp);
-		}
+		tools.pid[tools.i] = fork();
+		if (tools.pid[tools.i] == 0)
+			command_exec(tools, toc, *envp);
 	}
-	free_args(tools);
-	return (0);
+	return (free_args(tools), 0);
 }
 
 int	pipex(t_cmd_tab toc, char ***envp)
@@ -70,7 +61,9 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	init_tools(&tools, toc);
 	while (tools.i < toc.size)
 	{
-		if (command_type(tools, toc, envp) == 1)
+		if (toc.commands[tools.i] == NULL)
+			;
+		else if (command_type(tools, toc, envp) == 1)
 		{
 			clean_finish(tools, toc);
 			free_all(tools);
