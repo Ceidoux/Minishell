@@ -78,8 +78,7 @@ static int ft_addword(char *s, t_list **tokens)
 	len = 0;
 	simple_quote = FALSE;
 	double_quote = FALSE;
-	while (s[len] && (simple_quote || double_quote || !(ft_ismetachar(s[len])
-		|| ft_isblank(s[len]))))
+	while (s[len] && (simple_quote || double_quote || !(ft_ismetachar(s[len]) || ft_isblank(s[len]))))
 	{
 		if (s[len] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);

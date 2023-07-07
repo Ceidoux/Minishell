@@ -31,14 +31,13 @@ int	ft_check(t_list	*tokens)
 	{
 		if (tokens->type == OPERATOR && !ft_check_single_operator(tokens->content))
 			return (0);
-		else if (tokens->next && tokens->type == OPERATOR
-			&& tokens->next->type == OPERATOR
-			&& !ft_check_two_operators(tokens->content, tokens->next->content))
+		else if (tokens->next && tokens->type == OPERATOR && tokens->next->type == OPERATOR && !ft_check_two_operators(tokens->content, tokens->next->content))
 			return (0);
-		else if (!tokens->next && tokens->type == OPERATOR
-			&& !ft_check_last_operator(tokens->content))
+		else if (!tokens->next && tokens->type == OPERATOR && !ft_check_last_operator(tokens->content))
 			return (0);
-		else if (tokens->type == WORD && !ft_check_quotes(tokens->content))
+		else if (tokens->type == WORD)
+		{
+			if (!ft_check_quotes(tokens->content))
 				return (0);
 		// 	ft_unquote(&(tokens->content));
 		}
@@ -80,6 +79,12 @@ static int	ft_check_single_operator(char *operator)
 	}
 	return (1);
 }
+/* pour bonus
+|| !ft_strncmp(operator, "||", 3)
+|| !ft_strncmp(operator, "&&", 3)
+|| !ft_strncmp(operator, "(", 2)
+|| !ft_strncmp(operator, ")", 2)
+*/
 
 static int	ft_check_two_operators(char *operator1, char *operator2)
 {
