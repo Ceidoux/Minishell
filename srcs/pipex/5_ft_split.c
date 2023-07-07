@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:09:45 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:50:33 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,3 @@ char	**pipex_split(char *str, char *charset)
 	}
 	return (res);
 }
-
-

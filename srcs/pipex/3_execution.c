@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 14:08:21 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:49:59 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 
 int	ft_len_before_equal(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -177,7 +177,6 @@ void	env_path(t_tools tools, char **envp, t_cmd_tab toc)
 		execve(tools.paths[tools.i], tools.args, envp);
 		(tools.i)++;
 	}
-	// free(tools.paths[tools.i]);
 	ft_tocfree(&toc);
 	ft_envp_free(envp);
 	no_execution(tools);

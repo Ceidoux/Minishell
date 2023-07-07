@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   11_close_free_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/06 23:03:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/07 15:51:53 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	clean_finish(t_tools tools, t_cmd_tab toc)
 {
-	int exit_status;
+	int	exit_status;
 
 	tools.i = 0;
 	while (tools.i < toc.size)
@@ -40,7 +40,6 @@ void	clean_finish(t_tools tools, t_cmd_tab toc)
 
 void	no_execution(t_tools tools)
 {
-	// perror(tools.args[0]);
 	error_pipex_printf("%s: command not found\n", tools.args[0]);
 	free_main(&tools);
 	free_all(tools);
@@ -79,7 +78,6 @@ void	close_pipes(t_tools tools, t_cmd_tab toc)
 	j = 0;
 	while (j < toc.size)
 	{
-
 		close(tools.pipe_fd[j][0]);
 		close(tools.pipe_fd[j][1]);
 		close(toc.inputs[j]);

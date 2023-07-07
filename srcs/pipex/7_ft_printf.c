@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:37:45 by kali              #+#    #+#             */
-/*   Updated: 2023/07/05 14:10:27 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:50:53 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	pipex_printf(const char *str, ...)
 	va_end(args);
 	return (len);
 }
+
 int	error_pipex_printf(const char *str, ...)
 {
 	int		i;
