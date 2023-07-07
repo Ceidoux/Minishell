@@ -31,16 +31,15 @@ int	ft_check(t_list	*tokens)
 	{
 		if (tokens->type == OPERATOR && !ft_check_single_operator(tokens->content))
 			return (0);
-		else if (tokens->next && tokens->type == OPERATOR && tokens->next->type == OPERATOR && !ft_check_two_operators(tokens->content, tokens->next->content))
+		else if (tokens->next && tokens->type == OPERATOR
+			&& tokens->next->type == OPERATOR
+			&& !ft_check_two_operators(tokens->content, tokens->next->content))
 			return (0);
-		else if (!tokens->next && tokens->type == OPERATOR && !ft_check_last_operator(tokens->content))
+		else if (!tokens->next && tokens->type == OPERATOR
+			&& !ft_check_last_operator(tokens->content))
 			return (0);
-		else if (tokens->type == WORD)
-		{
-			if (!ft_check_quotes(tokens->content))
+		else if (tokens->type == WORD && !ft_check_quotes(tokens->content))
 				return (0);
-		// 	ft_unquote(&(tokens->content));
-		}
 		tokens = tokens->next;
 	}
 	return (1);

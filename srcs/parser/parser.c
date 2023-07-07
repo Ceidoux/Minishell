@@ -15,12 +15,10 @@
 t_cmd_tab	ft_parser(char *s, char **envp)
 {
 	t_cmd_tab	toc;
-	t_list				*tokens;
+	t_list		*tokens;
 
 	tokens = ft_lexer(s, envp);
-	// ft_lstprint(tokens);
 	toc = ft_create_table_of_commands(tokens, envp);	
 	ft_lstclear(&tokens, &free);
-	// ft_tocprint(toc);
 	return (toc);
 }

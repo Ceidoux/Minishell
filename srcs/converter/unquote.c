@@ -16,7 +16,7 @@ static int	ft_remove_quotes(char **s, int idx, char c);
 
 void	ft_unquote(char **s)
 {
-	int		idx;
+	int	idx;
 
 	idx = -1;
 	while ((*s)[++idx])
@@ -37,7 +37,8 @@ static int	ft_remove_quotes(char **s, int idx, char c)
 		exit(EXIT_FAILURE);
 	ft_strlcpy(new_s, *s, idx + 1);
 	ft_strlcpy(new_s + idx, *s + idx + 1, len + 1);
-	ft_strlcpy(new_s + idx + len, *s + idx + len + 2, ft_strlen(*s) - idx - len - 1);
+	ft_strlcpy(new_s + idx + len, *s + idx + len + 2,
+		ft_strlen(*s) - idx - len - 1);
 	free(*s);
 	*s = new_s;
 	return (len - 1);
