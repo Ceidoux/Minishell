@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 static int	ft_ismetachar(char c);
-static int	ft_isblank(char c);
 static int	ft_addoperator(char *s, t_list **tokens);
 static int	ft_addword(char *s, t_list **tokens);
+static void	ft_dissociate_op(t_list **tokens);
 
 /* creation d'une liste chainee dont chaque element est 
 un 'token' qui peut etre soit un 'operator' soit un 'word'*/
@@ -28,7 +28,7 @@ t_list	*ft_lexer(char *s, char **envp)
 	tokens = NULL;
 	while (*s)
 	{
-		while (ft_isblank(*s))
+		while (*s == ' ' || *s == '\t')
 			s++;
 		if (ft_ismetachar(*s))
 			s += ft_addoperator(s, &tokens);
@@ -52,20 +52,30 @@ static int	ft_ismetachar(char c)
 		|| c == ';');
 }
 
-static int	ft_isblank(char c)
-{
-	return (c == ' ' || c == '\t');
-}
-
 static int	ft_addoperator(char *s, t_list **tokens)
 {
 	int	len;
+	t_list	*last_elem;
 
 	len = 0;
 	while(ft_ismetachar(s[len]))
 		len++;
 	ft_lstadd_back(tokens, ft_lstnew(ft_substr(s, 0, len), OPERATOR));
+	last_elem = ft_lstlast(*tokens);
+	if (!ft_strncmp(last_elem->content, "|>", 3) || !ft_strncmp(last_elem->content, "|<", 3)
+	|| !ft_strncmp(last_elem->content, "|>>", 4) || !ft_strncmp(last_elem->content, "|<<", 4))
+		ft_dissociate_op(tokens);
 	return (len);
+}
+
+static void	ft_dissociate_op(t_list **tokens)
+{
+	t_list	*last_elem;
+
+	last_elem = ft_lstlast(*tokens);
+	ft_lstadd_back(tokens, ft_lstnew(ft_substr(last_elem->content, 1, ft_strlen(last_elem->content) - 1), OPERATOR));
+	free(last_elem->content);
+	last_elem->content = ft_strdup("|");
 }
 
 static int ft_addword(char *s, t_list **tokens)
@@ -78,7 +88,7 @@ static int ft_addword(char *s, t_list **tokens)
 	simple_quote = FALSE;
 	double_quote = FALSE;
 	while (s[len] && (simple_quote || double_quote
-		|| !(ft_ismetachar(s[len]) || ft_isblank(s[len]))))
+		|| !(ft_ismetachar(s[len]) || s[len] == ' ' || s[len] == '\t')))
 	{
 		if (s[len] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);
