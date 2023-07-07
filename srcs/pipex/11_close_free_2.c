@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 15:51:53 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/07 16:54:14 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	clean_finish(t_tools tools, t_cmd_tab toc)
 	while (toc.size > 0)
 	{
 		wait(&exit_status);
-		g_exit_status = WEXITSTATUS(exit_status);
+		if (WEXITSTATUS(exit_status) != 258)
+			g_exit_status = WEXITSTATUS(exit_status);
 		(toc.size)--;
 	}
 	free_main(&tools);
