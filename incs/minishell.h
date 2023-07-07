@@ -36,6 +36,7 @@ typedef struct s_cmd_tab
 
 typedef struct s_tools
 {
+	int		j;
 	int		i;
 	int		**pipe_fd;
 	int		file_fd;

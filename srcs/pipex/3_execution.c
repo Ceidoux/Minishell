@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 17:34:31 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 00:47:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 #include <string.h>
-
-/*  Voici la partie qui execute les commandes de pipex.
-    
-    La fonction command_exec() verifie bien les Fds obtenus par 
-    le parser, afin de bien rediriger chaque input et output.
-
-    les fonctions absolute_relative_path() et env_path() sont
-    quant a elles les fonctions chargees d'executer les commandes, en
-    fonciton de si un chemin est specifie ou si on prends les commandes
-    de la variable d'environnement PATH respectivements.
-
-*/
 
 void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 {
@@ -44,29 +32,25 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 		env_path(tools, envp, toc);
 }
 
+void	no_file(t_tools tools, t_cmd_tab toc, char **envp, int ex)
+{
+	perror(tools.str);
+	ft_tocfree(&toc);
+	ft_envp_free(envp);
+	free_main(&tools);
+	free_all(tools);
+	exit(ex);
+}
+
 void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	tools.str = ft_strdup(tools.args[0]);
 	if (tools.str == NULL)
 		return ;
 	if (access(tools.str, F_OK) == -1)
-	{
-		perror(tools.str);
-		ft_tocfree(&toc);
-		ft_envp_free(envp);
-		free_main(&tools);
-		free_all(tools);
-		exit(127);
-	}
+		no_file(tools, toc, envp, 127);
 	else if (access(tools.str, X_OK) == -1)
-	{
-		perror(tools.str);
-		ft_tocfree(&toc);
-		ft_envp_free(envp);
-		free_main(&tools);
-		free_all(tools);
-		exit(126);
-	}
+		no_file(tools, toc, envp, 126);
 	else if (end_slash(tools.str))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
@@ -232,14 +216,11 @@ int	is_builtin(char *str, char **envp)
 
 int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 {
-	int	i;
-
-	i = 0;
-	while (tools.args[i])
+	tools.j = -1;
+	while (tools.args[++(tools.j)])
 	{
-		ft_expand(&tools.args[i], *envp);
-		ft_unquote(&tools.args[i]);
-		i++;
+		ft_expand(&tools.args[tools.j], *envp);
+		ft_unquote(&tools.args[tools.j]);
 	}
 	if (ft_strcmp(tools.args[0], "cd"))
 		return (ft_cd(tools, *envp, toc));
@@ -253,16 +234,10 @@ int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
 			& (toc.size == 1));
 	}
 	else if (ft_strcmp(tools.args[0], "export"))
-	{
-		*envp = ft_export(tools, toc, *envp);
-		return (0);
-	}
+		return (*envp = ft_export(tools, toc, *envp), 0);
 	else if (ft_strcmp(tools.args[0], "pwd"))
 		return (ft_pwd(tools, toc, *envp));
 	else if (ft_strcmp(tools.args[0], "unset"))
-	{
-		*envp = ft_unset(toc.commands[tools.i], *envp);
-		return (0);
-	}
+		return (*envp = ft_unset(toc.commands[tools.i], *envp), 0);
 	return (0);
 }
