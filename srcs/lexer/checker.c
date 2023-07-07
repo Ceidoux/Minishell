@@ -17,6 +17,7 @@ static int	ft_check_two_op(char *operator1, char *operator2);
 static int	ft_check_last_op(char *operator);
 static int	ft_check_quotes(char *word);
 
+/* renvoie 0 en cas d'erreur */
 int	ft_check(t_list	*tokens)
 {
 	if (!tokens)
@@ -45,6 +46,7 @@ int	ft_check(t_list	*tokens)
 	return (1);
 }
 
+/* renvoie 0 en cas d'erreur */
 static int	ft_check_last_op(char *operator)
 {
 	if (!ft_strncmp(operator, "|", 2)
@@ -61,6 +63,7 @@ static int	ft_check_last_op(char *operator)
 	return (1);
 }
 
+/* renvoie 0 en cas d'erreur */
 static int	ft_check_single_op(char *operator)
 {
 	if (ft_strncmp(operator, "|", 2)
@@ -79,6 +82,7 @@ static int	ft_check_single_op(char *operator)
 	return (1);
 }
 
+/* renvoie 0 en cas d'erreur */
 static int	ft_check_two_op(char *operator1, char *operator2)
 {
 	if (!ft_strncmp(operator1, "|", 2) && (!ft_strncmp(operator2, "<", 2)
@@ -93,6 +97,7 @@ static int	ft_check_two_op(char *operator1, char *operator2)
 }
 /* exit_status en cas d'erreur est de 258  */
 
+/* renvoie 0 en cas d'erreur */
 static int	ft_check_quotes(char *word)
 {
 	int		idx;
