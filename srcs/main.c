@@ -66,7 +66,7 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)
@@ -77,9 +77,9 @@ static void	ft_handler(int sig)
 	else 
 	{
 		write(1, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	g_exit_status = 130;
 }
@@ -101,8 +101,10 @@ static char	*ft_prompt(char **envp)
 ! théoriquement, le format du prompt est donné par la variable PS1:
 Exemple:
 $>echo $PS1
-$>%n@%m %1~ %#		->Signifie que le prompt est au format suivant:	user@hostname cwd %
-Nb : impossible d'affichier l'hostname sans la fonction uname(), gethostname() ou set()
+$>%n@%m %1~ %#		->Signifie que le prompt est au format suivant:
+	user@hostname cwd %
+Nb : impossible d'affichier l'hostname sans la fonction uname(),
+	gethostname() ou set()
 
 Attention à check si toutes les variables existent pour ft_prompt
 
