@@ -66,7 +66,7 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	rl_clear_history();
+	// rl_clear_history();
 }
 
 static void	ft_handler(int sig)
@@ -77,9 +77,9 @@ static void	ft_handler(int sig)
 	else 
 	{
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 	g_exit_status = 130;
 }

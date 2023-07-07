@@ -39,7 +39,6 @@ int	ft_check(t_list	*tokens)
 		{
 			if (!ft_check_quotes(tokens->content))
 				return (0);
-		// 	ft_unquote(&(tokens->content));
 		}
 		tokens = tokens->next;
 	}
@@ -79,12 +78,6 @@ static int	ft_check_single_operator(char *operator)
 	}
 	return (1);
 }
-/* pour bonus
-|| !ft_strncmp(operator, "||", 3)
-|| !ft_strncmp(operator, "&&", 3)
-|| !ft_strncmp(operator, "(", 2)
-|| !ft_strncmp(operator, ")", 2)
-*/
 
 static int	ft_check_two_operators(char *operator1, char *operator2)
 {
