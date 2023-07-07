@@ -20,30 +20,30 @@ static void	ft_remove_dollar_sign(char **s, int idx);
 nb: char** car on passe l'adresse d'un str */
 void	ft_expand(char **s, char **envp)
 {
-	int		idx;
-	t_bool	simple_quote;
-	t_bool	double_quote;
+	int		i;
+	t_bool	squote;
+	t_bool	dquote;
 
-	idx = 0;
-	simple_quote = FALSE;
-	double_quote = FALSE;
-	while ((*s)[idx])
+	i = 0;
+	squote = FALSE;
+	dquote = FALSE;
+	while ((*s)[i])
 	{
-		if ((*s)[idx] == '$' && simple_quote == FALSE)
+		if ((*s)[i] == '$' && squote == FALSE)
 		{
-			if (double_quote == FALSE && ((*s)[idx + 1] == '\'' || (*s)[idx + 1] == '\"'))
-				ft_remove_dollar_sign(s, idx + 1);
-			else if ((*s)[idx + 1] == '?')
-				idx += ft_expand_exit_status(s, idx + 1);
+			if (dquote == FALSE && ((*s)[i + 1] == '\'' || (*s)[i + 1] == '\"'))
+				ft_remove_dollar_sign(s, i + 1);
+			else if ((*s)[i + 1] == '?')
+				i += ft_expand_exit_status(s, i + 1);
 			else
-				idx += ft_expand_var(s, idx + 1, envp);
+				i += ft_expand_var(s, i + 1, envp);
 			continue ;
 		}
-		else if ((*s)[idx] == '\"' && simple_quote == FALSE)
-			double_quote = (double_quote == FALSE);
-		else if ((*s)[idx] == '\'' && double_quote == FALSE)
-			simple_quote = (simple_quote == FALSE);
-		idx++;
+		else if ((*s)[i] == '\"' && squote == FALSE)
+			dquote = (dquote == FALSE);
+		else if ((*s)[i] == '\'' && dquote == FALSE)
+			squote = (squote == FALSE);
+		i++;
 	}
 }
 
@@ -79,7 +79,8 @@ static int	ft_expand_exit_status(char **s, int idx)
 	ft_strlcpy(new_s, *s, idx);
 	if (exit_status && *exit_status)
 		ft_strlcpy(new_s + idx - 1, exit_status, exit_status_length + 1);
-	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1, ft_strlen(*s) - idx);
+	ft_strlcpy(new_s + idx - 1 + exit_status_length, *s + idx + 1,
+		ft_strlen(*s) - idx);
 	free(exit_status);
 	old_s = *s;
 	*s = new_s;
@@ -109,11 +110,11 @@ static int	ft_expand_var(char **s, int idx, char **envp)
 	ft_strlcpy(new_s, *s, idx);
 	if (var)
 		ft_strlcpy(new_s + idx - 1, var, ft_strlen(var) + 1);
-	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len, ft_strlen(*s) - (idx + len) + 1);
+	ft_strlcpy(new_s + idx - 1 + ft_strlen(var), *s + idx + len,
+		ft_strlen(*s) - (idx + len) + 1);
 	old_s = *s;
 	*s = new_s;
-	free(old_s);
-	return (ft_strlen(var));
+	return (free(old_s), ft_strlen(var));
 }
 
 /*
