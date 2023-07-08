@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 10:57:07 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:28:43 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ void	command_exec(t_tools tools, t_cmd toc, char **envp)
 		absolute_relative_path(tools, envp, toc);
 	else
 		env_path(tools, envp, toc);
-}
-
-void	free_n_exit(t_tools tools, t_cmd toc, char **envp, int ex)
-{
-	ft_tocfree(&toc);
-	ft_envp_free(envp);
-	free_main(&tools);
-	free_all(tools);
-	exit(ex);
 }
 
 void	free_and_exit(t_tools tools, t_cmd toc, char **envp, int ex)
@@ -78,77 +69,6 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd toc)
 	no_execution(tools);
 }
 
-int	ft_len_before_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-int	env_var_exists(char **envp, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (((size_t)ft_len_before_equal(envp[i]) == ft_strlen(str)
-				&& ft_strncmp(envp[i], str, ft_len_before_equal(envp[i])) == 0))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_path(char **envp, char *str)
-{
-	int		i;
-	char	*res;
-
-	i = 0;
-	while (envp[i])
-	{
-		if ((ft_strlen(envp[i]) == ft_strlen(str)
-				&& ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
-			|| ft_strncmp(envp[i], str, 5) == 0)
-		{
-			res = ft_strdup(envp[i]);
-			return (res);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	*remove_beginning(char *str)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	i = 0;
-	j = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (str[i] == '=')
-		i++;
-	res = malloc(sizeof(char) * (ft_strlen(str) - i + 1));
-	if (res == NULL)
-		return (NULL);
-	while (str[i])
-		res[j++] = str[i++];
-	res[j] = 0;
-	free(str);
-	return (res);
-}
-
 void	env_path(t_tools tools, char **envp, t_cmd toc)
 {
 	tools.str = get_path(envp, "PATH=");
@@ -174,54 +94,6 @@ void	env_path(t_tools tools, char **envp, t_cmd toc)
 	ft_tocfree(&toc);
 	ft_envp_free(envp);
 	no_execution(tools);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_strsort(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (s2[i] - s1[i]);
-		i++;
-	}
-	return (0);
-} 
-
-int	is_builtin(char *str, char **envp)
-{
-	char	*copy;
-
-	copy = NULL;
-	copy = ft_strdup(str);
-	ft_expand(&copy, envp);
-	ft_unquote(&copy);
-	if (ft_strcmp(copy, "cd") || ft_strcmp(copy, "echo")
-		|| ft_strcmp(copy, "env") || ft_strcmp(copy, "exit")
-		|| ft_strcmp(copy, "export") || ft_strcmp(copy, "pwd")
-		|| ft_strcmp(copy, "unset"))
-	{	
-		free(copy);
-		return (1);
-	}
-	free(copy);
-	return (0);
 }
 
 int	builtin_exec(t_tools tools, t_cmd toc, char ***envp)

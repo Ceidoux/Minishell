@@ -6,21 +6,12 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:31:07 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 09:25:27 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:28:48 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-/*
-
-toutes ces fonctions sont lies aux chemins des commandes. 
-remove_path() permet de garder juste le nom de la commande sans le chemin
-is_slash() permet de  verifier si il y a bien un "/" dans la commande
-end_slash() permet de verifier si la commande se termine par un "/"
-no_path() est execute si aucun chemin n'est valide.
-
-*/
 char	*remove_path(char *str)
 {
 	int		i;

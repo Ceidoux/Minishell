@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:14:00 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 14:00:03 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:35:21 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,11 @@ void	error_pipex_putnbr(int nbr, int *len);
 void	error_pipex_putunsnbr(unsigned int nbr, int *len);
 void	error_pipex_putnbr_base(unsigned int nbr, char *base, int *len);
 void	free_and_exit(t_tools tools, t_cmd toc, char **envp, int ex);
-void	free_n_exit(t_tools tools, t_cmd toc, char **envp, int ex);
+char	*remove_beginning(char *str);
+void	is_double_quote(char *str, int *i);
+void	is_simple_quote(char *str, int *i);
+void	is_quote(char *str, int *i);
+void	double_quote(char *str, int *i, int *flag, int *compteur);
+void	single_quote(char *str, int *i, int *flag, int *compteur);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 09:49:56 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:28:57 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,6 @@ int	not_blank(char c, char *charset)
 		i++;
 	}
 	return (1);
-}
-void	double_quote(char *str, int *i, int *flag, int *compteur)
-{
-	(*i)++;
-	if (*flag == 0)
-	{
-		(*compteur)++;
-		*flag = 1;
-	}
-	while (str[*i] && str[*i] != '\"')
-		(*i)++;
-	if (str[*i])
-		(*i)++;
-}
-
-void	single_quote(char *str, int *i, int *flag, int *compteur)
-{
-	(*i)++;
-	if (*flag == 0)
-	{
-		(*compteur)++;
-		*flag = 1;
-	}
-	while (str[*i] && str[*i] != '\'')
-		(*i)++;
-	if (str[*i])
-		(*i)++;
 }
 
 void	new_word(int *compteur, int *flag, int *i)
@@ -105,34 +78,6 @@ char	*put_word(char *str, int start, int end)
 	}
 	res[i] = '\0';
 	return (res);
-}
-
-void	is_double_quote(char *str, int *i)
-{
-	(*i)++;
-	while (str[*i] && str[*i] != '\"')
-		(*i)++;
-	if (str[*i])
-		(*i)++;
-}
-
-void	is_single_quote(char *str, int *i)
-{
-	(*i)++;
-	while (str[*i] && str[*i] != '\'')
-		(*i)++;
-	if (str[*i])
-		(*i)++;
-}
-
-void	is_quote(char *str, int *i)
-{
-	if (str[*i] == '\"')
-		is_double_quote(str, i);
-	else if (str[*i] == '\'')
-		is_single_quote(str, i);
-	else
-		(*i)++;
 }
 
 char	**pipex_split(char *str, char *charset)

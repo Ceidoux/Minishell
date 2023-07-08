@@ -55,7 +55,13 @@ SRCS	:= main.c \
 		   pipex/8_useful_funcs_1.c \
 		   pipex/9_useful_funcs_2.c \
 		   pipex/10_close_free_1.c \
-		   pipex/11_close_free_2.c
+		   pipex/11_close_free_2.c \
+		   pipex/error_printf.c \
+		   pipex/pipex_utils.c \
+		   pipex/pipex_utils2.c \
+		   pipex/pipex_utils3.c \
+		   pipex/error_printf2.c
+
 
 OBJS 	:= $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 
