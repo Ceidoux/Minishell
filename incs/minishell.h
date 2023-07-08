@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:14:00 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:14:27 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:29:44 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,7 @@ void	error_pipex_putstr(char *str, int *len);
 void	error_pipex_putnbr(int nbr, int *len);
 void	error_pipex_putunsnbr(unsigned int nbr, int *len);
 void	error_pipex_putnbr_base(unsigned int nbr, char *base, int *len);
+void	free_and_exit(t_tools tools, t_cmd toc, char **envp, int ex);
+void	free_n_exit(t_tools tools, t_cmd toc, char **envp, int ex);
 
 #endif
