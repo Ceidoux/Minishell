@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:09 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 11:29:23 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 12:36:51 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ft_check_single_op(char *operator)
 		&& ft_strncmp(operator, "<>", 3))
 	{
 		g_exit_status = 258;
-		ft_putstr_fd("parse error near `", 1);
+		ft_putstr_fd("syntax error near unexpected token `", 1);
 		ft_putstr_fd(operator, 1);
 		ft_putendl_fd("\'", 1);
 		return (0);
