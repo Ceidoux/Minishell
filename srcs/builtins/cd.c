@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:14 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/07 14:17:35 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(t_tools tools, char **envp, t_cmd_tab toc)
+int	ft_cd(t_tools tools, char **envp, t_cmd toc)
 {
 	char	*str;
 

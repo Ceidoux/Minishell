@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:49 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 01:04:24 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@
 //ordre alphabetique si aucun paramtere, sinon
 // export les variables selon des regles precises.
 
-char	**ft_export(t_tools tools, t_cmd_tab toc, char **envp)
+char	**ft_export(t_tools tools, t_cmd toc, char **envp)
 {
 	int		i;
 	int		size;
@@ -164,7 +164,7 @@ void	print_env(char **export_var, char **envp, int i)
 		printf("export %s\n", envp[i]);
 }
 
-void	add_to_env(t_tools *tools, char ***envp, int *size, t_cmd_tab toc)
+void	add_to_env(t_tools *tools, char ***envp, int *size, t_cmd toc)
 {
 	int	i;
 	int		envp_size;

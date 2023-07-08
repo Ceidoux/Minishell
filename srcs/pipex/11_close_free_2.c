@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   11_close_free_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:44:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 09:26:31 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	clean_finish(t_tools tools, t_cmd_tab toc)
+void	clean_finish(t_tools tools, t_cmd toc)
 {
 	int	exit_status;
 
@@ -72,7 +72,7 @@ void	failed_open(t_tools tools, char **argv)
 	exit(0);
 }
 
-void	close_pipes(t_tools tools, t_cmd_tab toc)
+void	close_pipes(t_tools tools, t_cmd toc)
 {
 	int	j;
 

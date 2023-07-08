@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 09:57:29 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	ft_loop(char ***envp)
 {
 	char		*prompt;
 	char		*line_read;
-	t_cmd_tab	toc;
+	t_cmd	toc;
 	int			ret;
 
 	ret = 0;

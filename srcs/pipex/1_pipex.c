@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1_pipex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 11:09:53 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 09:24:44 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_args(t_tools tools)
 	}
 }
 
-int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
+int	command_type(t_tools tools, t_cmd toc, char ***envp)
 {
 	tools.args = pipex_split(toc.commands[tools.i], " ");
 	if (ft_strcmp(tools.args[0], "echo"))
@@ -53,7 +53,7 @@ int	command_type(t_tools tools, t_cmd_tab toc, char ***envp)
 	return (free_args(tools), 0);
 }
 
-int	pipex(t_cmd_tab toc, char ***envp)
+int	pipex(t_cmd toc, char ***envp)
 {
 	t_tools	tools;
 
@@ -76,7 +76,7 @@ int	pipex(t_cmd_tab toc, char ***envp)
 	return (0);
 }
 
-void	ft_pipe_manager(t_tools tools, t_cmd_tab toc)
+void	ft_pipe_manager(t_tools tools, t_cmd toc)
 {
 	int	j;
 

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 09:25:15 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 #include <string.h>
 
-void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
+void	command_exec(t_tools tools, t_cmd toc, char **envp)
 {
 	int	j;
 
@@ -32,7 +32,7 @@ void	command_exec(t_tools tools, t_cmd_tab toc, char **envp)
 		env_path(tools, envp, toc);
 }
 
-void	no_file(t_tools tools, t_cmd_tab toc, char **envp, int ex)
+void	no_file(t_tools tools, t_cmd toc, char **envp, int ex)
 {
 	perror(tools.str);
 	ft_tocfree(&toc);
@@ -42,7 +42,7 @@ void	no_file(t_tools tools, t_cmd_tab toc, char **envp, int ex)
 	exit(ex);
 }
 
-void	absolute_relative_path(t_tools tools, char **envp, t_cmd_tab toc)
+void	absolute_relative_path(t_tools tools, char **envp, t_cmd toc)
 {
 	tools.str = ft_strdup(tools.args[0]);
 	if (tools.str == NULL)
@@ -140,7 +140,7 @@ char	*remove_beginning(char *str)
 	return (res);
 }
 
-void	env_path(t_tools tools, char **envp, t_cmd_tab toc)
+void	env_path(t_tools tools, char **envp, t_cmd toc)
 {
 	tools.str = get_path(envp, "PATH=");
 	if (tools.str == NULL || tools.str[5] == 0)
@@ -215,7 +215,7 @@ int	is_builtin(char *str, char **envp)
 	return (0);
 }
 
-int	builtin_exec(t_tools tools, t_cmd_tab toc, char ***envp)
+int	builtin_exec(t_tools tools, t_cmd toc, char ***envp)
 {
 	tools.j = -1;
 	while (tools.args[++(tools.j)])

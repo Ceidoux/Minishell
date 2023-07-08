@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:34 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 19:59:45 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_has_equal_sign(char *s);
 
-int	ft_env(t_tools tools, t_cmd_tab toc, char **envp)
+int	ft_env(t_tools tools, t_cmd toc, char **envp)
 {
 	int	i;
 

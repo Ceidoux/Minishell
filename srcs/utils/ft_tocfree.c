@@ -6,13 +6,13 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:05:57 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/02 13:20:15 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_tocfree(t_cmd_tab *toc)
+void	ft_tocfree(t_cmd *toc)
 {
 	int	line;
 

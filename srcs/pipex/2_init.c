@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   2_init.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:39:35 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 09:24:57 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	init_tools(t_tools *tools, t_cmd_tab toc)
+void	init_tools(t_tools *tools, t_cmd toc)
 {
 	tools->i = 0;
 	tools->pipe_fd = malloc(sizeof(int *) * (toc.size + 1));

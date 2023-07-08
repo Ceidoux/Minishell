@@ -6,20 +6,20 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:54 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/02 16:14:22 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_add_new_line(t_cmd_tab *toc);
-static void ft_add_command(t_cmd_tab *toc, char *command);
-static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp);
-static int	ft_add_output(t_cmd_tab *toc, t_list **tokens, char **envp);
+static void	ft_add_new_line(t_cmd *toc);
+static void ft_add_command(t_cmd *toc, char *command);
+static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp);
+static int	ft_add_output(t_cmd *toc, t_list **tokens, char **envp);
 
-t_cmd_tab ft_create_table_of_commands(t_list *tok, char **envp)
+t_cmd ft_create_table_of_commands(t_list *tok, char **envp)
 {
-	t_cmd_tab	toc;
+	t_cmd	toc;
 
 	ft_memset(&toc, 0, sizeof(toc));
 	ft_add_new_line(&toc);
@@ -46,7 +46,7 @@ t_cmd_tab ft_create_table_of_commands(t_list *tok, char **envp)
 	return (toc);
 }
 
-static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp)
+static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp)
 {
 	if (toc->inputs[toc->size - 1] >= 0)
 		close(toc->inputs[toc->size - 1]);	
@@ -71,7 +71,7 @@ static int	ft_add_input(t_cmd_tab *toc, t_list **tokens, char **envp)
 	return (0);
 }
 
-static int	ft_add_output(t_cmd_tab *toc, t_list **tokens, char **envp)
+static int	ft_add_output(t_cmd *toc, t_list **tokens, char **envp)
 {
 	ft_expand(&(*tokens)->next->content, envp);
 	ft_unquote(&(*tokens)->next->content);
@@ -98,9 +98,9 @@ static int	ft_add_output(t_cmd_tab *toc, t_list **tokens, char **envp)
 	return (0);
 }
 
-static void	ft_add_new_line(t_cmd_tab *toc)
+static void	ft_add_new_line(t_cmd *toc)
 {
-	t_cmd_tab	new_toc;
+	t_cmd	new_toc;
 	int					line;
 
 	new_toc.size = toc->size + 1;
@@ -123,7 +123,7 @@ static void	ft_add_new_line(t_cmd_tab *toc)
 	*toc = new_toc;
 }
 
-static void ft_add_command(t_cmd_tab *toc, char *command)
+static void ft_add_command(t_cmd *toc, char *command)
 {
 	char	*temp;
 

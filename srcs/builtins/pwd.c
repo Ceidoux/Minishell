@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:40 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/07 17:28:03 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	invalid_option(char *str)
 	return (0);
 }
 
-int	ft_pwd(t_tools tools, t_cmd_tab toc, char **envp)
+int	ft_pwd(t_tools tools, t_cmd toc, char **envp)
 {
 	char	*current_dir;
 

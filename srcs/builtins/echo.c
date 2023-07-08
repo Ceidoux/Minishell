@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:25 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 15:48:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	is_slash_n(char *str)
 	return (i);
 } 
 
-void	ft_echo(t_tools tools, char *s, t_cmd_tab toc, char **envp)
+void	ft_echo(t_tools tools, char *s, t_cmd toc, char **envp)
 {
 	t_bool	n_flag;
 	int j;
