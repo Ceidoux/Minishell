@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/06 21:56:10 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 09:57:29 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,25 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	// rl_clear_history	();
+	rl_clear_history	();
 }
 
 static void	ft_handler(int sig)
 {
 	(void) sig;
 	if (g_exit_status == -1)
-		ioctl(STDIN_FILENO, TIOCSTI, "\0");
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	}
 	else 
+	{
 		write(1, "\n", 1);
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	g_exit_status = 130;
 }
 

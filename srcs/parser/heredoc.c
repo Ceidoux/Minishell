@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:40 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/06 19:33:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 09:59:26 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ int	ft_heredoc(char *delimiter, char **envp)
 	tp_exit_status = g_exit_status;
 	g_exit_status = -1;
 	if (ft_readline_heredoc(delimiter, envp, fd) == -1)
-		return (close(fd), -1);
+	{
+		close(fd);
+		unlink(".heredoc");
+		return (-1);
+	}
 	g_exit_status = tp_exit_status;
 	close(fd);
 	fd = open(".heredoc", O_RDONLY);
