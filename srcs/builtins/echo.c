@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:25 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:55:53 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	not_quote(char*	str, int *i, char c)
+int	not_quote(char *str, int *i, char c)
 {
 	(*i)++;
 	if (!str[*i] || str[*i] != '-')
@@ -29,9 +29,10 @@ int	not_quote(char*	str, int *i, char c)
 		return (0);
 	return (1);
 }
+
 int	is_slash_n(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '\"')
@@ -56,13 +57,33 @@ int	is_slash_n(char *str)
 	if (str[i] && str[i] != ' ')
 		return (0);
 	return (i);
-} 
+}
+
+void	echo_final_free(char *copy, char **envp, t_tools tools, t_cmd toc)
+{
+	free(copy);
+	clean_finish(tools, toc);
+	ft_tocfree(&toc);
+	free_all(tools);
+	ft_envp_free(envp);
+	exit(0);
+}
+
+void	expand_print(char **copy, char **envp, t_bool n_flag)
+{
+	ft_expand(copy, envp);
+	ft_unquote(copy);
+	if (n_flag)
+		printf("%s", *copy);
+	else
+		printf("%s\n", *copy);
+}
 
 void	ft_echo(t_tools tools, char *s, t_cmd toc, char **envp)
 {
 	t_bool	n_flag;
-	int j;
-	char *copy;
+	int		j;
+	char	*copy;
 
 	copy = NULL;
 	ft_pipe_manager(tools, toc);
@@ -76,47 +97,13 @@ void	ft_echo(t_tools tools, char *s, t_cmd toc, char **envp)
 		j = is_slash_n(s);
 		if (j != 0)
 		{
-
 			n_flag = 1;
 			s += j;
 			while (*s && *s == ' ')
 				s++;
 		}
 		copy = ft_strdup(s);
-		ft_expand(&copy, envp);
-		ft_unquote(&copy);
-		if (n_flag)
-			printf("%s", copy);
-		else
-			printf("%s\n", copy);
+		expand_print(&copy, envp, n_flag);
 	}
-	free(copy);
-	clean_finish(tools, toc);
-	ft_tocfree(&toc);
-	free_all(tools);
-	ft_envp_free(envp);
-	exit(0);
+	echo_final_free(copy, envp, tools, toc);
 }
-
-/*
-ATTENTION : echo renvoie les variables de shell, et non seulement les varaibles d'environnement.
--> il ne suffit pas de vérifier dans envp. En principe, aller vérifier du côté de ```set``` qui liste les variables shell (VAR=1 qui enregistre en variable shell versus ```export VAR=1``` qui enregistre comme variable d'environnement)
-
-A gérer :
-[**] echo "text"
-[**] echo 'text'
-[**] echo text
-[**] echo "text" 'text' text
-[**] echo $MA_VARIABLE
-[**] echo '$MA_VAR'
-[**] echo "$MA_VAR"
-[**] echo $(MA_VAR)
-[**] echo $?
-[**] echo $$
-[**] echo $!				-> PID of last job running in background
-[**] echo -n text
-
-[] echo      test
-[] echo "     " test
-
-*/
