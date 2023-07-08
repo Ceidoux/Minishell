@@ -6,13 +6,12 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:54 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 11:28:35 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:34:58 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_add_new_line(t_cmd *toc);
 static void	ft_add_command(t_cmd *toc, char *command);
 static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp);
 static int	ft_add_output(t_cmd *toc, t_list **tokens, char **envp);
@@ -100,31 +99,6 @@ static int	ft_add_output(t_cmd *toc, t_list **tokens, char **envp)
 	}
 	*tokens = (*tokens)->next;
 	return (0);
-}
-
-static void	ft_add_new_line(t_cmd *toc)
-{
-	t_cmd	new_toc;
-	int		line;
-
-	new_toc.size = toc->size + 1;
-	new_toc.commands = calloc(new_toc.size, sizeof(*(new_toc.commands)));
-	if (!(new_toc.commands))
-		exit(EXIT_FAILURE);
-	new_toc.inputs = calloc(new_toc.size, sizeof(*(new_toc.inputs)));
-	new_toc.outputs = calloc(new_toc.size, sizeof(*(new_toc.outputs)));
-	line = -1;
-	while (++line < new_toc.size - 1)
-	{
-		if (toc->commands[line])
-			new_toc.commands[line] = ft_strdup(toc->commands[line]);
-		new_toc.inputs[line] = toc->inputs[line];
-		new_toc.outputs[line] = toc->outputs[line];
-	}
-	new_toc.inputs[line] = -1;
-	new_toc.outputs[line] = -1;
-	ft_tocfree(toc);
-	*toc = new_toc;
 }
 
 static void	ft_add_command(t_cmd *toc, char *command)

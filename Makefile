@@ -40,6 +40,7 @@ SRCS	:= main.c \
 		   parser/heredoc.c \
 		   parser/parser.c \
 		   parser/toc.c \
+		   parser/toc2.c \
 		   utils/ft_envp_utils.c \
 		   utils/ft_lstprint.c \
 		   utils/ft_lstremovelast.c \
