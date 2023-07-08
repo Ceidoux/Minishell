@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:56 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 12:33:08 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 10:18:22 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	env_size(char **envp)
 	int	i;
 
 	i = 0;
-	while (envp[i])
-		i++;
+	if (envp)
+	{
+		while (envp[i])
+			i++;
+	}
 	return (i);
 }
 

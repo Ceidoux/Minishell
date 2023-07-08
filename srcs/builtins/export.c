@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:49 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:21:41 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ char	**ft_export(t_tools tools, t_cmd toc, char **envp)
 	export_var = NULL;
 	size = arg_size(tools);
 	envp_size = env_size(envp);
+	if (!envp_size)
+	{
+		g_exit_status = 0;
+		return (NULL);
+	}
 	if (size == 1)
 	{
 		tools.pid[tools.i] = fork();
