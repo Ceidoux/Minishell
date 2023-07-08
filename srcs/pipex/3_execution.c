@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 00:47:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 09:25:15 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char	*remove_beginning(char *str)
 	free(str);
 	return (res);
 }
+
 void	env_path(t_tools tools, char **envp, t_cmd_tab toc)
 {
 	tools.str = get_path(envp, "PATH=");

@@ -6,7 +6,7 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 12:34:03 by kali              #+#    #+#             */
-/*   Updated: 2023/07/07 15:50:33 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 09:49:56 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,40 @@ int	not_blank(char c, char *charset)
 	}
 	return (1);
 }
+void	double_quote(char *str, int *i, int *flag, int *compteur)
+{
+	(*i)++;
+	if (*flag == 0)
+	{
+		(*compteur)++;
+		*flag = 1;
+	}
+	while (str[*i] && str[*i] != '\"')
+		(*i)++;
+	if (str[*i])
+		(*i)++;
+}
+
+void	single_quote(char *str, int *i, int *flag, int *compteur)
+{
+	(*i)++;
+	if (*flag == 0)
+	{
+		(*compteur)++;
+		*flag = 1;
+	}
+	while (str[*i] && str[*i] != '\'')
+		(*i)++;
+	if (str[*i])
+		(*i)++;
+}
+
+void	new_word(int *compteur, int *flag, int *i)
+{
+	(*compteur)++;
+	*flag = 1;
+	(*i)++;
+}
 
 int	count_words(char *str, char *charset)
 {
@@ -38,37 +72,11 @@ int	count_words(char *str, char *charset)
 	while (str[i])
 	{
 		if (str[i] == '\"')
-		{
-			i++;
-			if (flag == 0)
-			{
-				compteur++;
-				flag = 1;
-			}
-			while (str[i] && str[i] != '\"')
-				i++;
-			if (str[i])
-				i++;
-		}
+			double_quote(str, &i, &flag, &compteur);
 		else if (str[i] == '\'')
-		{
-			i++;
-			if (flag == 0)
-			{
-				compteur++;
-				flag = 1;
-			}
-			while (str[i] && str[i] != '\'')
-				i++;
-			if (str[i])
-				i++;
-		}
+			single_quote(str, &i, &flag, &compteur);
 		else if (not_blank(str[i], charset) && flag == 0)
-		{
-			compteur++;
-			flag = 1;
-			i++;
-		}
+			new_word(&compteur, &flag, &i);
 		else if (!not_blank(str[i], charset))
 		{
 			flag = 0;
@@ -99,6 +107,34 @@ char	*put_word(char *str, int start, int end)
 	return (res);
 }
 
+void	is_double_quote(char *str, int *i)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\"')
+		(*i)++;
+	if (str[*i])
+		(*i)++;
+}
+
+void	is_single_quote(char *str, int *i)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\'')
+		(*i)++;
+	if (str[*i])
+		(*i)++;
+}
+
+void	is_quote(char *str, int *i)
+{
+	if (str[*i] == '\"')
+		is_double_quote(str, i);
+	else if (str[*i] == '\'')
+		is_single_quote(str, i);
+	else
+		(*i)++;
+}
+
 char	**pipex_split(char *str, char *charset)
 {
 	char	**res;
@@ -118,26 +154,7 @@ char	**pipex_split(char *str, char *charset)
 		{
 			ancre = i;
 			while (str[i] && not_blank(str[i], charset))
-			{
-				if (str[i] == '\"')
-				{
-					i++;
-					while (str[i] && str[i] != '\"')
-						i++;
-					if (str[i])
-						i++;
-				}
-				else if (str[i] == '\'')
-				{
-					i++;
-					while (str[i] && str[i] != '\'')
-						i++;
-					if (str[i])
-						i++;
-				}
-				else
-					i++;
-			}
+				is_quote(str, &i);
 			res[j] = put_word(str, ancre, i);
 			j++;
 		}
