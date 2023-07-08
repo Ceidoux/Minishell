@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:49:08 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 12:41:46 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:02:18 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,8 @@ static char	**ft_unset_my_var(char *varname, char **old_envp)
 			else
 				new_envp[old_size - 1 + offset] = ft_strdup(old_envp[old_size]);
 		}
-		ft_envp_free(old_envp);
-		return (new_envp);
+		return (ft_envp_free(old_envp), new_envp);
 	}
 	else
 		return (old_envp);
 }
-
-/*
-
-
-A gérer :
-[**] unset VAR_QUI_EXISTE		-> supprime la variable de l'environnement
-[**] unset VAR_QUI_N'EXISTE_PAS	-> ne fait rien
-[**] unset VAR1 VAR2			-> ceci va unset les 2 variables
-[**] unset VAR1 VAR2 VAR3 VAR4	-> ceci va unset les 4 variables
-[**] unset						-> unset: not enough arguments --> FAUX: pas sur bash --posix
-
-nota : utiliser ft_split !!!
-*/

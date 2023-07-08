@@ -6,15 +6,11 @@
 /*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:15:51 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:27:25 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:01:36 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-
-// la suite de separation_two. Ces deux fonctions servent a faire un split mais
-// que pour la premiere instance du charset, divisant le tableau en 2
 
 char	**split_two(char *str, int i)
 {
@@ -43,7 +39,6 @@ char	**split_two(char *str, int i)
 	res[1][j] = 0;
 	return (res);
 }
-/* voir split_two*/
 
 char	**separate_two(char	*str)
 {
@@ -72,8 +67,6 @@ char	**separate_two(char	*str)
 	res[0][i] = 0;
 	return (res);
 }
-/* permet de savoir combien de caracters avant le premier signe '='
- (utile pour savoir s la variable existe deja avec strncmp() )*/
 
 int	ft_len_dif(char *str)
 {
@@ -89,7 +82,6 @@ int	ft_len_dif(char *str)
 	else
 		return (ft_strlen(str));
 }
-/* permet de savoir si l'enchainement "+="  est present dans la string*/
 
 int	plus_equal(char *str)
 {
@@ -109,7 +101,6 @@ int	plus_equal(char *str)
 	}
 	return (-1);
 }
-/* verifie que la variable exportee respecte bien les regles de syntaxe */
 
 int	has_invalid_character(char *str)
 {

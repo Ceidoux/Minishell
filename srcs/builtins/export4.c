@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:56 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 10:18:22 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:01:44 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-/*  Me permet d'avoir le nombres d'arguments passe (toos.args)*/
 
 int	arg_size(t_tools tools)
 {
@@ -23,8 +21,6 @@ int	arg_size(t_tools tools)
 		i++;
 	return (i);
 }
-
-/* Nombre de lignes dans env*/
 
 int	env_size(char **envp)
 {
@@ -38,9 +34,6 @@ int	env_size(char **envp)
 	}
 	return (i);
 }
-
-/*  permet de saboir si un caractere est dans une chaine
-(notamment pour =, ' ou encore ")*/
 
 int	has_car(char *str, char c)
 {
@@ -56,16 +49,12 @@ int	has_car(char *str, char c)
 	return (-1);
 }
 
-/*  permet de savoir si un caractere est le meme element)*/
-
 int	is_char(char str, char c)
 {
 	if (str == c)
 		return (1);
 	return (0);
 }
-
-/* Un simple echange de valeurs de str*/
 
 void	ft_swap(char **s1, char **s2)
 {

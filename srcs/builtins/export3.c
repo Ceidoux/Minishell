@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:54 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/06 19:49:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2023/07/08 14:01:40 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-//retire le '+' dune string
 char	*remove_plus(char *str)
 {
 	int		i;
@@ -38,7 +37,6 @@ char	*remove_plus(char *str)
 	}
 	return (res);
 }
-//remplace la variable dans envp par la nouvelle variable
 
 char	**ft_addstr_replace(char **envp, char *str, int i)
 {
@@ -46,8 +44,6 @@ char	**ft_addstr_replace(char **envp, char *str, int i)
 	envp[i] = ft_strdup(str);
 	return (envp);
 }
-
-//concatene
 
 char	**ft_addstr_plus(char **res, char **envp, char *str, int i)
 {
@@ -65,9 +61,6 @@ char	**ft_addstr_plus(char **res, char **envp, char *str, int i)
 	return (envp);
 }
 
-//permet de ajouter la variable dans envp !
-// str = modify_var(str); apres res = NULL
-
 char	**ft_addstr(char **envp, char *str, int envp_size)
 {
 	int		i;
@@ -82,23 +75,14 @@ char	**ft_addstr(char **envp, char *str, int envp_size)
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str))
 			&& has_car(str, '=') == -1
 			&& ft_len_dif(str) == ft_len_dif(envp[i]))
-			{
-				free(str_no_plus);
-				return (envp);
-			}
+			return (free(str_no_plus), envp);
 		if (pipex_strncmp(str, envp[i], ft_len_dif(str))
 			&& ft_len_dif(str) == ft_len_dif(envp[i]))
-			{
-				free(str_no_plus);
-				return (ft_addstr_replace(envp, str, i));
-			}
+			return (free(str_no_plus), ft_addstr_replace(envp, str, i));
 		if (pipex_strncmp(str_no_plus, envp[i],
 				ft_len_dif(str_no_plus)) && plus_equal(str) == 1
 			&& ft_len_dif(str_no_plus) == ft_len_dif(envp[i]))
-			{
-				free(str_no_plus);
-				return (ft_addstr_plus(res, envp, str, i));
-			}
+			return (free(str_no_plus), ft_addstr_plus(res, envp, str, i));
 		i++;
 	}
 	free(str_no_plus);

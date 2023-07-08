@@ -30,6 +30,7 @@ SRCS	:= main.c \
 		   builtins/export2.c \
 		   builtins/export3.c \
 		   builtins/export4.c \
+		   builtins/export5.c \
 		   builtins/pwd.c \
 		   builtins/unset.c \
 		   converter/expand.c \

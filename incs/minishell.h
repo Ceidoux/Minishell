@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:14:00 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 11:20:40 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:00:03 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ void	child_export(char **export_var, char **envp, int i, int envp_size);
 char	**ft_addstr_end(char **envp, char *str, int envp_size);
 char	**ft_addstr_plus(char **res, char **envp, char *str, int i);
 char	**ft_addstr_replace(char **envp, char *str, int i);
+void	export_free_1(t_tools tools, t_cmd toc, char **envp);
+void	export_free_2(t_tools tools, t_cmd toc, char **envp);
+void	export_not_valid(t_tools *tools, t_cmd toc, char ***envp, int *i);
 /* End of functions in export*/
 
 /* lexer (lexical analyser) directory */

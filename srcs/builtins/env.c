@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:34 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:05:24 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,3 @@ static int	ft_has_equal_sign(char *s)
 	}
 	return (0);
 }
-
-/*
-A gérer (pas d'option, pas d'argument):
-[ok] env
-[*]	si export zzz	-> env n'affiche pas zzz (alors que export le fait)
-*/
