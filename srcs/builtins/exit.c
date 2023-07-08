@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:16:41 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:29:26 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clean_exit(t_tools tools, t_cmd toc, char **envp, int ex)
+{
+	ft_pipe_manager(tools, toc);
+	clean_finish(tools, toc);
+	ft_tocfree(&toc);
+	free_all(tools);
+	ft_envp_free(envp);
+	exit(ex);
+}
+
+void	not_digit_case(t_tools tools, t_cmd toc, char **envp)
+{
+	ft_putendl_fd("exit: numeric argument required", 2);
+	tools.pid[tools.i] = fork();
+	if (tools.pid[tools.i] == 0)
+		clean_exit(tools, toc, envp, 2);
+}
+
+void	many_arguments(t_tools tools, t_cmd toc, char **envp)
+{
+	ft_putendl_fd("exit: too many arguments", 2);
+	tools.pid[tools.i] = fork();
+	if (tools.pid[tools.i] == 0)
+		clean_exit(tools, toc, envp, 1);
+}
 
 int	ft_exit(char *s, t_tools tools, t_cmd toc, char **envp)
 {
@@ -19,7 +45,6 @@ int	ft_exit(char *s, t_tools tools, t_cmd toc, char **envp)
 
 	n = 0;
 	sign = 1;
-	s += 4;
 	while (*s == ' ')
 		s++;
 	if (!*s)
@@ -27,87 +52,17 @@ int	ft_exit(char *s, t_tools tools, t_cmd toc, char **envp)
 	if (*s == '+' || *s == '-')
 		sign = 44 - *(s++);
 	if (!ft_isdigit(*s))
-	{
-		ft_putendl_fd("exit: numeric argument required", 2);
-		if (toc.size == 1)
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-			{
-				ft_pipe_manager(tools, toc);
-				clean_finish(tools, toc);
-				ft_tocfree(&toc);
-				free_all(tools);
-				ft_envp_free(envp);
-				exit(2);
-			}
-		}
-		return (1);
-	}
+		return (not_digit_case(tools, toc, envp), 1);
 	while (ft_isdigit(*s))
 		n = n * 10 + *(s++) - '0';
 	if (*s && *s != ' ')
-	{
-		ft_putendl_fd("exit: numeric argument required", 2);
-		if (toc.size == 1)
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-			{
-				ft_pipe_manager(tools, toc);
-				clean_finish(tools, toc);
-				ft_tocfree(&toc);
-				free_all(tools);
-				ft_envp_free(envp);
-				exit(2);
-			}
-		}
-		return (1);
-	}
+		return (not_digit_case(tools, toc, envp), 1);
 	while (*s == ' ')
 		s++;
 	if (*s)
-	{
-		ft_putendl_fd("exit: too many arguments", 2);
-		if (toc.size == 1)
-		{
-			tools.pid[tools.i] = fork();
-			if (tools.pid[tools.i] == 0)
-			{
-				ft_pipe_manager(tools, toc);
-				clean_finish(tools, toc);
-				ft_tocfree(&toc);
-				free_all(tools);
-				ft_envp_free(envp);
-				exit(1);
-			}	
-		}
-		return (0);
-	}
+		return (many_arguments(tools, toc, envp), 0);
 	tools.pid[tools.i] = fork();
 	if (tools.pid[tools.i] == 0)
-	{
-		ft_pipe_manager(tools, toc);
-		clean_finish(tools, toc);
-		ft_tocfree(&toc);
-		free_all(tools);
-		ft_envp_free(envp);
-		exit(n * sign);
-	}
+		clean_exit(tools, toc, envp, n * sign);
 	return (1);
 }
-
-// A gérer:
-// [ok] exit						
-// -> If N is not given, the exit status code 
-// is that of the last executed command
-// [ok] exit [space][space][space] 
-// -> renvoie le dernier statut de sortie (identique à exit)
-// [ok] exit N						-> returns N (avec N unsigned char)
-// [ok] exit -N					-> renvoie la valeur en unsigned char
-// [ok] exit 123D					
-// -> print error: numeric argument required ET exit avec 255 en return value
-// [ok] exit D123					-> idem
-// [~] exit 123 123				
-// -> print error: too many arguments (MAIS en principe n'exit pas)
-// Note: exit ne gère pas l'overflow ! (exit 256 renvoie 0)
