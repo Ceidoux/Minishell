@@ -77,8 +77,6 @@ void	child_export(char **export_var, char **envp, int i, int envp_size);
 char	**ft_addstr_end(char **envp, char *str, int envp_size);
 char	**ft_addstr_plus(char **res, char **envp, char *str, int i);
 char	**ft_addstr_replace(char **envp, char *str, int i);
-
-
 /* End of functions in export*/
 
 /* lexer (lexical analyser) directory */
@@ -155,7 +153,8 @@ int		ft_len_before_equal(char *str);
 int		env_var_exists(char **envp, char *str);
 int		error_pipex_printf(const char *str, ...);
 void	error_pipex_putpoint_base(long unsigned int nbr, char *base, int *len);
-void	error_pipex_putlongnbr_base(long unsigned int nbr, char *base, int *len);
+void	error_pipex_putlongnbr_base(long unsigned int nbr,
+			char *base, int *len);
 void	error_pipex_putchar(char c, int *len);
 void	error_pipex_putstr(char *str, int *len);
 void	error_pipex_putnbr(int nbr, int *len);

@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:09 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/05 18:03:11 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:07:32 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static int	ft_check_single_op(char *operator)
 static int	ft_check_two_op(char *operator1, char *operator2)
 {
 	if (!ft_strncmp(operator1, "|", 2) && (!ft_strncmp(operator2, "<", 2)
-		|| !ft_strncmp(operator2, ">", 2) || !ft_strncmp(operator2, "<<", 3)
-		|| !ft_strncmp(operator2, ">>", 3)))
+			|| !ft_strncmp(operator2, ">", 2) || !ft_strncmp(operator2, "<<", 3)
+			|| !ft_strncmp(operator2, ">>", 3)))
 		return (1);
 	g_exit_status = 258;
 	ft_putstr_fd("syntax error near unexpected token `", 1);
