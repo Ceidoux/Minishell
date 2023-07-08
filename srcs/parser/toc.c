@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:54 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:10:11 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:07:46 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp)
 	}
 	if (toc->inputs[toc->size - 1] == -1)
 	{
-		perror((*tokens)->next->content);
+		if (errno)
+			perror((*tokens)->next->content);
 		ft_tocfree(toc);
 		return (-1);
 	}
