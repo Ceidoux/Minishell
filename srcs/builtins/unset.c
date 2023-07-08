@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:49:08 by smestre           #+#    #+#             */
-/*   Updated: 2023/07/05 14:49:30 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 12:41:46 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**ft_unset(char *s, char **envp)
 	char	**var_tab;
 	int		idx;
 
+	if (!envp)
+		return (NULL);
 	var_tab = ft_split(s, ' ');
 	idx = 0;
 	while (var_tab[++idx])
