@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:09 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:07:32 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:29:23 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	ft_check(t_list	*tokens)
 			&& tokens->next->type == OPERATOR
 			&& !ft_check_two_op(tokens->content, tokens->next->content))
 			return (0);
-		else if (!tokens->next && tokens->type == OPERATOR &&
-			!ft_check_last_op(tokens->content))
+		else if (!tokens->next && tokens->type == OPERATOR
+			&& !ft_check_last_op(tokens->content))
 			return (0);
 		else if (tokens->type == WORD && !ft_check_quotes(tokens->content))
 			return (0);

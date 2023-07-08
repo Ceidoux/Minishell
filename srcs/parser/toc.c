@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:54 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 11:07:46 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:28:35 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_cmd	ft_create_table_of_commands(t_list *tok, char **envp)
 
 static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp)
 {
+	t_bool	is_quoted;
+
 	if (toc->inputs[toc->size - 1] >= 0)
 		close(toc->inputs[toc->size - 1]);
 	if (!ft_strncmp((*tokens)->content, "<", 2))
@@ -58,15 +60,16 @@ static int	ft_add_input(t_cmd *toc, t_list **tokens, char **envp)
 	}
 	else
 	{
+		is_quoted = ft_is_quoted((*tokens)->next->content);
 		ft_unquote(&(*tokens)->next->content);
-		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content, envp);
+		toc->inputs[toc->size - 1] = ft_heredoc((*tokens)->next->content, envp,
+				is_quoted);
 	}
 	if (toc->inputs[toc->size - 1] == -1)
 	{
 		if (errno)
 			perror((*tokens)->next->content);
-		ft_tocfree(toc);
-		return (-1);
+		return (ft_tocfree(toc), -1);
 	}
 	*tokens = (*tokens)->next;
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:14:00 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:29:44 by smestre          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:20:40 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,12 @@ t_list	*ft_lexer(char *s, char **envp);
 /* converter directory */
 void	ft_expand(char **s, char **envp);
 void	ft_unquote(char **s);
+t_bool	ft_is_quoted(char *s);
 
 /* parser directory */
 t_cmd	ft_parser(char *s, char **envp);
 t_cmd	ft_create_table_of_commands(t_list *tokens, char **envp);
-int		ft_heredoc(char *delimiter, char **envp);
+int		ft_heredoc(char *delimiter, char **envp, t_bool is_quoted);
 
 /* utils directory */
 int		ft_envp_size(char **envp);
