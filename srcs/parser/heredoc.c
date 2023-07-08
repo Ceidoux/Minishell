@@ -6,15 +6,16 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:40 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:08:45 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:21:50 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_readline_heredoc(char *delimiter, char **envp, int fd);
+static int	ft_readline_heredoc(char *delimiter, char **envp, int fd,
+				t_bool is_quoted);
 
-int	ft_heredoc(char *delimiter, char **envp)
+int	ft_heredoc(char *delimiter, char **envp, t_bool is_quoted)
 {
 	int	fd;
 	int	tp_exit_status;
@@ -24,7 +25,7 @@ int	ft_heredoc(char *delimiter, char **envp)
 		return (-1);
 	tp_exit_status = g_exit_status;
 	g_exit_status = -1;
-	if (ft_readline_heredoc(delimiter, envp, fd) == -1)
+	if (ft_readline_heredoc(delimiter, envp, fd, is_quoted) == -1)
 	{
 		close(fd);
 		unlink(".heredoc");
@@ -39,7 +40,8 @@ int	ft_heredoc(char *delimiter, char **envp)
 	return (fd);
 }
 
-static int	ft_readline_heredoc(char *delimiter, char **envp, int fd)
+static int	ft_readline_heredoc(char *delimiter, char **envp, int fd,
+	t_bool is_quoted)
 {
 	char	*line;
 	int		idx;
@@ -56,7 +58,8 @@ static int	ft_readline_heredoc(char *delimiter, char **envp, int fd)
 			break ;
 		if (idx > 1)
 			write(fd, "\n", 1);
-		ft_expand(&line, envp);
+		if (!is_quoted)
+			ft_expand(&line, envp);
 		write(fd, line, ft_strlen(line));
 		free(line);
 	}

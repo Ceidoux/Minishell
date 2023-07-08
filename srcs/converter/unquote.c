@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:27 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:07:00 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 11:23:01 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,10 @@ static int	ft_remove_quotes(char **s, int idx, char c)
 	free(*s);
 	*s = new_s;
 	return (len - 1);
+}
+
+t_bool	ft_is_quoted(char *s)
+{
+	printf("%s\n", s);
+	return (s[0] == '\'' || s[0] == '\"');
 }
