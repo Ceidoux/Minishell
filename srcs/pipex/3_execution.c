@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_execution.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smestre <smestre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 20:06:29 by kali              #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:57:07 by smestre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,16 @@ void	command_exec(t_tools tools, t_cmd toc, char **envp)
 		env_path(tools, envp, toc);
 }
 
-void	no_file(t_tools tools, t_cmd toc, char **envp, int ex)
+void	free_n_exit(t_tools tools, t_cmd toc, char **envp, int ex)
+{
+	ft_tocfree(&toc);
+	ft_envp_free(envp);
+	free_main(&tools);
+	free_all(tools);
+	exit(ex);
+}
+
+void	free_and_exit(t_tools tools, t_cmd toc, char **envp, int ex)
 {
 	perror(tools.str);
 	ft_tocfree(&toc);
@@ -48,9 +57,9 @@ void	absolute_relative_path(t_tools tools, char **envp, t_cmd toc)
 	if (tools.str == NULL)
 		return ;
 	if (access(tools.str, F_OK) == -1)
-		no_file(tools, toc, envp, 127);
+		free_and_exit(tools, toc, envp, 127);
 	else if (access(tools.str, X_OK) == -1)
-		no_file(tools, toc, envp, 126);
+		free_and_exit(tools, toc, envp, 126);
 	else if (end_slash(tools.str))
 	{
 		dup2(STDERR_FILENO, STDOUT_FILENO);
@@ -231,7 +240,7 @@ int	builtin_exec(t_tools tools, t_cmd toc, char ***envp)
 	{
 		ft_expand(&toc.commands[tools.i], *envp);
 		ft_unquote(&toc.commands[tools.i]);
-		return (ft_exit(toc.commands[tools.i], tools, toc, *envp)
+		return (ft_exit(toc.commands[tools.i] + 4, tools, toc, *envp)
 			& (toc.size == 1));
 	}
 	else if (ft_strcmp(tools.args[0], "export"))
