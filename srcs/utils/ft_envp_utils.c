@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:04:20 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/05 19:45:05 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:12:00 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_envp_size(char **envp)
 {
-	int		size;
+	int	size;
 
 	size = 0;
 	if (envp)
@@ -83,7 +83,8 @@ char	*ft_getenv(char *var, char **envp)
 	if (envp)
 	{
 		while (envp[++idx])
-			if (!ft_strncmp(envp[idx], var, ft_strlen(var)) && envp[idx][ft_strlen(var)] == '=')
+			if (!ft_strncmp(envp[idx], var, ft_strlen(var))
+				&& envp[idx][ft_strlen(var)] == '=')
 				return (envp[idx] + ft_strlen(var) + 1);
 	}
 	return (NULL);

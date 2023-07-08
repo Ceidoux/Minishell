@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:16 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:06:54 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:13:39 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_remove_dollar_sign(char **s, int idx)
 	char	*new_s;
 	char	*old_s;
 	int		old_size;
-	
+
 	old_size = ft_strlen(*s);
 	new_s = malloc(old_size * sizeof(*new_s));
 	if (!new_s)
@@ -121,7 +121,8 @@ static int	ft_expand_var(char **s, int idx, char **envp)
 A gerer:
 [**] $VAR_DEFINIE
 [**] $VAR_NON_DEFINIE	-> echo $VAR_UNDEFINIED Output: (nothing)
-[**] $ blabla 			--> e.g. echo $ qs ($ immediatement suivi d'un espace) Output: $ qs ($ conserve)
+[**] $ blabla 			--> e.g. echo $ qs ($ immediatement suivi d'un espace)
+							Output: $ qs ($ conserve)
 [**] blabla$			->
 [**] "$USER"			--> jle
 [**] '$USER'			--> $USER

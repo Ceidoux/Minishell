@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:00:40 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 09:59:26 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:08:45 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static int	ft_readline_heredoc(char *delimiter, char **envp, int fd)
 		line = readline(">");
 		if (g_exit_status == 130)
 			return (free(line), -1);
-		else if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+		else if (!line
+			|| !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 			break ;
 		if (idx > 1)
 			write(fd, "\n", 1);

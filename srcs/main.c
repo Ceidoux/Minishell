@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:02:15 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:50 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:10:33 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	main(int argc, char **argv, char **envp)
 
 static void	ft_loop(char ***envp)
 {
-	char		*prompt;
-	char		*line_read;
+	char	*prompt;
+	char	*line_read;
 	t_cmd	toc;
-	int			ret;
+	int		ret;
 
 	ret = 0;
 	while (!ret)
@@ -66,7 +66,7 @@ static void	ft_loop(char ***envp)
 		}
 	}
 	printf("exit\n");
-	rl_clear_history	();
+	rl_clear_history();
 }
 
 static void	ft_handler(int sig)
@@ -78,7 +78,7 @@ static void	ft_handler(int sig)
 		rl_on_new_line();
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	}
-	else 
+	else
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);

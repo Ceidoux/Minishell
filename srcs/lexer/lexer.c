@@ -6,7 +6,7 @@
 /*   By: jleguay <jleguay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 17:01:21 by jleguay           #+#    #+#             */
-/*   Updated: 2023/07/08 10:07:35 by jleguay          ###   ########.fr       */
+/*   Updated: 2023/07/08 10:08:30 by jleguay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,18 @@ static int	ft_ismetachar(char c)
 
 static int	ft_addoperator(char *s, t_list **tokens)
 {
-	int	len;
+	int		len;
 	t_list	*last_elem;
 
 	len = 0;
-	while(ft_ismetachar(s[len]))
+	while (ft_ismetachar(s[len]))
 		len++;
 	ft_lstadd_back(tokens, ft_lstnew(ft_substr(s, 0, len), OPERATOR));
 	last_elem = ft_lstlast(*tokens);
-	if (!ft_strncmp(last_elem->content, "|>", 3) || !ft_strncmp(last_elem->content, "|<", 3)
-	|| !ft_strncmp(last_elem->content, "|>>", 4) || !ft_strncmp(last_elem->content, "|<<", 4))
+	if (!ft_strncmp(last_elem->content, "|>", 3)
+		|| !ft_strncmp(last_elem->content, "|<", 3)
+		|| !ft_strncmp(last_elem->content, "|>>", 4)
+		|| !ft_strncmp(last_elem->content, "|<<", 4))
 		ft_dissociate_op(tokens);
 	return (len);
 }
@@ -73,12 +75,13 @@ static void	ft_dissociate_op(t_list **tokens)
 	t_list	*last_elem;
 
 	last_elem = ft_lstlast(*tokens);
-	ft_lstadd_back(tokens, ft_lstnew(ft_substr(last_elem->content, 1, ft_strlen(last_elem->content) - 1), OPERATOR));
+	ft_lstadd_back(tokens, ft_lstnew(ft_substr(last_elem->content, 1,
+				ft_strlen(last_elem->content) - 1), OPERATOR));
 	free(last_elem->content);
 	last_elem->content = ft_strdup("|");
 }
 
-static int ft_addword(char *s, t_list **tokens)
+static int	ft_addword(char *s, t_list **tokens)
 {
 	int		len;
 	t_bool	simple_quote;
@@ -88,7 +91,7 @@ static int ft_addword(char *s, t_list **tokens)
 	simple_quote = FALSE;
 	double_quote = FALSE;
 	while (s[len] && (simple_quote || double_quote
-		|| !(ft_ismetachar(s[len]) || s[len] == ' ' || s[len] == '\t')))
+			|| !(ft_ismetachar(s[len]) || s[len] == ' ' || s[len] == '\t')))
 	{
 		if (s[len] == '\"' && simple_quote == FALSE)
 			double_quote = (double_quote == FALSE);
